@@ -1,0 +1,319 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Мудборд designcodes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: узкая колонка текста + широкие сетки картинок; два направления как две главы, сравнение таблицей в конце */
+:root {
+  --bg: #F4F5F6;
+  --surface: #FFFFFF;
+  --ink: #121417;
+  --muted: #6A7079;
+  --line: #E0E3E7;
+  --accent: #2E55F0;
+  --font-display: "Onest", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Onest", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111315; --surface: #1A1D20; --ink: #ECEEF0; --muted: #959CA6; --line: #2B2F34; --accent: #7F98FF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111315; --surface: #1A1D20; --ink: #ECEEF0; --muted: #959CA6; --line: #2B2F34; --accent: #7F98FF;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 72px;
+}
+.wrap { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 96px; }
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.label::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+h1 { font-size: clamp(36px, 6vw, 68px); line-height: 1.04; }
+h2 { font-size: clamp(30px, 4.4vw, 48px); line-height: 1.08; }
+h1 .soft, h2 .soft { color: var(--muted); }
+p { margin: 0; max-width: 62ch; }
+
+/* шапка */
+.top { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+.top b { color: var(--ink); font-weight: 500; }
+.intro { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px 64px; align-items: end; }
+.intro .lead { display: flex; flex-direction: column; gap: 28px; }
+.common { display: flex; flex-direction: column; gap: 14px; }
+.common ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.common li { padding: 12px 0; border-bottom: 1px solid var(--line); display: flex; gap: 16px; }
+.common li span { font-family: var(--font-mono); font-size: 12px; color: var(--muted); min-width: 22px; padding-top: 3px; }
+
+/* направление */
+.dir { display: flex; flex-direction: column; gap: 36px; }
+.dir-head { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 24px 64px; align-items: start; }
+.dir-head .left { display: flex; flex-direction: column; gap: 18px; }
+.dir-letter { font-family: var(--font-mono); font-size: 13px; color: var(--accent); }
+.dir-head .right { display: flex; flex-direction: column; gap: 18px; padding-top: 6px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: 13px; padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); }
+
+.grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 20px; }
+.card { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card.wide { grid-column: span 2; }
+.shot {
+  all: unset; cursor: zoom-in; display: block; width: 100%; max-width: 100%;
+  aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; background: var(--surface);
+  outline: 1px solid var(--line); outline-offset: -1px;
+}
+.card.wide .shot { aspect-ratio: 8 / 3; }
+.shot:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.shot img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; transition: transform .5s ease; }
+.shot:hover img { transform: scale(1.03); }
+.cap { display: flex; flex-direction: column; gap: 4px; }
+.cap .take { font-size: 15px; line-height: 1.4; }
+.cap .src { font-family: var(--font-mono); font-size: 11.5px; color: var(--muted); }
+.cap .src a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--line); }
+.cap .src a:hover { color: var(--accent); border-color: var(--accent); }
+.mine { color: var(--accent); }
+
+/* сравнение */
+.compare { display: flex; flex-direction: column; gap: 28px; }
+.table-wrap { overflow-x: auto; border-top: 1px solid var(--ink); }
+table { width: 100%; border-collapse: collapse; min-width: 760px; }
+th, td { text-align: left; vertical-align: top; padding: 16px 16px 16px 0; border-bottom: 1px solid var(--line); }
+th { font-family: var(--font-mono); font-size: 12px; font-weight: 400; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+td { width: 26%; }
+td:first-child { color: var(--muted); width: 22%; }
+
+.ask { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px 64px; padding: 40px; background: var(--surface); border-radius: 16px; }
+.ask ol { margin: 0; padding-left: 20px; display: grid; gap: 10px; }
+
+footer { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+
+/* просмотр картинки */
+dialog { border: 0; padding: 0; background: transparent; max-width: min(1200px, 94vw); max-height: 92vh; }
+dialog::backdrop { background: rgba(10, 12, 14, .82); }
+dialog img { display: block; max-width: 100%; max-height: 86vh; border-radius: 8px; margin: 0 auto; }
+dialog p { color: #E9ECEF; font-size: 14px; margin: 12px auto 0; text-align: center; }
+.close { position: fixed; top: calc(16px + env(safe-area-inset-top, 0px)); right: calc(16px + env(safe-area-inset-right, 0px));
+  background: #fff; color: #111; border: 0; border-radius: 999px; padding: 8px 14px; font: 500 13px var(--font-body); cursor: pointer; }
+
+@media (max-width: 960px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .intro, .dir-head, .ask { grid-template-columns: minmax(0, 1fr); }
+  .wrap { gap: 72px; }
+}
+@media (max-width: 520px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .card.wide { grid-column: auto; }
+  .card.wide .shot { aspect-ratio: 4 / 3; }
+  .ask { padding: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .shot img { transition: none; } .shot:hover img { transform: none; } }
+</style>
+
+<div class="wrap">
+  <section class="dir" aria-labelledby="dir-a">
+    <div class="dir-head">
+      <div class="left">
+        <span class="dir-letter">Вариант A</span>
+        <h2 id="dir-a">Продуктовый <span class="soft">минимализм</span></h2>
+      </div>
+      <div class="right">
+        <p>Вместо фотографий — ваши работы: скриншоты сайтов, интерфейс Битрикс24, крупные цифры. Карточки и бенто-сетки, местами тёмные блоки-вставки. Сайт выглядит как современный продукт и сразу показывает, что студия делает.</p>
+        <div class="chips"><span class="chip">Карточки</span><span class="chip">Скриншоты кейсов</span><span class="chip">Бенто-сетка</span><span class="chip">Крупные цифры</span></div>
+      </div>
+    </div>
+    <div class="grid">
+      <figure class="card wide" style="margin:0">
+        <button class="shot" type="button" data-full="img/a-clause.webp"><img src="img/a-clause.webp" alt="Clause: светлый сайт с интерфейсами в карточках" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Основа структуры: интерфейсы в карточках, блок интеграций</span><span class="src mine">Clause · первый подбор</span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/a-pricing.webp"><img src="img/a-pricing.webp" alt="Карточки услуг веб-студии" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Услуги карточками: визитка, лендинг, магазин — со сроком и ценой</span><span class="src"><a href="https://dribbble.com/shots/27716691-Agency-Pricing-Section-Web-Design-Service-Packages" target="_blank" rel="noopener">Agency Pricing Section ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/a-northstar.webp"><img src="img/a-northstar.webp" alt="Northstar: интерфейс на первом экране" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Интерфейс прямо на первом экране — так можно подать Битрикс24</span><span class="src"><a href="https://dribbble.com/shots/27893183-NORTHSTAR-Studio-Management-SaaS-Website-Design" target="_blank" rel="noopener">Northstar ↗</a></span></figcaption>
+      </figure>
+      <figure class="card wide" style="margin:0">
+        <button class="shot" type="button" data-full="img/a-bento.webp"><img src="img/a-bento.webp" alt="Бенто-сетка возможностей" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Бенто-сетка возможностей вместо слайдера</span><span class="src"><a href="https://dribbble.com/shots/27546924--FinTech-Analytics-Hub-Bento-Grid-UI-Layout" target="_blank" rel="noopener">Bento Grid ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/a-looper.webp"><img src="img/a-looper.webp" alt="Looper: скруглённые карточки и цифры" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Крупные цифры в карточках: 15 лет, 100+ сайтов, Gold-партнёр</span><span class="src"><a href="https://dribbble.com/shots/24127094-Looper-Website-design-for-the-aviation-procurement-platform" target="_blank" rel="noopener">Looper ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/a-keven.webp"><img src="img/a-keven.webp" alt="Keven: избранные работы" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Блок «Избранные работы» с крупными превью</span><span class="src"><a href="https://dribbble.com/shots/27663792-Keven" target="_blank" rel="noopener">Keven ↗</a></span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="dir" aria-labelledby="dir-b">
+    <div class="dir-head">
+      <div class="left">
+        <span class="dir-letter">Вариант B</span>
+        <h2 id="dir-b">Типографический <span class="soft">минимализм</span></h2>
+      </div>
+      <div class="right">
+        <p>Почти без картинок: крупный шрифт, строгая швейцарская сетка, нумерация и моноширинные подписи. Работы показаны крупно, по одной. Самый «дизайнерский» и запоминающийся вариант, но тексты в нём должны быть сильными.</p>
+        <div class="chips"><span class="chip">Крупный шрифт</span><span class="chip">Строгая сетка</span><span class="chip">Нумерация</span><span class="chip">Кейсы лентой</span></div>
+      </div>
+    </div>
+    <div class="grid">
+      <figure class="card wide" style="margin:0">
+        <button class="shot" type="button" data-full="img/b-designtoweb.webp"><img src="img/b-designtoweb.webp" alt="DesignToWeb: сайт студии, которая программирует дизайн" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Студия с той же идеей: вы проектируете, мы программируем. Один яркий акцент</span><span class="src"><a href="https://dribbble.com/shots/14733234-DesignToWeb-Website" target="_blank" rel="noopener">DesignToWeb ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/b-portfolio2026.webp"><img src="img/b-portfolio2026.webp" alt="Сайт веб-студии с услугами таблицей" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Сайт веб-студии: услуги таблицей с нумерацией</span><span class="src"><a href="https://dribbble.com/shots/27149012-Portfolio-Website-Design-2026" target="_blank" rel="noopener">Portfolio 2026 ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/b-righetti.webp"><img src="img/b-righetti.webp" alt="Первый экран только из шрифта" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Первый экран только из шрифта</span><span class="src"><a href="https://dribbble.com/shots/15965702-Benjamin-Righetti-Website" target="_blank" rel="noopener">Benjamin Righetti ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/b-aebli.webp"><img src="img/b-aebli.webp" alt="Крупное название и лента работ" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Крупное название и лента работ</span><span class="src"><a href="https://dribbble.com/shots/27816607-Swiss-Minimal-Portfolio-Website-for-Studios" target="_blank" rel="noopener">Swiss Minimal Portfolio ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/b-swiss.webp"><img src="img/b-swiss.webp" alt="Манифест крупным текстом" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Манифест крупным текстом и «кодовая» нумерация</span><span class="src"><a href="https://dribbble.com/shots/26737472-Swiss-Website-Design-2025" target="_blank" rel="noopener">Swiss Website 2025 ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/b-jh.webp"><img src="img/b-jh.webp" alt="Журнальная сетка" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Журнальная сетка, контраст размеров текста</span><span class="src"><a href="https://dribbble.com/shots/27288946-JH-Editorial-Art-Director-Portfolio-Personal-Website-UI-Design" target="_blank" rel="noopener">JH Editorial ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/b-moorr.webp"><img src="img/b-moorr.webp" alt="Чистая сетка портфолио" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Чистая сетка портфолио</span><span class="src"><a href="https://dribbble.com/shots/27739932-MOORR-Clean-Portfolio-Readymag-Template" target="_blank" rel="noopener">MOORR ↗</a></span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="dir" aria-labelledby="dir-c">
+    <div class="dir-head">
+      <div class="left">
+        <span class="dir-letter">Вариант C</span>
+        <h2 id="dir-c">Воздушный <span class="soft">минимализм</span></h2>
+      </div>
+      <div class="right">
+        <p>Самый мягкий вариант: почти белый фон, светлые градиенты и много пустого места. Акцент едва заметный, крупные светлые картинки и плавная анимация. Сайт ощущается спокойным и дорогим, но о самой работе студии говорит меньше всего.</p>
+        <div class="chips"><span class="chip">Много пустого места</span><span class="chip">Светлые градиенты</span><span class="chip">Мягкий акцент</span><span class="chip">Плавная анимация</span></div>
+      </div>
+    </div>
+    <div class="grid">
+      <figure class="card wide" style="margin:0">
+        <button class="shot" type="button" data-full="img/c-studio.webp"><img src="img/c-studio.webp" alt="Белый первый экран студии с кольцом из работ" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Белый первый экран студии, работы по кругу вместо фото</span><span class="src"><a href="https://dribbble.com/shots/27850658-3D-Photo-Ring-Hero-Section-Clean-White-Landing-Page" target="_blank" rel="noopener">Clean White Landing ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/c-harno.webp"><img src="img/c-harno.webp" alt="Harno: двухтоновые заголовки и карточки" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Двухтоновые заголовки, карточки кейсов с плашкой</span><span class="src mine">Harno · первый подбор</span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/c-omnix.webp"><img src="img/c-omnix.webp" alt="Omnix Studio: светлый первый экран" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Воздушный первый экран и строка логотипов клиентов</span><span class="src"><a href="https://dribbble.com/shots/27577180-Omnix-Studio-Photography-Studio-Website-Design" target="_blank" rel="noopener">Omnix Studio ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/c-energy.webp"><img src="img/c-energy.webp" alt="Крупный тонкий заголовок на светлом фоне" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Крупный тонкий заголовок и один предмет на светлом фоне</span><span class="src"><a href="https://dribbble.com/shots/26904119-Renewable-Energy-Landing-Page-Minimal-UI-Maximum-Impact" target="_blank" rel="noopener">Renewable Energy ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/c-gradient.webp"><img src="img/c-gradient.webp" alt="Мягкий градиент на первом экране" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Мягкий градиент вместо картинки на первом экране</span><span class="src"><a href="https://dribbble.com/shots/27748847-AI-Technology-Landing-Page-Artificial-Intelligence-Solutions" target="_blank" rel="noopener">AI Technology Landing ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/c-accuracy.webp"><img src="img/c-accuracy.webp" alt="Светлый экран с цифрами и интерфейсом" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Цифры и кусочки интерфейса, растворённые в светлом фоне</span><span class="src"><a href="https://dribbble.com/shots/27133849-AI-Accuracy-Landing-Page" target="_blank" rel="noopener">AI Accuracy ↗</a></span></figcaption>
+      </figure>
+      <figure class="card" style="margin:0">
+        <button class="shot" type="button" data-full="img/c-enterprise.webp"><img src="img/c-enterprise.webp" alt="Светлая волна и спокойный заголовок" loading="lazy"></button>
+        <figcaption class="cap"><span class="take">Светлая волна и спокойный заголовок, почти ничего лишнего</span><span class="src"><a href="https://dribbble.com/shots/27424439-AI-Enterprise-Website" target="_blank" rel="noopener">AI Enterprise ↗</a></span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="compare" aria-labelledby="cmp">
+    <span class="label">Сравнение</span>
+    <h2 id="cmp">Чем отличаются <span class="soft">на вашем сайте</span></h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th></th><th>A · Продуктовый</th><th>B · Типографический</th><th>C · Воздушный</th></tr></thead>
+        <tbody>
+          <tr><td>Первый экран</td><td>Заголовок и скриншоты ваших сайтов</td><td>Только крупный текст, максимум одна картинка</td><td>Тонкий заголовок на светлом градиенте</td></tr>
+          <tr><td>Портфолио</td><td>Карточки с превью и подписью ниши</td><td>Крупные кадры по одному, лентой</td><td>Крупные светлые превью с большими отступами</td></tr>
+          <tr><td>Битрикс24</td><td>Бенто-сетка с интерфейсами</td><td>Нумерованный список возможностей</td><td>Несколько карточек с короткими подписями</td></tr>
+          <tr><td>Впечатление</td><td>Надёжный подрядчик, современный продукт</td><td>Авторская студия с характером</td><td>Спокойно, легко, премиально</td></tr>
+          <tr><td>Что понадобится</td><td>Хорошие скриншоты всех кейсов</td><td>Сильные короткие тексты</td><td>Светлые аккуратные изображения и анимация</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="ask" aria-labelledby="next">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <span class="label">Что нужно от вас</span>
+      <h2 id="next">Какой вариант ближе?</h2>
+    </div>
+    <ol>
+      <li>Выберите вариант A, B или C — или скажите, что взять из разных.</li>
+      <li>Назовите 2–3 картинки, которые нравятся больше всего, и одну, которая точно нет.</li>
+      <li>Пришлите скриншоты или ссылки на все кейсы, которые хотите показать.</li>
+    </ol>
+  </section>
+
+  <footer>Картинки — референсы с Dribbble, ссылки на авторов под каждой. Нажмите на картинку, чтобы открыть крупно.</footer>
+</div>
+
+<dialog id="viewer" aria-label="Просмотр референса">
+  <button class="close" type="button" id="viewer-close">Закрыть</button>
+  <img id="viewer-img" alt="">
+  <p id="viewer-cap"></p>
+</dialog>
+
+<script>
+(function () {
+  var dlg = document.getElementById('viewer');
+  var img = document.getElementById('viewer-img');
+  var cap = document.getElementById('viewer-cap');
+  document.querySelectorAll('.shot').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      img.src = btn.dataset.full;
+      img.alt = btn.querySelector('img').alt;
+      var t = btn.parentElement.querySelector('.take');
+      cap.textContent = t ? t.textContent : '';
+      if (dlg.showModal) dlg.showModal();
+    });
+  });
+  document.getElementById('viewer-close').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+})();
+</script>
