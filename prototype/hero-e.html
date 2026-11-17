@@ -7,7 +7,7 @@
 <meta name="description" content="Разработка сайтов на 1С-Битрикс: интернет-магазины, корпоративные сайты, интеграции и поддержка. Портфолио и обсуждение проекта.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Jost:wght@400&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Jost:wght@300;400;500;600&family=Onest:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
 <style>
   /* Прототип главной, стиль B — типографический минимализм.
      Цвета временные: акцент и фон уточняются с клиентом. Меняются только здесь. */
@@ -61,7 +61,7 @@
   .nav-link {
     display: inline-flex; align-items: center; gap: 6px;
     height: 40px; padding: 0 12px;
-    font-size: 15px; font-weight: 500;
+    font-size: 15px; font-weight: 400;
     border-radius: 999px;
   }
   .nav-link:hover, .nav-link[aria-expanded="true"] { background: rgba(17,17,16,.06); }
@@ -95,7 +95,7 @@
     display: inline-flex; align-items: center; gap: 10px;
     height: 44px; padding: 0 20px;
     background: var(--ink); color: var(--bg);
-    font-size: 15px; font-weight: 500;
+    font-size: 15px; font-weight: 400;
     border-radius: 999px;
     white-space: nowrap;
     transition: background .2s;
@@ -132,10 +132,10 @@
     align-self: end;
     margin: 0;
     padding: 4vh 0 0;
-    font-weight: 600;
-    font-size: clamp(48px, 11.2vw, 210px);
-    line-height: 0.9;
-    letter-spacing: -0.055em;
+    font-weight: var(--tw);
+    font-size: clamp(48px, calc(11.2vw / var(--fk, 1)), 210px);
+    line-height: 0.96;
+    letter-spacing: var(--tls);
   }
   .hero-title .line { display: block; }
   .hero-title .idx {
@@ -164,13 +164,16 @@
     grid-column: 9 / 13;
     display: flex; flex-direction: column; align-items: flex-end; gap: 16px;
   }
+  /* Вторая кнопка: контур, без подчёркивания */
   .link-arrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; font-weight: 500;
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 2px;
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 56px; padding: 0 24px;
+    border: 1px solid currentColor; border-radius: 999px;
+    font-size: 17px; font-weight: 400; white-space: nowrap;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .link-arrow:hover { color: var(--accent); border-color: var(--accent); }
+  .link-arrow:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .show-sm { display: none; }
 
   /* Указатель услуг — строка-таблица внизу экрана */
   .hero-index {
@@ -188,7 +191,7 @@
   .hero-index a + a { padding-left: 20px; }
   .hero-index a:last-child { border-right: 0; }
   .hero-index .row { display: flex; justify-content: space-between; color: var(--muted); }
-  .hero-index .name { font-size: clamp(17px, 1.4vw, 21px); font-weight: 500; letter-spacing: -0.015em; line-height: 1.2; }
+  .hero-index .name { font-size: clamp(17px, 1.4vw, 21px); font-weight: 400; letter-spacing: -0.015em; line-height: 1.2; }
   .hero-index a:hover .name, .hero-index a:hover .row { color: var(--accent); }
   .hero-index .arr { transition: transform .2s; }
   .hero-index a:hover .arr { transform: translate(3px, -3px); }
@@ -206,7 +209,7 @@
   .mobile-menu summary, .mobile-menu > a:not(.btn):not(.phone) {
     display: flex; justify-content: space-between; align-items: center;
     padding: 18px 0;
-    font-size: 24px; font-weight: 500; letter-spacing: -0.02em;
+    font-size: 24px; font-weight: 400; letter-spacing: -0.02em;
     list-style: none; cursor: pointer;
   }
   .mobile-menu > a:not(.btn):not(.phone) { border-bottom: 1px solid var(--line); }
@@ -245,7 +248,7 @@
     .logo-svg { height: 40px; }
     .hero-meta { grid-template-columns: 1fr; gap: 4px; }
     .hero-meta > :nth-child(1), .hero-meta > :nth-child(3) { grid-column: 1; text-align: left; }
-    .hero-title { font-size: clamp(40px, 12.4vw, 64px); letter-spacing: -0.05em; padding-top: 2vh; }
+    .hero-title { font-size: clamp(40px, calc(12.4vw / var(--fk, 1)), 64px); letter-spacing: var(--tls); padding-top: 2vh; }
     .hero-title .idx { display: none; }
     .hero-actions .btn { width: 100%; justify-content: center; }
     .hero-index { grid-template-columns: 1fr; }
@@ -291,10 +294,32 @@
   .cm { color: var(--accent); }
   .hc .cm, .inv .cm { color: #fff; }
 
+
+  /* Насыщенность заголовков: переключается под первым экраном (?w=600|400|300) */
+  :root { --tw: 600; --tls: -0.035em; }
+  :root[data-w="400"] { --tw: 400; --tls: -0.03em; }
+  :root[data-w="300"] { --tw: 300; --tls: -0.025em; }
+
+  .dock-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 10px; }
+  .dock-row > span { min-width: 92px; text-align: right; }
+  .dock-opt {
+    display: inline-flex; align-items: center; gap: 8px;
+    height: 32px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px;
+    font-family: var(--mono); font-size: 12px; color: var(--ink); background: transparent;
+  }
+  .dock-opt[aria-pressed="true"] { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+  .dock-opt i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
   /* Переключатель вариантов — только для показа клиенту */
+  /* под первым экраном: чтобы ничего не перекрывало, листается вниз */
+  .variant-dock {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    padding: 56px var(--gutter) 40vh;
+    background: var(--bg); color: var(--muted);
+    font-family: var(--mono); font-size: 12px; text-align: center;
+  }
   .variant-switch {
-    position: fixed; right: 16px; bottom: 16px; z-index: 50;
-    display: flex; gap: 2px; padding: 4px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; padding: 4px;
     background: #111110; border-radius: 999px;
     font-family: var(--mono); font-size: 12px;
   }
@@ -317,13 +342,13 @@
   .he-kicker .slash { color: var(--accent); }
   .he-title {
     margin: clamp(12px, 2.6vh, 28px) 0 0;
-    font-weight: 600;
-    font-size: clamp(40px, min(7.6vw, 15svh), 148px);
-    line-height: 0.92; letter-spacing: -0.055em;
+    font-weight: var(--tw);
+    font-size: clamp(40px, min(calc(7.6vw / var(--fk, 1)), 15svh), 148px);
+    line-height: 0.98; letter-spacing: var(--tls);
   }
   .he-title .thin { font-weight: 400; color: var(--muted); }
   .he-lead { margin: clamp(14px, 3vh, 32px) auto 0; max-width: 36em; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; }
-  .he-actions { display: flex; align-items: center; justify-content: center; gap: 28px; margin-top: clamp(16px, 3.4vh, 36px); flex-wrap: wrap; }
+  .he-actions { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: clamp(16px, 3.4vh, 36px); flex-wrap: wrap; }
 
   /* бегущая строка направлений */
   .he-ticker { border-top: 1px solid var(--ink); overflow: hidden; white-space: nowrap; }
@@ -331,7 +356,7 @@
   .he-track a {
     display: inline-flex; align-items: center; gap: 28px;
     padding: 22px 28px 22px 0;
-    font-size: clamp(20px, 2vw, 30px); font-weight: 500; letter-spacing: -0.02em;
+    font-size: clamp(20px, 2vw, 30px); font-weight: 400; letter-spacing: -0.02em;
   }
   .he-track a::after { content: "/"; color: var(--accent); font-weight: 400; }
   .he-track a:hover { color: var(--accent); }
@@ -340,8 +365,9 @@
   @media (prefers-reduced-motion: reduce) { .he-track { animation: none; } .he-ticker { overflow-x: auto; } }
 
   @media (max-width: 560px) {
-    .he-title { font-size: clamp(40px, 12vw, 62px); }
-    .he-actions .btn { width: 100%; justify-content: center; }
+    .he-title { font-size: clamp(40px, calc(12vw / var(--fk, 1)), 62px); }
+    .he-actions { flex-wrap: nowrap; }
+    .he-actions .btn { flex: 1; justify-content: center; }
     .he-kicker { flex-direction: column; gap: 4px; }
     .he-kicker .slash { display: none; }
   }
@@ -350,14 +376,23 @@
   /* ---------- Телефон: первый экран ровно в высоту экрана ---------- */
   @media (max-width: 560px) {
     .btn-lg { height: 52px; font-size: 16px; }
-    .link-arrow { font-size: 14px; }
+    .link-arrow { height: 52px; padding: 0 18px; font-size: 16px; }
+    .hide-sm { display: none; }
+    .show-sm { display: inline; }
   }
 
   @media (max-width: 560px) {
     .he-kicker { font-size: 10px; }
-    .he-title { font-size: min(12vw, 8svh); }
+    .he-title { font-size: min(calc(12vw / var(--fk, 1)), 8svh); }
     .he-lead { font-size: 15px; }
     .he-track a { padding: 14px 20px 14px 0; font-size: 18px; gap: 20px; }
+  }
+
+  /* короткая подпись второй кнопки там, где тесно */
+  @media (max-width: 1180px) { .hide-sm { display: none; } .show-sm { display: inline; } }
+  @media (max-width: 400px) {
+    .btn-lg, .link-arrow { padding: 0 14px; font-size: 15px; gap: 8px; }
+    .btn-lg .ico { display: none; }
   }
 </style>
 </head>
@@ -483,11 +518,11 @@
   <section class="he" aria-labelledby="hero-title">
     <div class="he-main">
       <span class="he-kicker mono"><span>Студия с 2013</span><span class="slash">/</span><span>130+ сайтов</span><span class="slash">/</span><span>Золотой партнёр 1С-Битрикс</span></span>
-      <h1 class="he-title" id="hero-title">Разработка сайтов<br><span class="thin">на</span> 1С&#8209;Битрикс<span class="caret-blink" aria-hidden="true"></span></h1>
+      <h1 class="he-title" id="hero-title">Разработка сайтов<br>на 1С&#8209;Битрикс<span class="caret-blink" aria-hidden="true"></span></h1>
       <p class="he-lead">Создаём корпоративные сайты и интернет-магазины, дорабатываем существующие проекты, интегрируем их с 1С и CRM. Подбираем готовое решение или разрабатываем индивидуально.</p>
       <div class="he-actions">
         <a class="btn btn-lg" href="#form" data-open-form>Обсудить проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <a class="link-arrow" href="/portfolio/">Смотреть портфолио <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="link-arrow" href="/portfolio/"><span class="hide-sm">Смотреть портфолио</span><span class="show-sm">Портфолио</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
     <nav class="he-ticker" aria-label="Направления">
@@ -511,15 +546,78 @@
   </section>
 </main>
 
-<nav class="variant-switch" aria-label="Варианты первого экрана"><a href="index.html">A · Плакат</a><a href="hero-b.html">B · Оглавление</a><a href="hero-c.html">C · Цифры</a><a href="hero-d.html">D · Модули</a><a href="hero-e.html" aria-current="page">E · Центр</a></nav>
+<div class="variant-dock"><nav class="variant-switch" aria-label="Варианты первого экрана"><a href="index.html">A · Плакат</a><a href="hero-b.html">B · Оглавление</a><a href="hero-c.html">C · Цифры</a><a href="hero-d.html">D · Модули</a><a href="hero-e.html" aria-current="page">E · Центр</a></nav><div class="dock-row"><span>Цвет акцента</span>
+    <button class="dock-opt" data-accent="2433FF"><i style="background:#2433FF"></i>Ультрамарин</button>
+    <button class="dock-opt" data-accent="2F6BFF"><i style="background:#2F6BFF"></i>Luminous Blue</button>
+    <button class="dock-opt" data-accent="F0441C"><i style="background:#F0441C"></i>Сигнальный красный</button>
+    <button class="dock-opt" data-accent="0B7A6E"><i style="background:#0B7A6E"></i>Глубокий изумруд</button>
+  </div>
+  <div class="dock-row"><span>Шрифт</span>
+    <button class="dock-opt" data-font="inter" style="font-family:'Inter Tight'">Inter Tight</button>
+    <button class="dock-opt" data-font="onest" style="font-family:Onest">Onest</button>
+    <button class="dock-opt" data-font="manrope" style="font-family:Manrope">Manrope</button>
+    <button class="dock-opt" data-font="jost" style="font-family:Jost">Jost</button>
+  </div>
+  <div class="dock-row"><span>Заголовки</span>
+    <button class="dock-opt" data-w="600">Semibold</button>
+    <button class="dock-opt" data-w="400">Regular</button>
+    <button class="dock-opt" data-w="300">Light</button>
+  </div>
+  <span>Варианты первого экрана · ← → переключение вариантов</span></div>
 
 <script>
   // ?clean — скрыть переключатель (для скриншотов)
-  if (new URLSearchParams(location.search).has('clean')) document.querySelector('.variant-switch')?.remove();
+  if (new URLSearchParams(location.search).has('clean')) document.querySelector('.variant-dock')?.remove();
 
-  // Для сравнения цветов: ?accent=2433FF
-  const qa = new URLSearchParams(location.search).get('accent');
-  if (qa && /^[0-9a-f]{6}$/i.test(qa)) document.documentElement.style.setProperty('--accent', '#' + qa);
+
+
+  // Поправка на ширину шрифта: заголовок не должен переноситься иначе, чем в Inter Tight
+  async function fitFont() {
+    await document.fonts.ready;
+    const probe = (fam) => {
+      const s = document.createElement('span');
+      s.textContent = 'Разработка сайтов на 1С-Битрикс';
+      s.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-size:100px;letter-spacing:var(--tls);font-weight:var(--tw);font-family:' + fam;
+      document.body.appendChild(s); const w = s.getBoundingClientRect().width; s.remove(); return w;
+    };
+    const k = probe('var(--font)') / probe('"Inter Tight"');
+    document.documentElement.style.setProperty('--fk', Math.max(1, k).toFixed(3));
+  }
+
+  // Цвет и насыщенность из адреса: ?accent=HEX&w=600|400|300 — сохраняются при переключении вариантов
+  const params = new URLSearchParams(location.search);
+  function applyOpts() {
+    const a = params.get('accent'), w = params.get('w') || '600';
+    if (a && /^[0-9a-f]{6}$/i.test(a)) document.documentElement.style.setProperty('--accent', '#' + a);
+    else document.documentElement.style.removeProperty('--accent');
+    document.documentElement.dataset.w = w;
+    document.querySelectorAll('.dock-opt[data-accent]').forEach(b => b.setAttribute('aria-pressed', String((a || '2433FF').toUpperCase() === b.dataset.accent)));
+    document.querySelectorAll('.dock-opt[data-w]').forEach(b => b.setAttribute('aria-pressed', String(w === b.dataset.w)));
+    const fonts = { inter: '"Inter Tight"', onest: 'Onest', manrope: 'Manrope', jost: 'Jost' };
+    const fn = fonts[params.get('font')] ? params.get('font') : 'inter';
+    document.documentElement.style.setProperty('--font', fonts[fn] + ', "Helvetica Neue", Arial, sans-serif');
+    document.querySelectorAll('.dock-opt[data-font]').forEach(b => b.setAttribute('aria-pressed', String(fn === b.dataset.font)));
+    fitFont();
+    const q = params.toString();
+    document.querySelectorAll('.variant-switch a').forEach(l => l.href = l.getAttribute('href').split('?')[0] + (q ? '?' + q : ''));
+    history.replaceState(null, '', location.pathname + (q ? '?' + q : ''));
+  }
+  document.querySelectorAll('.dock-opt').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.accent) params.set('accent', b.dataset.accent);
+    if (b.dataset.w) params.set('w', b.dataset.w);
+    if (b.dataset.font) params.set('font', b.dataset.font);
+    applyOpts();
+  }));
+  applyOpts();
+
+  // ← → — переключение вариантов
+  document.addEventListener('keydown', e => {
+    if (!['ArrowLeft', 'ArrowRight'].includes(e.key) || e.target.closest('input, textarea')) return;
+    const links = [...document.querySelectorAll('.variant-switch a')];
+    const i = links.findIndex(a => a.hasAttribute('aria-current'));
+    const next = links[(i + (e.key === 'ArrowRight' ? 1 : -1) + links.length) % links.length];
+    if (next) location.href = next.href;
+  });
 
   // Подменю: открытие по клику/касанию и с клавиатуры, Esc и клик вне закрывают
   const triggers = document.querySelectorAll('.nav-link[aria-controls]');
