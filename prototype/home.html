@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Разработка сайтов на 1С-Битрикс — Дизайн+Код</title>
+<meta name="description" content="Разработка сайтов на 1С-Битрикс: интернет-магазины, корпоративные сайты, интеграции и поддержка. Портфолио и обсуждение проекта.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=Jost:wght@300;400;500;600&family=Onest:wght@300;400;500;600&family=Manrope:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+  /* Главная, утверждённая связка (17.11.2026): первый экран B «Оглавление»,
+     акцент «Сигнальный красный», шрифт Onest, заголовки Regular. */
+  :root {
+    --bg: #F3F2EE;
+    --ink: #111110;
+    --muted: #6B6A66;
+    --line: #D6D4CE;
+    --accent: #F0441C;          /* Сигнальный красный — выбран клиентом 17.11.2026 */
+    --font: Onest, "Helvetica Neue", Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    --gutter: clamp(16px, 3vw, 40px);
+    --header-h: 72px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .plus { color: var(--accent); }
+
+  /* ---------- Шапка ---------- */
+  .header {
+    position: sticky; top: 0; z-index: 20;
+    height: var(--header-h);
+    display: flex; align-items: center; gap: 40px;
+    padding: 0 var(--gutter);
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .logo { display: block; flex: none; }
+  .logo-svg { display: block; height: 46px; width: auto; }
+  .nav { display: flex; gap: 4px; flex: 1; }
+  .nav-item { position: relative; }
+  .nav-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 40px; padding: 0 12px;
+    font-size: 15px; font-weight: 400;
+    border-radius: 999px;
+  }
+  .nav-link:hover, .nav-link[aria-expanded="true"] { background: rgba(17,17,16,.06); }
+  .caret { width: 9px; height: 9px; transition: transform .2s; }
+  .nav-link[aria-expanded="true"] .caret { transform: rotate(180deg); }
+
+  .submenu {
+    position: absolute; top: calc(100% + 14px); left: 0;
+    min-width: 300px;
+    padding: 10px 0;
+    background: var(--bg);
+    border: 1px solid var(--ink);
+    display: none;
+  }
+  .submenu.open { display: block; }
+  .submenu a {
+    display: grid; grid-template-columns: 34px 1fr; align-items: baseline;
+    padding: 9px 20px;
+    font-size: 15px;
+  }
+  .submenu a:hover { background: var(--ink); color: var(--bg); }
+  .submenu a .mono { color: var(--muted); }
+  .submenu a:hover .mono { color: var(--bg); }
+  .submenu .sub-group {
+    padding: 12px 20px 4px; color: var(--muted);
+  }
+
+  .header-right { display: flex; align-items: center; gap: 24px; margin-left: auto; }
+  .phone { font-family: var(--mono); font-size: 14px; white-space: nowrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 44px; padding: 0 20px;
+    background: var(--ink); color: var(--bg);
+    font-size: 15px; font-weight: 400;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background .2s;
+  }
+  .btn:hover { background: var(--accent); }
+  .btn-lg { height: 56px; padding: 0 28px; font-size: 17px; background: var(--accent); color: #fff; }
+  .btn-lg:hover { background: var(--ink); }
+
+  .icon-btn {
+    display: none;
+    width: 44px; height: 44px;
+    align-items: center; justify-content: center;
+    border: 1px solid var(--ink); border-radius: 999px;
+  }
+  .icon-btn svg { width: 18px; height: 18px; }
+
+  /* ---------- Первый экран ---------- */
+  .hero {
+    min-height: calc(100svh - var(--header-h));
+    display: grid;
+    grid-template-rows: auto 1fr auto auto;
+    padding: 0 var(--gutter);
+  }
+  .hero-meta {
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;
+    padding: 20px 0;
+    color: var(--muted);
+  }
+  .hero-meta > :nth-child(1) { grid-column: 1 / 4; }
+  .hero-meta > :nth-child(2) { grid-column: 4 / 8; }
+  .hero-meta > :nth-child(3) { grid-column: 8 / 13; text-align: right; }
+
+  .hero-title {
+    align-self: end;
+    margin: 0;
+    padding: 4vh 0 0;
+    font-weight: var(--tw);
+    font-size: clamp(48px, calc(11.2vw / var(--fk, 1)), 210px);
+    line-height: 0.96;
+    letter-spacing: var(--tls);
+  }
+  .hero-title .line { display: block; }
+  .hero-title .idx {
+    font-family: var(--mono); font-weight: 400;
+    font-size: 0.16em; letter-spacing: 0;
+    vertical-align: top; color: var(--accent);
+    margin-left: 0.4em;
+    position: relative; top: 0.55em;
+  }
+
+  .hero-body {
+    display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;
+    align-items: end;
+    padding: clamp(28px, 5vh, 56px) 0 clamp(28px, 5vh, 48px);
+  }
+  .hero-label { grid-column: 1 / 4; color: var(--muted); align-self: start; padding-top: 6px; }
+  .hero-lead {
+    grid-column: 4 / 9;
+    margin: 0;
+    font-size: clamp(18px, 1.5vw, 22px);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+    max-width: 34em;
+  }
+  .hero-actions {
+    grid-column: 9 / 13;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 16px;
+  }
+  /* Вторая кнопка: контур, без подчёркивания */
+  .link-arrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 56px; padding: 0 24px;
+    border: 1px solid currentColor; border-radius: 999px;
+    font-size: 17px; font-weight: 400; white-space: nowrap;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .link-arrow:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
+  .show-sm { display: none; }
+
+  /* Указатель услуг — строка-таблица внизу экрана */
+  .hero-index {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--ink);
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 0 var(--gutter);
+  }
+  .hero-index a {
+    display: flex; flex-direction: column; gap: 22px;
+    padding: 18px 20px 24px 0;
+    border-right: 1px solid var(--line);
+    transition: color .2s;
+  }
+  .hero-index a + a { padding-left: 20px; }
+  .hero-index a:last-child { border-right: 0; }
+  .hero-index .row { display: flex; justify-content: space-between; color: var(--muted); }
+  .hero-index .name { font-size: clamp(17px, 1.4vw, 21px); font-weight: 400; letter-spacing: -0.015em; line-height: 1.2; }
+  .hero-index a:hover .name, .hero-index a:hover .row { color: var(--accent); }
+  .hero-index .arr { transition: transform .2s; }
+  .hero-index a:hover .arr { transform: translate(3px, -3px); }
+
+  /* ---------- Мобильное меню ---------- */
+  .mobile-menu {
+    position: fixed; inset: var(--header-h) 0 0 0; z-index: 19;
+    background: var(--bg);
+    overflow-y: auto;
+    padding: 8px var(--gutter) 32px;
+    display: none;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu details { border-bottom: 1px solid var(--line); }
+  .mobile-menu summary, .mobile-menu > a:not(.btn):not(.phone) {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 0;
+    font-size: 24px; font-weight: 400; letter-spacing: -0.02em;
+    list-style: none; cursor: pointer;
+  }
+  .mobile-menu > a:not(.btn):not(.phone) { border-bottom: 1px solid var(--line); }
+  .mobile-menu summary::-webkit-details-marker { display: none; }
+  .mobile-menu details[open] summary .caret { transform: rotate(180deg); }
+  .mobile-menu details a { display: block; padding: 8px 0 8px 16px; font-size: 17px; }
+  .mobile-menu details > div { padding-bottom: 16px; }
+  .mobile-menu .btn { margin-top: 28px; width: 100%; justify-content: center; height: 56px; }
+  .mobile-menu .phone { display: block; margin-top: 20px; text-align: center; }
+
+  /* ---------- Адаптив ---------- */
+  @media (max-width: 1180px) {
+    .phone { display: none; }
+    .header { gap: 24px; }
+  }
+  @media (max-width: 960px) {
+    .nav, .header-right .btn { display: none; }
+    .icon-btn { display: inline-flex; }
+    .header-right { gap: 8px; }
+
+    .hero-meta > :nth-child(2) { display: none; }
+    .hero-meta > :nth-child(1) { grid-column: 1 / 7; }
+    .hero-meta > :nth-child(3) { grid-column: 7 / 13; }
+
+    .hero-label { display: none; }
+    .hero-lead { grid-column: 1 / 13; }
+    .hero-actions { grid-column: 1 / 13; flex-direction: row; align-items: center; justify-content: flex-start; gap: 24px; flex-wrap: wrap; }
+
+    .hero-index { grid-template-columns: repeat(2, 1fr); }
+    .hero-index a:nth-child(2) { border-right: 0; }
+    .hero-index a:nth-child(3) { padding-left: 0; }
+    .hero-index a:nth-child(n+3) { border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 560px) {
+    :root { --header-h: 64px; }
+    .logo-svg { height: 40px; }
+    .hero-meta { grid-template-columns: 1fr; gap: 4px; }
+    .hero-meta > :nth-child(1), .hero-meta > :nth-child(3) { grid-column: 1; text-align: left; }
+    .hero-title { font-size: clamp(40px, calc(12.4vw / var(--fk, 1)), 64px); letter-spacing: var(--tls); padding-top: 2vh; }
+    .hero-title .idx { display: none; }
+    .hero-actions .btn { width: 100%; justify-content: center; }
+    .hero-index { grid-template-columns: 1fr; }
+    .hero-index a, .hero-index a + a { padding: 14px 0; border-right: 0; flex-direction: row; align-items: center; gap: 14px; }
+    .hero-index a + a { border-top: 1px solid var(--line); }
+    .hero-index .row { order: 0; gap: 14px; }
+    .hero-index .row .arr { display: none; }
+    .hero-index .name { flex: 1; }
+  }
+
+
+  /* ---------- Шапка: логотип по центру ---------- */
+  .header { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; }
+  .header .nav { grid-column: 1; grid-row: 1; flex: none; }
+  .header .logo { grid-column: 2; grid-row: 1; }
+  .header .header-right { grid-column: 3; grid-row: 1; justify-self: end; margin-left: 0; }
+  @media (max-width: 1080px) {
+    .header .nav, .header .header-right .btn, .header .phone { display: none; }
+    .header .header-right { display: contents; }
+    .header .icon-btn { display: inline-flex; }
+    .header a.icon-btn { grid-column: 1; grid-row: 1; justify-self: start; }
+    .header #menu-toggle { grid-column: 3; grid-row: 1; justify-self: end; }
+  }
+
+  /* ---------- Стрелка «гарпун» ---------- */
+  .ico { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; overflow: visible; transition: transform .25s ease; }
+  .ico-diag { transform: none; }
+  a:hover > .ico, a:hover .arr .ico { transform: translateX(4px); }
+  a:hover > .ico-diag, a:hover .arr .ico-diag { transform: translateX(4px); }
+
+
+  /* ---------- Микродетали из кода ---------- */
+  /* пункты меню: при наведении появляется слэш */
+  .nav-link::before { content: "/"; color: var(--accent); width: 0; overflow: hidden; display: inline-block; transition: width .2s; }
+  .nav-link:hover::before, .nav-link[aria-expanded="true"]::before { width: .6em; }
+  body.inv .nav-link::before { color: #fff; }
+  /* комментарий в коде */
+  .cm { color: var(--accent); }
+  .hc .cm, .inv .cm { color: #fff; }
+
+
+  /* Насыщенность заголовков: Regular */
+  :root { --tw: 400; --tls: -0.03em; }
+  :root[data-w="400"] { --tw: 400; --tls: -0.03em; }
+  :root[data-w="300"] { --tw: 300; --tls: -0.025em; }
+
+
+  /* ---------- Вариант B: оглавление ---------- */
+  .hb {
+    min-height: calc(100svh - var(--header-h));
+    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px;
+    padding: 0 var(--gutter);
+  }
+  .hb-left {
+    grid-column: 1 / 7;
+    display: flex; flex-direction: column;
+    padding: 20px 40px 48px 0;
+    border-right: 1px solid var(--line);
+  }
+  .hb-left .mono { color: var(--muted); }
+  .hb-title {
+    margin: auto 0 0;
+    font-weight: var(--tw);
+    font-size: clamp(40px, min(calc(6.6vw / var(--fk, 1)), 12svh), 124px);
+    line-height: 0.98; letter-spacing: var(--tls);
+  }
+  .hb-title .acc { color: var(--accent); }
+  .hb-lead {
+    margin: 32px 0 0; max-width: 30em;
+    font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; letter-spacing: -0.01em;
+  }
+  .hb-actions { display: flex; align-items: center; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
+
+  .hb-index { grid-column: 7 / 13; display: flex; flex-direction: column; padding: 20px 0 0 20px; }
+  .hb-index-head { display: flex; justify-content: space-between; color: var(--muted); padding-bottom: 16px; }
+  .hb-row {
+    flex: 1;
+    display: grid; grid-template-columns: 56px 1fr auto; align-items: center; column-gap: 16px;
+    min-height: 76px;
+    padding: 0 16px 0 0;
+    border-top: 1px solid var(--line);
+    transition: background .2s, color .2s, padding .2s;
+  }
+  .hb-row:last-child { border-bottom: 1px solid var(--line); }
+  .hb-row .num { color: var(--muted); }
+  .hb-row .name { font-size: clamp(20px, 2vw, 32px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.1; }
+  .hb-row .desc { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); letter-spacing: 0; font-weight: 400; }
+  .hb-row .arr { font-size: 20px; transition: transform .2s; }
+  .hb-row:hover { background: var(--accent); color: #fff; padding-left: 16px; }
+  .hb-row:hover .num, .hb-row:hover .desc { color: rgba(255,255,255,.75); }
+  .hb-row:hover .arr { transform: translate(3px,-3px); }
+
+  @media (max-width: 960px) {
+    .hb-left { grid-column: 1 / 13; border-right: 0; padding: 20px 0 40px; }
+    .hb-title { margin-top: 48px; }
+    .hb-index { grid-column: 1 / 13; padding: 0 0 24px; }
+    .hb-row { min-height: 56px; }
+    .hb-left { padding-bottom: 28px; }
+    .hb-title { margin-top: 28px; }
+  }
+  @media (max-width: 560px) {
+    .hb-title { font-size: clamp(40px, calc(12.4vw / var(--fk, 1)), 64px); margin-top: 32px; }
+    .hb-actions .btn { width: 100%; justify-content: center; }
+    .hb-row { grid-template-columns: 40px 1fr auto; min-height: 64px; padding: 12px 0; }
+    .hb-row .desc { font-size: 13px; }
+  }
+
+  /* ---------- Телефон: первый экран ровно в высоту экрана ---------- */
+  @media (max-width: 560px) {
+    .btn-lg { height: 52px; font-size: 16px; }
+    .link-arrow { height: 52px; padding: 0 18px; font-size: 16px; }
+    .hide-sm { display: none; }
+    .show-sm { display: inline; }
+  }
+
+  @media (max-width: 560px) {
+    .hb-left { padding: 14px 0 16px; }
+    .hb-title { font-size: min(calc(12vw / var(--fk, 1)), 7.6svh); margin-top: 14px; }
+    .hb-lead { font-size: 15px; margin-top: 12px; }
+    .hb-actions { margin-top: 14px; gap: 12px 20px; }
+    .hb-actions .btn { width: auto; flex: 1; }
+    .hb-actions { flex-wrap: nowrap; }
+    .hb-index-head { display: none; }
+    .hb-index { padding: 0; }
+    .hb-row { min-height: 0; padding: 9px 0; grid-template-columns: 30px 1fr auto; }
+    .hb-row .desc { display: none; }
+    .hb-row .name { font-size: 15px; }
+    .hb-index { display: grid; grid-template-columns: 1fr 1fr; }
+    .hb-row { grid-template-columns: 24px 1fr; padding: 10px 8px 10px 0; }
+    .hb-row:nth-of-type(even) { padding-left: 10px; border-left: 1px solid var(--line); }
+    .hb-row .arr { display: none; }
+    .hb-row:last-child { border-bottom: 0; }
+    .hb-index { border-bottom: 1px solid var(--line); }
+  }
+
+  /* короткая подпись второй кнопки там, где тесно */
+  @media (max-width: 1180px) { .hide-sm { display: none; } .show-sm { display: inline; } }
+  @media (max-width: 400px) {
+    .btn-lg, .link-arrow { padding: 0 14px; font-size: 15px; gap: 8px; }
+    .btn-lg .ico { display: none; }
+  }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M8.5 4.5L16 12l-7.5 7.5"/></symbol>
+</svg>
+
+
+<header class="header">
+  <a class="logo" href="/" aria-label="Дизайн+Код — на главную">
+    <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="7" aria-hidden="true">
+  <path d="M595 57H297L10 211l287 154h155"/>
+  <path d="M140 137v142"/>
+  <path d="M706 3L515 412"/>
+  <path d="M725 57l305 154-305 154"/>
+  <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+    <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
+    <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+  </g>
+</svg>
+  </a>
+
+  <nav class="nav" aria-label="Основное меню">
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-services">Услуги
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-services">
+        <div class="sub-group mono">Сайты</div>
+        <a href="/services/bitrix/"><span class="mono">01</span>Разработка на 1С-Битрикс</a>
+        <a href="/services/online-stores/"><span class="mono">02</span>Интернет-магазины</a>
+        <a href="/services/corporate-sites/"><span class="mono">03</span>Корпоративные сайты</a>
+        <a href="/services/support/"><span class="mono">04</span>Поддержка</a>
+        <div class="sub-group mono">Интеграции</div>
+        <a href="/services/integrations-1c/"><span class="mono">05</span>Сайт и 1С</a>
+        <a href="/services/messenger-bots/"><span class="mono">06</span>Мессенджеры и чат-боты</a>
+        <div class="sub-group mono">Ещё</div>
+        <a href="/bitrix24/"><span class="mono">07</span>Битрикс24</a>
+        <a href="/solutions/"><span class="mono">08</span>Готовые решения</a>
+        <a href="/prices/"><span class="mono">09</span>Стоимость работ</a>
+      </div>
+    </div>
+    <div class="nav-item"><a class="nav-link" href="/portfolio/">Портфолио</a></div>
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-licenses">Лицензии
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-licenses">
+        <a href="/licenses/"><span class="mono">01</span>Обзор</a>
+        <a href="/licenses/bitrix/"><span class="mono">02</span>Покупка 1С-Битрикс</a>
+        <a href="/licenses/bitrix-renewal/"><span class="mono">03</span>Продление 1С-Битрикс</a>
+        <a href="/licenses/bitrix24/"><span class="mono">04</span>Тарифы Битрикс24</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-about">О компании
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-about">
+        <a href="/about/"><span class="mono">01</span>О студии</a>
+        <a href="/process/"><span class="mono">02</span>Как мы работаем</a>
+        <a href="/letters/"><span class="mono">03</span>Благодарственные письма</a>
+        <a href="/company-documents/"><span class="mono">04</span>Документы и реквизиты</a>
+        <a href="/contacts/"><span class="mono">05</span>Контакты</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="header-right">
+    <!-- ЗАГЛУШКА: телефон уточнить у студии -->
+    <a class="phone" href="tel:+70000000000">+7 (000) 000-00-00</a>
+    <a class="btn" href="#form" data-open-form>Обсудить проект</a>
+    <a class="icon-btn" href="tel:+70000000000" aria-label="Позвонить">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="icon-btn" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Открыть меню">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18M3 16h18" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <details>
+    <summary>Услуги <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="/services/bitrix/">Разработка на 1С-Битрикс</a>
+      <a href="/services/online-stores/">Интернет-магазины</a>
+      <a href="/services/corporate-sites/">Корпоративные сайты</a>
+      <a href="/services/support/">Поддержка</a>
+      <a href="/services/integrations-1c/">Сайт и 1С</a>
+      <a href="/services/messenger-bots/">Мессенджеры и чат-боты</a>
+      <a href="/bitrix24/">Битрикс24</a>
+      <a href="/solutions/">Готовые решения</a>
+      <a href="/prices/">Стоимость работ</a>
+    </div>
+  </details>
+  <a href="/portfolio/">Портфолио</a>
+  <details>
+    <summary>Лицензии <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="/licenses/">Обзор</a>
+      <a href="/licenses/bitrix/">Покупка 1С-Битрикс</a>
+      <a href="/licenses/bitrix-renewal/">Продление 1С-Битрикс</a>
+      <a href="/licenses/bitrix24/">Тарифы Битрикс24</a>
+    </div>
+  </details>
+  <details>
+    <summary>О компании <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="/about/">О студии</a>
+      <a href="/process/">Как мы работаем</a>
+      <a href="/letters/">Благодарственные письма</a>
+      <a href="/company-documents/">Документы и реквизиты</a>
+      <a href="/contacts/">Контакты</a>
+    </div>
+  </details>
+  <a class="btn" href="#form" data-open-form>Обсудить проект</a>
+  <a class="phone" href="tel:+70000000000">+7 (000) 000-00-00</a>
+</div>
+
+<main>
+  <section class="hb" aria-labelledby="hero-title">
+    <div class="hb-left">
+      <span class="mono"><span class="cm">//</span> с 2013 · золотой партнёр 1С-Битрикс</span>
+      <h1 class="hb-title" id="hero-title">Разработка сайтов на&nbsp;1С&#8209;Битрикс</h1>
+      <p class="hb-lead">Создаём корпоративные сайты и интернет-магазины, дорабатываем существующие проекты, интегрируем их с 1С и CRM. Подбираем готовое решение или разрабатываем индивидуально.</p>
+      <div class="hb-actions">
+        <a class="btn btn-lg" href="#form" data-open-form>Обсудить проект
+          <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+        <a class="link-arrow" href="/portfolio/"><span class="hide-sm">Смотреть портфолио</span><span class="show-sm">Портфолио</span> <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+
+    <nav class="hb-index" aria-label="Направления">
+      <div class="hb-index-head mono"><span><span class="cm">//</span> направления</span><span>06</span></div>
+      <a class="hb-row" href="/services/corporate-sites/"><span class="num mono">01</span><span class="name">Корпоративные сайты<span class="desc">Представительства, B2B-каталоги, кабинеты</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="hb-row" href="/services/online-stores/"><span class="num mono">02</span><span class="name">Интернет-магазины<span class="desc">Каталог, доставка, маркетплейсы, оптовые цены</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="hb-row" href="/services/integrations-1c/"><span class="num mono">03</span><span class="name">Интеграция с 1С<span class="desc">Номенклатура, цены, остатки, заказы</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="hb-row" href="/services/support/"><span class="num mono">04</span><span class="name">Поддержка сайтов<span class="desc">Обновления, ошибки, доработки</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="hb-row" href="/bitrix24/"><span class="num mono">05</span><span class="name">Битрикс24<span class="desc">CRM, воронки, автоматизация</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="hb-row" href="/services/messenger-bots/"><span class="num mono">06</span><span class="name">Чат-боты и мессенджеры<span class="desc">Telegram и MAX для сайта и CRM</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+    </nav>
+  </section>
+</main>
+
+<script>
+
+
+
+  // Поправка на ширину шрифта: заголовок не должен переноситься иначе, чем в Inter Tight
+  async function fitFont() {
+    await document.fonts.ready;
+    const probe = (fam) => {
+      const s = document.createElement('span');
+      s.textContent = 'Разработка сайтов на 1С-Битрикс';
+      s.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-size:100px;letter-spacing:var(--tls);font-weight:var(--tw);font-family:' + fam;
+      document.body.appendChild(s); const w = s.getBoundingClientRect().width; s.remove(); return w;
+    };
+    const k = probe('var(--font)') / probe('"Inter Tight"');
+    document.documentElement.style.setProperty('--fk', Math.max(1, k).toFixed(3));
+  }
+
+  fitFont();
+
+  // Подменю: открытие по клику/касанию и с клавиатуры, Esc и клик вне закрывают
+  const triggers = document.querySelectorAll('.nav-link[aria-controls]');
+  function closeAll(except) {
+    triggers.forEach(t => {
+      if (t === except) return;
+      t.setAttribute('aria-expanded', 'false');
+      document.getElementById(t.getAttribute('aria-controls')).classList.remove('open');
+    });
+  }
+  triggers.forEach(t => {
+    t.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = t.getAttribute('aria-expanded') === 'true';
+      closeAll(t);
+      t.setAttribute('aria-expanded', String(!open));
+      document.getElementById(t.getAttribute('aria-controls')).classList.toggle('open', !open);
+    });
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('.nav-item')) closeAll(); });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    const opened = document.querySelector('.nav-link[aria-expanded="true"]');
+    closeAll();
+    if (opened) opened.focus();
+    toggleMenu(false);
+  });
+
+  // Мобильное меню
+  const menuBtn = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  function toggleMenu(force) {
+    const open = force ?? menuBtn.getAttribute('aria-expanded') !== 'true';
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    menu.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuBtn.addEventListener('click', () => toggleMenu());
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+</script>
+</body>
+</html>
