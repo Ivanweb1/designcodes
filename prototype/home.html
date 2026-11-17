@@ -393,6 +393,51 @@
     .btn-lg, .link-arrow { padding: 0 14px; font-size: 15px; gap: 8px; }
     .btn-lg .ico { display: none; }
   }
+
+  /* ---------- Портфолио ---------- */
+  html { scroll-behavior: smooth; }
+  .works { padding: clamp(64px, 9vw, 128px) var(--gutter) clamp(64px, 8vw, 112px); border-top: 1px solid var(--line); scroll-margin-top: var(--header-h); }
+  .works-head {
+    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; align-items: end;
+    margin-bottom: clamp(40px, 5vw, 72px);
+  }
+  .works-label { grid-column: 1 / 13; color: var(--muted); margin-bottom: 20px; }
+  .works-title {
+    grid-column: 1 / 7; margin: 0;
+    font-weight: var(--tw); font-size: clamp(44px, 6.6vw, 124px); line-height: 0.98; letter-spacing: var(--tls);
+  }
+  .works-title sup { font-family: var(--mono); font-weight: 400; font-size: 0.18em; letter-spacing: 0; color: var(--accent); vertical-align: top; margin-left: 6px; }
+  .works-lead { grid-column: 8 / 13; margin: 0; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; letter-spacing: -0.01em; }
+  .works-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 4vw, 64px) 20px; }
+  .case { display: flex; flex-direction: column; }
+  .case-shot { display: block; aspect-ratio: 2 / 1; overflow: hidden; border: 1px solid var(--line); background: #E8E6E0; }
+  .case-shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
+  .case:hover .case-shot img { transform: scale(1.03); }
+  .case-meta { display: grid; grid-template-columns: 56px 1fr auto; column-gap: 16px; align-items: baseline; padding-top: 18px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
+  .case-meta .num { color: var(--muted); }
+  .case-name { font-size: clamp(20px, 2vw, 32px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.1; transition: color .2s; }
+  .case-desc { display: block; margin-top: 8px; font-size: 14px; color: var(--muted); letter-spacing: 0; line-height: 1.4; }
+  .case-domain { color: var(--muted); white-space: nowrap; transition: color .2s; }
+  .case:hover .case-name, .case:hover .case-domain { color: var(--accent); }
+  .works-foot { display: flex; justify-content: center; margin-top: clamp(48px, 5vw, 72px); }
+
+  @media (max-width: 960px) {
+    .works-title { grid-column: 1 / 13; }
+    .works-lead { grid-column: 1 / 13; margin-top: 24px; max-width: 34em; }
+  }
+  @media (max-width: 720px) {
+    .works-grid { grid-template-columns: 1fr; gap: 36px; }
+    .case-meta { grid-template-columns: 30px 1fr; padding: 14px 0; }
+    .case-domain { grid-column: 2; margin-top: 6px; }
+    .case-name { font-size: 20px; }
+  }
+  @media (max-width: 560px) {
+    .works { padding-top: 56px; padding-bottom: 56px; }
+    .works-head { margin-bottom: 28px; }
+    .works-label { margin-bottom: 14px; }
+    .works-lead { font-size: 15px; margin-top: 16px; }
+    .works-foot .link-arrow { width: 100%; justify-content: center; }
+  }
 </style>
 </head>
 <body>
@@ -436,7 +481,7 @@
         <a href="/prices/"><span class="mono">09</span>Стоимость работ</a>
       </div>
     </div>
-    <div class="nav-item"><a class="nav-link" href="/portfolio/">Портфолио</a></div>
+    <div class="nav-item"><a class="nav-link" href="#works">Портфолио</a></div>
     <div class="nav-item">
       <button class="nav-link" aria-expanded="false" aria-controls="sm-licenses">Лицензии
         <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
@@ -490,7 +535,7 @@
       <a href="/prices/">Стоимость работ</a>
     </div>
   </details>
-  <a href="/portfolio/">Портфолио</a>
+  <a href="#works">Портфолио</a>
   <details>
     <summary>Лицензии <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
     <div>
@@ -524,7 +569,7 @@
         <a class="btn btn-lg" href="#form" data-open-form>Обсудить проект
           <svg class="ico ico-chat" aria-hidden="true"><use href="#i-chat"/></svg>
         </a>
-        <a class="link-arrow" href="/portfolio/"><span class="hide-sm">Смотреть портфолио</span><span class="show-sm">Портфолио</span></a>
+        <a class="link-arrow" href="#works"><span class="hide-sm">Смотреть портфолио</span><span class="show-sm">Портфолио</span></a>
       </div>
     </div>
 
@@ -537,6 +582,43 @@
       <a class="hb-row" href="/bitrix24/"><span class="num mono">05</span><span class="name">Битрикс24<span class="desc">CRM, воронки, автоматизация</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
       <a class="hb-row" href="/services/messenger-bots/"><span class="num mono">06</span><span class="name">Чат-боты и мессенджеры<span class="desc">Telegram и MAX для сайта и CRM</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
     </nav>
+  </section>
+
+  <section class="works" id="works" aria-labelledby="works-title">
+    <div class="works-head">
+      <span class="works-label mono"><span class="cm">//</span> 02 · портфолио</span>
+      <h2 class="works-title" id="works-title">Работы<sup>100+</sup></h2>
+      <p class="works-lead">Больше 100 сайтов за 15 лет: интернет-магазины брендов и дилеров, каталоги, корпоративные сайты. Всё — на 1С-Битрикс.</p>
+    </div>
+    <div class="works-grid">
+      <a class="case" href="https://happybaby.ru/" target="_blank" rel="noopener">
+        <span class="case-shot"><img src="img/cases/happybaby.webp" alt="Сайт Happy Baby" width="1200" height="600" loading="lazy"></span>
+        <span class="case-meta"><span class="num mono">01</span><span class="case-name">Happy Baby<span class="case-desc">Интернет-магазин крупной марки детских товаров</span></span><span class="case-domain mono">happybaby.ru</span></span>
+      </a>
+      <a class="case" href="https://3electro.ru/" target="_blank" rel="noopener">
+        <span class="case-shot"><img src="img/cases/troika.webp" alt="Сайт ТРОЙКА Electro" width="1200" height="600" loading="lazy"></span>
+        <span class="case-meta"><span class="num mono">02</span><span class="case-name">ТРОЙКА Electro<span class="case-desc">Сайт-каталог бутика электротехники в Москве</span></span><span class="case-domain mono">3electro.ru</span></span>
+      </a>
+      <a class="case" href="https://kenwood.kz/" target="_blank" rel="noopener">
+        <span class="case-shot"><img src="img/cases/kenwood.webp" alt="Сайт Kenwood" width="1200" height="600" loading="lazy"></span>
+        <span class="case-meta"><span class="num mono">03</span><span class="case-name">Kenwood<span class="case-desc">Интернет-магазин официального дилера Kenwood</span></span><span class="case-domain mono">kenwood.kz</span></span>
+      </a>
+      <a class="case" href="https://delonghi.kz/" target="_blank" rel="noopener">
+        <span class="case-shot"><img src="img/cases/delonghi.webp" alt="Сайт DeLonghi" width="1200" height="600" loading="lazy"></span>
+        <span class="case-meta"><span class="num mono">04</span><span class="case-name">DeLonghi<span class="case-desc">Интернет-магазин официального дилера DeLonghi</span></span><span class="case-domain mono">delonghi.kz</span></span>
+      </a>
+      <a class="case" href="https://new.moto-falcon.ru/" target="_blank" rel="noopener">
+        <span class="case-shot"><img src="img/cases/falcon.webp" alt="Сайт Falcon" width="1200" height="600" loading="lazy"></span>
+        <span class="case-meta"><span class="num mono">05</span><span class="case-name">Falcon<span class="case-desc">Оригинальные запчасти для мототехники и сервис</span></span><span class="case-domain mono">moto-falcon.ru</span></span>
+      </a>
+      <a class="case" href="https://nutribullet.ru/" target="_blank" rel="noopener">
+        <span class="case-shot"><img src="img/cases/nutribullet.webp" alt="Сайт NutriBullet" width="1200" height="600" loading="lazy"></span>
+        <span class="case-meta"><span class="num mono">06</span><span class="case-name">NutriBullet<span class="case-desc">Адаптивный магазин на 1С-Битрикс для официального дилера</span></span><span class="case-domain mono">nutribullet.ru</span></span>
+      </a>
+    </div>
+    <div class="works-foot">
+      <a class="link-arrow" href="https://designcodes.ru/portfolio/" target="_blank" rel="noopener">Все работы</a>
+    </div>
   </section>
 </main>
 
