@@ -1,6 +1,8 @@
 # Референсы для редизайна designcodes.ru
 
-Стиль: минимализм. Клиенту показываем три направления. Доска: `moodboard/index.html`.
+Стиль: минимализм. Клиенту показали три направления. Доска: `moodboard/index.html`.
+
+**Утверждено (17.11.2026): вариант B — типографический минимализм.** Дальше работаем только в нём; A и C остаются как архив.
 
 ## C. Воздушный минимализм
 
@@ -35,3 +37,28 @@
 - [JH — Editorial Portfolio](https://dribbble.com/shots/27288946-JH-Editorial-Art-Director-Portfolio-Personal-Website-UI-Design) — редакционная сетка, контраст размеров текста
 - [Swiss Website Design 2025](https://dribbble.com/shots/26737472-Swiss-Website-Design-2025) — манифест крупным текстом, нумерация `//2213` — близко к «коду»
 - [MOORR](https://dribbble.com/shots/27739932-MOORR-Clean-Portfolio-Readymag-Template) — чистая сетка портфолио
+
+### B — дополнительные референсы (17.11.2026)
+
+Подобраны под утверждённый стиль для сборки первого экрана и следующих блоков.
+
+Огромный заголовок «плакатом»:
+- [SEO & Digital Marketing Agency](https://dribbble.com/shots/27842580-SEO-Digital-Marketing-Agency-Website) — заголовок на всю ширину, один яркий акцент
+- [MONTGOMERY](https://dribbble.com/shots/27613722-MONTGOMERY-Webflow-view) — имя крупнее экрана, моно-подписи
+- [LUMA Studio](https://dribbble.com/shots/27822352-Luma-Studio-Creative-Agency-Website-Design) — гигантский логотип-заголовок, цифры в акцентном цвете
+- [EVERGREEN Corporate](https://dribbble.com/shots/20740330-EVERGREEN-Corporate-site) — корпоративный сайт с типографикой на всю ширину
+- [ARCHIV](https://dribbble.com/shots/27890712-ARCHIV-Minimalist-Architecture-Studio-Website) — светлый фон, крупное название, строгая сетка
+
+Сетка, оглавление, таблицы:
+- [Kreativy — Homepage](https://dribbble.com/shots/25964691-Kreativy-Homepage-Design-Agency-Website) и [Kreativy — Mega Menu](https://dribbble.com/shots/25983730-Kreativy-Mega-Menu-Agency-Website) — чёрно-белая сетка, меню-оглавление
+- [Typographic layout / Grid system](https://dribbble.com/shots/26990432-Typographic-layout-Grid-system-exploration) — «From noises to structure», чистая модульная сетка, один акцентный квадрат
+- [3.11 LABS](https://dribbble.com/shots/25983829-3-11-LABS-Website) — карточки в жёсткой сетке, много воздуха
+- [SPace®](https://dribbble.com/shots/27557641-SPace-Creative-Agency-Landing-Page) — моноширинные подписи, нумерация `{4}`, `078`
+
+B2B и «инженерный» тон (ближе к Битриксу и интеграциям):
+- [Vektor Systems — Industry 4.0](https://dribbble.com/shots/27849583-Vektor-Systems-Industry-4-0-Website-German) — строгая швейцарская B2B-подача, цифры, один акцент
+- [GP Industrial Construction](https://dribbble.com/shots/27495149-GP-Industrial-Construction-Service-Page-Company-Website-Design) — сервисная страница, сетка и крупные заголовки
+
+Цветной экран (под ультрамарин):
+- [AI Customer Support — Swiss](https://dribbble.com/shots/27524204-AI-Customer-Support-Website-Design-Modern-SaaS-Landing-Page-UI) — насыщенный синий + белая типографика + сетка
+- [Boulevard Digital Design Studio](https://dribbble.com/shots/26365827-Boulevard-Digital-Design-Studio-Web-Concept) — синий блок, крупное название студии, цифры 15+ / 50+ / 20+

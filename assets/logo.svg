@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="7" role="img" aria-label="Дизайн/Код">
+  <!-- Перерисовано по DC_logo_new.png со старого сайта. Не оригинал: при наличии исходника заменить. -->
+  <path d="M595 57H297L10 211l287 154h155"/>
+  <path d="M140 137v142"/>
+  <path d="M706 3L515 412"/>
+  <path d="M725 57l305 154-305 154"/>
+  <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+    <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
+    <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+  </g>
+</svg>
