@@ -451,6 +451,12 @@
     font-weight: var(--tw); font-size: clamp(40px, 5.4vw, 104px); line-height: 0.98; letter-spacing: var(--tls);
   }
   .sec-title .acc { color: var(--accent); }
+  /* типографика заголовков: строки по смыслу, вторая — серым; индекс в моно и акценте, как «Работы 100+» */
+  .sec-title .l { display: block; }
+  .sec-title .dim { color: var(--muted); }
+  .sec-title sup { font-family: var(--mono); font-weight: 400; font-size: 0.18em; letter-spacing: 0; color: var(--accent); vertical-align: top; position: relative; top: .35em; margin-left: 6px; }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
   .sec-lead { grid-column: 8 / 13; margin: 0; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; letter-spacing: -0.01em; }
   @media (max-width: 960px) {
     .sec-title { grid-column: 1 / 13; }
@@ -463,33 +469,39 @@
     .sec-lead { font-size: 15px; margin-top: 16px; }
   }
 
-  /* ---------- 03 Как работаем: разворот «заголовок слева, шаги справа» (реф. GP Industrial) ---------- */
-  .split { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; }
-  .split-left {
-    grid-column: 1 / 7; align-self: start;
-    position: sticky; top: calc(var(--header-h) + 24px);
-    display: flex; flex-direction: column; gap: 20px;
-    padding-right: 40px;
+  /* ---------- 03 Как работаем: типографическая таблица — огромный номер · название · описание ---------- */
+  .steps { border-top: 1px solid var(--line); counter-reset: none; }
+  .step {
+    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; align-items: end;
+    padding: clamp(20px, 2.4vw, 32px) 0; border-bottom: 1px solid var(--line);
   }
-  .split-left .sec-label { margin: 0; color: var(--muted); }
-  .split-left .sec-title { font-size: clamp(40px, 5.4vw, 104px); margin: 0; }
-  .split-left .sec-lead { margin: 12px 0 0; max-width: 26em; color: var(--muted); }
-  .srows { grid-column: 7 / 13; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
-  .srow { display: grid; grid-template-columns: 56px 1fr; column-gap: 16px; padding: 24px 0 32px; border-bottom: 1px solid var(--line); }
-  .srow .num { color: var(--accent); padding-top: .55em; }
-  .srow h3 { margin: 0; font-size: clamp(26px, 2.6vw, 42px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; }
-  .srow p { margin: 14px 0 0; max-width: 30em; color: var(--muted); }
-  .srow .tags { margin-top: 18px; color: var(--muted); }
+  .step-num {
+    grid-column: 1 / 4; align-self: start;
+    font-weight: 300; font-size: clamp(88px, 13vw, 240px); line-height: .78; letter-spacing: -0.06em;
+    font-variant-numeric: tabular-nums;
+    transition: color .25s;
+  }
+  .step h3 {
+    grid-column: 4 / 9; margin: 0;
+    font-weight: var(--tw); font-size: clamp(30px, 3.6vw, 64px); line-height: 1; letter-spacing: var(--tls);
+  }
+  .step h3 .dim { display: block; color: var(--muted); }
+  .step-text { grid-column: 9 / 13; }
+  .step-text p { margin: 0; color: var(--muted); }
+  .step-text .mono { display: block; margin-top: 14px; color: var(--ink); }
+  .step:hover .step-num { color: var(--accent); }
   @media (max-width: 960px) {
-    .split-left { grid-column: 1 / 13; position: static; padding: 0 0 36px; }
-    .srows { grid-column: 1 / 13; }
+    .step { row-gap: 16px; }
+    .step-num { grid-column: 1 / 5; grid-row: 1 / 3; }
+    .step h3 { grid-column: 5 / 13; }
+    .step-text { grid-column: 5 / 13; }
   }
   @media (max-width: 560px) {
-    .srow { grid-template-columns: 30px 1fr; padding: 18px 0 22px; }
-    .srow h3 { font-size: 22px; }
-    .srow p { font-size: 15px; }
-    .split-left { padding-bottom: 24px; gap: 14px; }
-    .split-left .sec-lead { font-size: 15px; margin-top: 0; }
+    .step { grid-template-columns: 1fr; padding: 18px 0 22px; }
+    .step-num, .step h3, .step-text { grid-column: 1; grid-row: auto; }
+    .step-num { font-size: 72px; margin-bottom: 4px; }
+    .step h3 { font-size: 26px; }
+    .step-text p { font-size: 15px; }
   }
 
   /* ---------- 04 Битрикс24: нумерованный аккордеон с тегами (реф. Boulevard, GP Industrial) ---------- */
@@ -514,8 +526,9 @@
   .acc-body p { grid-column: 2 / 7; margin: 0; color: var(--muted); max-width: 28em; }
   .chips { grid-column: 8 / 14; display: flex; flex-wrap: wrap; gap: 8px; align-content: start; margin: 0; padding: 0; list-style: none; }
   .chips li { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; line-height: 1.2; }
-  .b24-foot { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: clamp(32px, 4vw, 56px); }
-  .b24-foot p { margin: 0; max-width: 40em; color: var(--muted); }
+  /* итоговая строка в той же сетке, что и пункты аккордеона: номер · текст · кнопка */
+  .b24-foot { display: grid; grid-template-columns: 56px 1fr auto; column-gap: 16px; align-items: center; padding: 28px 0 0; }
+  .b24-foot p { margin: 0; max-width: 30em; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.35; letter-spacing: -0.01em; }
   @media (max-width: 960px) {
     .acc-body p { grid-column: 2 / 14; }
     .chips { grid-column: 2 / 14; margin-top: 18px; }
@@ -526,7 +539,9 @@
     .acc-body { grid-template-columns: 30px 1fr; column-gap: 16px; padding-bottom: 22px; }
     .acc-body p, .chips { grid-column: 2; font-size: 15px; }
     .chips li { font-size: 13px; padding: 5px 10px; }
-    .b24-foot .link-arrow { width: 100%; justify-content: center; }
+    .b24-foot { grid-template-columns: 30px 1fr; row-gap: 20px; padding-top: 20px; }
+    .b24-foot p { font-size: 16px; }
+    .b24-foot .link-arrow { grid-column: 1 / 3; width: 100%; justify-content: center; }
   }
 
   /* ---------- 05 О студии: манифест + крупные цифры в акценте (реф. Swiss Website Design, LUMA, Boulevard) ---------- */
@@ -592,7 +607,19 @@
   .field input::placeholder, .field textarea::placeholder { color: rgba(243,242,238,.3); }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
   .agree { display: flex; gap: 12px; align-items: flex-start; margin-top: 24px; font-size: 14px; color: var(--cdim); cursor: pointer; }
-  .agree input { margin: 3px 0 0; width: 16px; height: 16px; accent-color: var(--accent); flex: none; }
+  .agree { line-height: 20px; }
+  /* свой чекбокс: 18px по высоте строки текста, в стиле полей формы */
+  .agree input {
+    appearance: none; -webkit-appearance: none;
+    flex: none; width: 18px; height: 18px; margin: 1px 0 0;
+    border: 1px solid var(--cdim); border-radius: 4px; background: none;
+    display: grid; place-items: center; cursor: pointer;
+    transition: background .2s, border-color .2s;
+  }
+  .agree input::after { content: ""; width: 5px; height: 9px; margin-top: -2px; border: solid #fff; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); opacity: 0; }
+  .agree input:checked { background: var(--accent); border-color: var(--accent); }
+  .agree input:checked::after { opacity: 1; }
+  .agree:hover input { border-color: var(--bg); }
   .agree a { text-decoration: underline; text-underline-offset: 3px; }
   .form-actions { display: flex; align-items: center; gap: 20px; margin-top: 28px; flex-wrap: wrap; }
   .form-actions .btn-lg:hover { background: var(--bg); color: var(--ink); }
@@ -612,7 +639,7 @@
   .to-top .ico { transform: rotate(-90deg); }
   a.to-top:hover > .ico { transform: rotate(-90deg) translateX(4px); }
   .wordmark {
-    display: block; margin: 0 0 -0.2em;
+    display: block; width: max-content; margin: 0 0 -0.2em;  /* кегль подгоняет скрипт: надпись ровно во всю ширину */
     font-weight: var(--tw); font-size: 15.6vw; line-height: 1; letter-spacing: -0.055em; white-space: nowrap;
     user-select: none;
   }
@@ -817,45 +844,43 @@
   </section>
 
   <section class="sec" id="process" aria-labelledby="process-title">
-    <div class="split">
-      <div class="split-left">
-        <span class="sec-label mono"><span class="cm">//</span> 03 · как работаем</span>
-        <h2 class="sec-title" id="process-title">Три шага до&nbsp;нового сайта</h2>
-        <p class="sec-lead">Вы утверждаете не картинки, а работающий прототип. К разработке переходим, когда вы уже видели и пощупали будущий сайт.</p>
+    <div class="sec-head">
+      <span class="sec-label mono"><span class="cm">//</span> 03 · как работаем</span>
+      <h2 class="sec-title" id="process-title">Три шага <span class="l dim">до&nbsp;нового сайта</span></h2>
+      <p class="sec-lead">Вы утверждаете не картинки, а работающий прототип. К разработке переходим, когда вы уже видели и пощупали будущий сайт.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num" aria-hidden="true">01</span>
+        <h3>Подготовка <span class="dim">и&nbsp;договор</span></h3>
+        <div class="step-text">
+          <p>Вы рассказываете о задаче и заполняете бриф. Заключаем договор и готовим техническое задание.</p>
+          <span class="mono">бриф · договор · ТЗ</span>
+        </div>
       </div>
-      <ol class="srows">
-        <li class="srow">
-          <span class="num mono">01</span>
-          <div>
-            <h3>Подготовка</h3>
-            <p>Вы рассказываете о задаче и заполняете бриф. Заключаем договор и готовим техническое задание.</p>
-            <div class="tags mono">бриф · договор · ТЗ</div>
-          </div>
-        </li>
-        <li class="srow">
-          <span class="num mono">02</span>
-          <div>
-            <h3>Дизайн и прототип</h3>
-            <p>Делаем дизайн как рабочую модель сайта: на утверждение вы получаете прототип со всеми эффектами.</p>
-            <div class="tags mono">дизайн · прототип · правки</div>
-          </div>
-        </li>
-        <li class="srow">
-          <span class="num mono">03</span>
-          <div>
-            <h3>Разработка и запуск</h3>
-            <p>Разрабатываем сайт на 1С-Битрикс, тестируем, наполняем текстами и картинками. Поможем с доменом и хостингом.</p>
-            <div class="tags mono">код · тесты · запуск</div>
-          </div>
-        </li>
-      </ol>
+      <div class="step">
+        <span class="step-num" aria-hidden="true">02</span>
+        <h3>Дизайн <span class="dim">и&nbsp;прототип</span></h3>
+        <div class="step-text">
+          <p>Делаем дизайн как рабочую модель сайта: на утверждение вы получаете прототип со всеми эффектами.</p>
+          <span class="mono">дизайн · прототип · правки</span>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num" aria-hidden="true">03</span>
+        <h3>Разработка <span class="dim">и&nbsp;запуск</span></h3>
+        <div class="step-text">
+          <p>Разрабатываем сайт на 1С-Битрикс, тестируем, наполняем текстами и картинками. Поможем с доменом и хостингом.</p>
+          <span class="mono">код · тесты · запуск</span>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="sec" id="bitrix24" aria-labelledby="b24-title">
     <div class="sec-head">
       <span class="sec-label mono"><span class="cm">//</span> 04 · битрикс24</span>
-      <h2 class="sec-title" id="b24-title">Настраиваем Битрикс24 под&nbsp;ваш бизнес</h2>
+      <h2 class="sec-title" id="b24-title">Битрикс<span class="acc">24</span> <span class="l dim">под&nbsp;ваш бизнес</span></h2>
       <p class="sec-lead">Объясняем без терминов, настраиваем и дорабатываем систему, чтобы портал стал рабочим инструментом. После запуска консультируем бесплатно.</p>
     </div>
     <div class="acc-list">
@@ -903,7 +928,8 @@
       </details>
     </div>
     <div class="b24-foot">
-      <p>Поможем перестроить процессы под Битрикс24: воронки, роли, права доступа, обмен с сайтом и 1С.</p>
+      <span aria-hidden="true"></span>
+      <p>Поможем перестроить процессы под Битрикс24: воронки, роли, права доступа, обмен с сайтом и 1С</p>
       <a class="link-arrow" href="/bitrix24/">Подробнее о Битрикс24</a>
     </div>
   </section>
@@ -943,7 +969,7 @@
         <div class="form-fields">
           <div class="form-grid">
             <label class="field"><span class="mono">Имя</span><input name="name" autocomplete="name" placeholder="Как к вам обращаться" required></label>
-            <label class="field"><span class="mono">Телефон или почта</span><input name="contact" autocomplete="tel" placeholder="+7 ___ ___-__-__" required></label>
+            <label class="field"><span class="mono">Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" maxlength="18" required></label>
           </div>
           <label class="field"><span class="mono">Задача</span><textarea name="task" rows="3" placeholder="Новый магазин, доработка, интеграция с 1С…"></textarea></label>
           <label class="agree"><input type="checkbox" name="agree" required><span>Согласен с <a href="https://designcodes.ru/police/" target="_blank" rel="noopener">политикой конфиденциальности</a> и обработкой персональных данных</span></label>
@@ -992,8 +1018,6 @@
       <span>© 2014–2026 ООО «Дизайнкод» · ИНН 7736666610 · ОГРН 5137746015138</span>
       <span>117393, Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582</span>
       <a href="https://designcodes.ru/police/" target="_blank" rel="noopener">Политика конфиденциальности</a>
-      <span>Не является публичной офертой (ст. 437 ГК РФ)</span>
-      <a class="to-top mono" href="#top">Наверх <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
     <span class="wordmark" aria-hidden="true">Дизайн<span class="plus">+</span>Код</span>
   </footer>
@@ -1017,6 +1041,18 @@
   }
 
   fitFont();
+
+  // Надпись «Дизайн+Код» в подвале: кегль под ширину между полями страницы
+  const wordmark = document.querySelector('.wordmark');
+  function fitWordmark() {
+    const box = wordmark.parentElement, cs = getComputedStyle(box);
+    const avail = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    wordmark.style.fontSize = '100px';
+    const w = wordmark.getBoundingClientRect().width;
+    wordmark.style.fontSize = (100 * avail / w).toFixed(2) + 'px';
+  }
+  document.fonts.ready.then(fitWordmark);
+  addEventListener('resize', fitWordmark);
 
   // Подменю: открытие по клику/касанию и с клавиатуры, Esc и клик вне закрывают
   const triggers = document.querySelectorAll('.nav-link[aria-controls]');
@@ -1058,14 +1094,49 @@
   menuBtn.addEventListener('click', () => toggleMenu());
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
 
+  // Маска телефона: +7 (___) ___-__-__
+  const phone = document.querySelector('#lead-form input[type="tel"]');
+  // 10 цифр номера без кода страны
+  function nationalDigits(v) {
+    let d = v.replace(/\D/g, '');
+    if (v.trim().startsWith('+7')) d = d.slice(1);           // уже есть «+7»: первая 7 — код страны
+    else if (/^[78]\d{10}$/.test(d)) d = d.slice(1);          // вставили 8 926… или 7 926…
+    return d;
+  }
+  let prevNational = '';
+  function formatPhone(v) {
+    let d = nationalDigits(v);
+    if (!prevNational && /^[78]/.test(d)) d = d.slice(1);     // первой набрали 8 или 7 — это код страны, не номер
+    d = d.slice(0, 10);
+    if (!d) return '';
+    let out = '+7 (' + d.slice(0, 3);
+    if (d.length >= 3) out += ') ' + d.slice(3, 6);
+    if (d.length >= 6) out += '-' + d.slice(6, 8);
+    if (d.length >= 8) out += '-' + d.slice(8, 10);
+    return out;
+  }
+  phone.addEventListener('input', e => {
+    // при стирании не мешаем удалять скобки и дефисы
+    if (e.inputType && e.inputType.startsWith('delete')) {
+      if (!/\d/.test(phone.value.replace(/^\+7/, ''))) phone.value = '+7 (';
+      prevNational = nationalDigits(phone.value);
+      return;
+    }
+    phone.value = formatPhone(phone.value) || '+7 (';
+    prevNational = nationalDigits(phone.value);
+  });
+  phone.addEventListener('focus', () => { if (!phone.value) phone.value = '+7 ('; });
+  phone.addEventListener('blur', () => { if (phone.value.replace(/\D/g, '').length <= 1) phone.value = ''; });
+
   // Форма заявки: проверка полей. ЗАГЛУШКА — отправки пока нет
   const form = document.getElementById('lead-form');
   form.addEventListener('submit', e => {
     e.preventDefault();
     const note = form.querySelector('.form-note');
-    const bad = [...form.querySelectorAll('[required]')].find(f => f.type === 'checkbox' ? !f.checked : !f.value.trim());
+    const bad = [...form.querySelectorAll('[required]')].find(f =>
+      f.type === 'checkbox' ? !f.checked : f.type === 'tel' ? f.value.replace(/\D/g, '').length !== 11 : !f.value.trim());
     if (bad) {
-      note.textContent = bad.type === 'checkbox' ? 'Нужно согласие на обработку данных' : 'Заполните имя и контакт';
+      note.textContent = bad.type === 'checkbox' ? 'Нужно согласие на обработку данных' : bad.type === 'tel' ? 'Введите телефон полностью' : 'Заполните имя';
       bad.focus();
       return;
     }
