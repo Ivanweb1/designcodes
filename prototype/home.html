@@ -438,9 +438,189 @@
     .works-lead { font-size: 15px; margin-top: 16px; }
     .works-foot .link-arrow { width: 100%; justify-content: center; }
   }
+
+  /* ---------- Общие для секций ---------- */
+  .sec { padding: clamp(64px, 9vw, 128px) var(--gutter); border-top: 1px solid var(--line); scroll-margin-top: var(--header-h); }
+  .sec-head {
+    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; align-items: end;
+    margin-bottom: clamp(40px, 5vw, 72px);
+  }
+  .sec-label { grid-column: 1 / 13; color: var(--muted); margin-bottom: 20px; }
+  .sec-title {
+    grid-column: 1 / 8; margin: 0;
+    font-weight: var(--tw); font-size: clamp(40px, 5.4vw, 104px); line-height: 0.98; letter-spacing: var(--tls);
+  }
+  .sec-title .acc { color: var(--accent); }
+  .sec-lead { grid-column: 8 / 13; margin: 0; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; letter-spacing: -0.01em; }
+  @media (max-width: 960px) {
+    .sec-title { grid-column: 1 / 13; }
+    .sec-lead { grid-column: 1 / 13; margin-top: 24px; max-width: 34em; }
+  }
+  @media (max-width: 560px) {
+    .sec { padding-top: 56px; padding-bottom: 56px; }
+    .sec-head { margin-bottom: 28px; }
+    .sec-label { margin-bottom: 14px; }
+    .sec-lead { font-size: 15px; margin-top: 16px; }
+  }
+
+  /* ---------- Как работаем ---------- */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
+  .step { display: flex; flex-direction: column; padding: 20px 28px 8px 0; border-right: 1px solid var(--line); }
+  .step + .step { padding-left: 28px; }
+  .step:last-child { border-right: 0; padding-right: 0; }
+  .step-top { display: flex; justify-content: space-between; color: var(--muted); }
+  .step-num {
+    margin: clamp(32px, 5vw, 72px) 0 clamp(20px, 2.5vw, 32px);
+    font-weight: var(--tw); font-size: clamp(64px, 8vw, 148px); line-height: .9; letter-spacing: -0.04em;
+    color: var(--accent);
+  }
+  .step h3 { margin: 0; font-size: clamp(22px, 2vw, 32px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.1; }
+  .step p { margin: 14px 0 0; color: var(--muted); max-width: 26em; }
+  @media (max-width: 860px) {
+    .steps { grid-template-columns: 1fr; }
+    .step, .step + .step { padding: 18px 0 28px; border-right: 0; }
+    .step + .step { border-top: 1px solid var(--line); }
+    .step { display: grid; grid-template-columns: 96px 1fr; column-gap: 16px; }
+    .step-top { grid-column: 1 / 3; }
+    .step-num { grid-column: 1; grid-row: 2 / 4; margin: 16px 0 0; font-size: 64px; }
+    .step h3 { grid-column: 2; margin-top: 20px; }
+    .step p { grid-column: 2; }
+  }
+  @media (max-width: 560px) {
+    .step { grid-template-columns: 64px 1fr; }
+    .step-num { font-size: 48px; }
+    .step h3 { font-size: 20px; }
+    .step p { font-size: 15px; }
+  }
+
+  /* ---------- Битрикс24 ---------- */
+  .b24-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); border-left: 1px solid var(--line); }
+  .b24-cell {
+    display: flex; flex-direction: column; gap: 18px;
+    min-height: 260px; padding: 20px 24px 28px;
+    border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    transition: background .2s, color .2s;
+  }
+  .b24-cell .row { display: flex; justify-content: space-between; color: var(--muted); }
+  .b24-cell h3 { margin: auto 0 0; font-size: clamp(22px, 2vw, 32px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.1; }
+  .b24-cell ul { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 14px; }
+  .b24-cell li::before { content: "+"; color: var(--accent); margin-right: 5px; }
+  .b24-cell:hover { background: var(--ink); color: var(--bg); }
+  .b24-cell:hover li::before { color: var(--accent); }
+  .b24-cell:hover .row, .b24-cell:hover ul { color: rgba(243,242,238,.65); }
+  .b24-foot { display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: clamp(32px, 4vw, 56px); }
+  .b24-foot p { margin: 0; max-width: 40em; color: var(--muted); }
+  @media (max-width: 960px) { .b24-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) {
+    .b24-grid { grid-template-columns: 1fr; border-left: 0; }
+    .b24-cell { min-height: 0; padding: 16px 0 20px; border-right: 0; gap: 12px; }
+    .b24-cell h3 { margin-top: 4px; font-size: 20px; }
+    .b24-cell ul { font-size: 13px; }
+    .b24-cell:hover { background: none; color: inherit; }
+    .b24-cell:hover .row, .b24-cell:hover ul { color: var(--muted); }
+    .b24-foot .link-arrow { width: 100%; justify-content: center; }
+  }
+
+  /* ---------- Цифры ---------- */
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); }
+  .fact { padding: 20px 24px 0 0; border-right: 1px solid var(--line); }
+  .fact + .fact { padding-left: 24px; }
+  .fact:last-child { border-right: 0; }
+  .fact-val {
+    display: block; margin: clamp(24px, 4vw, 56px) 0 16px;
+    font-weight: var(--tw); font-size: clamp(56px, 7vw, 132px); line-height: .9; letter-spacing: -0.04em;
+  }
+  .fact-val sup { font-size: .4em; color: var(--accent); vertical-align: top; position: relative; top: .1em; margin-left: .05em; }
+  .fact-txt { display: block; max-width: 18em; color: var(--muted); }
+  .fact .mono { color: var(--muted); }
+  @media (max-width: 960px) {
+    .facts { grid-template-columns: 1fr 1fr; }
+    .fact:nth-child(2) { border-right: 0; }
+    .fact:nth-child(3) { padding-left: 0; }
+    .fact:nth-child(n+3) { border-top: 1px solid var(--line); margin-top: 32px; }
+  }
+  @media (max-width: 560px) {
+    .fact, .fact + .fact { padding: 14px 12px 0 0; }
+    .fact:nth-child(even) { padding-left: 12px; }
+    .fact:nth-child(n+3) { margin-top: 24px; }
+    .fact-val { font-size: 48px; margin: 18px 0 10px; }
+    .fact-txt { font-size: 14px; }
+  }
+
+  /* ---------- Контакты и форма (тёмный блок) ---------- */
+  .contact {
+    --cline: rgba(243,242,238,.18);
+    background: var(--ink); color: var(--bg);
+    padding: clamp(64px, 9vw, 128px) var(--gutter);
+    scroll-margin-top: var(--header-h);
+  }
+  .contact .sec-label, .contact .sec-lead { color: rgba(243,242,238,.65); }
+  .contact .cm { color: var(--accent); }
+  .contact-body { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; border-top: 1px solid var(--bg); }
+  .form { grid-column: 1 / 8; padding: 28px 40px 0 0; border-right: 1px solid var(--cline); }
+  .field { display: block; border-bottom: 1px solid var(--cline); padding: 14px 0 6px; }
+  .field .mono { display: block; color: rgba(243,242,238,.55); }
+  .field input, .field textarea {
+    width: 100%; margin-top: 4px; padding: 6px 0 8px;
+    background: none; border: 0; outline: none; color: var(--bg);
+    font: inherit; font-size: clamp(18px, 1.6vw, 24px); letter-spacing: -0.01em;
+  }
+  .field textarea { resize: vertical; min-height: 84px; }
+  .field:focus-within { border-bottom-color: var(--accent); }
+  .field input::placeholder, .field textarea::placeholder { color: rgba(243,242,238,.3); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
+  .agree { display: flex; gap: 12px; align-items: flex-start; margin-top: 24px; font-size: 14px; color: rgba(243,242,238,.65); cursor: pointer; }
+  .agree input { margin: 3px 0 0; width: 16px; height: 16px; accent-color: var(--accent); flex: none; }
+  .agree a { text-decoration: underline; text-underline-offset: 3px; }
+  .form-actions { display: flex; align-items: center; gap: 20px; margin-top: 28px; flex-wrap: wrap; }
+  .form-actions .btn-lg:hover { background: var(--bg); color: var(--ink); }
+  .form-note { color: rgba(243,242,238,.55); }
+  .form-done { display: none; margin-top: 28px; font-size: clamp(22px, 2vw, 30px); letter-spacing: -0.02em; }
+  .form.sent .form-done { display: block; }
+  .form.sent .form-fields { display: none; }
+
+  .contact-info { grid-column: 8 / 13; display: flex; flex-direction: column; padding: 28px 0 0 20px; }
+  .ci-row { display: grid; grid-template-columns: 110px 1fr; column-gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--cline); }
+  .ci-row .mono { color: rgba(243,242,238,.55); }
+  .ci-row a, .ci-row span:last-child { font-size: clamp(18px, 1.5vw, 22px); letter-spacing: -0.01em; }
+  .ci-row a:hover { color: var(--accent); }
+  @media (max-width: 960px) {
+    .form { grid-column: 1 / 13; padding-right: 0; border-right: 0; }
+    .contact-info { grid-column: 1 / 13; padding: 48px 0 0; }
+  }
+  @media (max-width: 560px) {
+    .form-grid { grid-template-columns: 1fr; }
+    .form-actions .btn-lg { width: 100%; justify-content: center; }
+    .ci-row { grid-template-columns: 1fr; row-gap: 4px; }
+    .field input, .field textarea { font-size: 18px; }
+  }
+
+  /* ---------- Подвал ---------- */
+  .footer { background: var(--ink); color: var(--bg); padding: 0 var(--gutter) 28px; }
+  .footer-top { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; padding: 40px 0; border-top: 1px solid rgba(243,242,238,.18); }
+  .footer .logo-svg { height: 54px; }
+  .footer-brand { grid-column: 1 / 5; display: flex; flex-direction: column; gap: 20px; }
+  .footer-brand p { margin: 0; color: rgba(243,242,238,.55); font-size: 14px; max-width: 24em; }
+  .footer-col { grid-column: span 2; display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+  .footer-col:first-of-type { grid-column: 6 / 8; }
+  .footer-col .mono { color: rgba(243,242,238,.55); margin-bottom: 6px; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-legal { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid rgba(243,242,238,.18); color: rgba(243,242,238,.55); font-size: 13px; }
+  .footer-legal a:hover { color: var(--bg); }
+  .footer-legal .disc { flex-basis: 100%; max-width: 60em; }
+  .to-top { display: inline-flex; align-items: center; gap: 8px; }
+  .to-top .ico { transform: rotate(-90deg); }
+  a.to-top:hover > .ico { transform: rotate(-90deg) translateX(4px); }
+  @media (max-width: 960px) {
+    .footer-brand { grid-column: 1 / 13; margin-bottom: 36px; }
+    .footer-col, .footer-col:first-of-type { grid-column: span 4; }
+  }
+  @media (max-width: 560px) {
+    .footer-col, .footer-col:first-of-type { grid-column: span 6; margin-bottom: 24px; }
+  }
 </style>
 </head>
-<body>
+<body id="top">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M8.5 4.5L16 12l-7.5 7.5"/></symbol>
   <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H11l-4.5 4v-4h-1A1.5 1.5 0 0 1 4 14.5v-9A1.5 1.5 0 0 1 5.5 4z"/><path d="M8 8.5h8M8 11.5h5"/></symbol>
@@ -508,10 +688,9 @@
   </nav>
 
   <div class="header-right">
-    <!-- ЗАГЛУШКА: телефон уточнить у студии -->
-    <a class="phone" href="tel:+70000000000">+7 (000) 000-00-00</a>
+    <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
     <a class="btn" href="#form" data-open-form>Обсудить проект</a>
-    <a class="icon-btn" href="tel:+70000000000" aria-label="Позвонить">
+    <a class="icon-btn" href="tel:+79262901420" aria-label="Позвонить">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
     </a>
     <button class="icon-btn" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Открыть меню">
@@ -556,7 +735,7 @@
     </div>
   </details>
   <a class="btn" href="#form" data-open-form>Обсудить проект</a>
-  <a class="phone" href="tel:+70000000000">+7 (000) 000-00-00</a>
+  <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
 </div>
 
 <main>
@@ -620,7 +799,170 @@
       <a class="link-arrow" href="https://designcodes.ru/portfolio/" target="_blank" rel="noopener">Все работы</a>
     </div>
   </section>
+
+  <section class="sec" id="process" aria-labelledby="process-title">
+    <div class="sec-head">
+      <span class="sec-label mono"><span class="cm">//</span> 03 · как работаем</span>
+      <h2 class="sec-title" id="process-title">Три шага до&nbsp;нового сайта</h2>
+      <p class="sec-lead">Утверждаете не картинки, а работающий прототип. Поэтому к разработке переходим, когда вы уже видели и пощупали сайт.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-top mono"><span>этап</span><span>бриф · договор · ТЗ</span></span>
+        <span class="step-num">01</span>
+        <h3>Подготовка</h3>
+        <p>Вы рассказываете о задаче и заполняете бриф. Заключаем договор и готовим техническое задание.</p>
+      </div>
+      <div class="step">
+        <span class="step-top mono"><span>этап</span><span>дизайн · прототип</span></span>
+        <span class="step-num">02</span>
+        <h3>Дизайн и прототип</h3>
+        <p>Делаем дизайн как рабочую модель сайта: вы получаете на утверждение прототип со всеми эффектами.</p>
+      </div>
+      <div class="step">
+        <span class="step-top mono"><span>этап</span><span>код · тесты · запуск</span></span>
+        <span class="step-num">03</span>
+        <h3>Разработка и запуск</h3>
+        <p>Разрабатываем сайт на 1С-Битрикс, тестируем, наполняем текстами и картинками. Поможем с доменом и хостингом.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="bitrix24" aria-labelledby="b24-title">
+    <div class="sec-head">
+      <span class="sec-label mono"><span class="cm">//</span> 04 · битрикс24</span>
+      <h2 class="sec-title" id="b24-title">Настраиваем Битрикс24 под&nbsp;ваш бизнес</h2>
+      <p class="sec-lead">Объясняем без терминов, настраиваем и дорабатываем систему, чтобы портал стал рабочим инструментом. После запуска консультируем бесплатно.</p>
+    </div>
+    <div class="b24-grid">
+      <div class="b24-cell">
+        <span class="row mono"><span>01</span><span>общение</span></span>
+        <h3>Мессенджер</h3>
+        <ul><li>Чаты</li><li>Видеозвонки</li><li>Каналы</li><li>Расшифровка звонков</li></ul>
+      </div>
+      <div class="b24-cell">
+        <span class="row mono"><span>02</span><span>команда</span></span>
+        <h3>Совместная работа</h3>
+        <ul><li>Онлайн-доски</li><li>Календарь</li><li>Документы</li><li>Диск</li></ul>
+      </div>
+      <div class="b24-cell">
+        <span class="row mono"><span>03</span><span>продажи</span></span>
+        <h3>CRM</h3>
+        <ul><li>Лиды и сделки</li><li>Роботы и триггеры</li><li>Контакт-центр</li><li>Сквозная аналитика</li></ul>
+      </div>
+      <div class="b24-cell">
+        <span class="row mono"><span>04</span><span>управление</span></span>
+        <h3>Задачи и проекты</h3>
+        <ul><li>Канбан</li><li>Диаграмма Ганта</li><li>Учёт времени</li><li>Связь с CRM</li></ul>
+      </div>
+      <div class="b24-cell">
+        <span class="row mono"><span>05</span><span>ИИ</span></span>
+        <h3>Искусственный интеллект</h3>
+        <ul><li>Чат с ИИ</li><li>Заполнение сделок</li><li>Речевая аналитика</li><li>Тексты</li></ul>
+      </div>
+      <div class="b24-cell">
+        <span class="row mono"><span>06</span><span>онлайн</span></span>
+        <h3>Сайты и магазины</h3>
+        <ul><li>Лендинги</li><li>Формы и виджеты</li><li>Онлайн-запись</li><li>Интеграция с 1С</li></ul>
+      </div>
+    </div>
+    <div class="b24-foot">
+      <p>Поможем перестроить процессы под Битрикс24: воронки, роли, права доступа, обмен с сайтом и 1С.</p>
+      <a class="link-arrow" href="/bitrix24/">Подробнее о Битрикс24</a>
+    </div>
+  </section>
+
+  <section class="sec" id="studio" aria-labelledby="studio-title">
+    <div class="sec-head">
+      <span class="sec-label mono"><span class="cm">//</span> 05 · о студии</span>
+      <h2 class="sec-title" id="studio-title">Дизайн<span class="acc">+</span>Код в&nbsp;цифрах</h2>
+      <p class="sec-lead">Web-студия в Москве. Делаем сайты и интеграции на 1С-Битрикс для брендов, дилеров и B2B-компаний.</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><span class="mono">лет</span><span class="fact-val">15</span><span class="fact-txt">делаем сайты, из них десять как полноценная студия</span></div>
+      <div class="fact"><span class="mono">проектов</span><span class="fact-val">100<sup>+</sup></span><span class="fact-txt">сайтов в портфолио: магазины, каталоги, корпоративные</span></div>
+      <div class="fact"><span class="mono">партнёрство</span><span class="fact-val">10</span><span class="fact-txt">лет золотой партнёр компании 1С-Битрикс</span></div>
+      <div class="fact"><span class="mono">направлений</span><span class="fact-val">06</span><span class="fact-txt">от первого макета до поддержки и CRM</span></div>
+    </div>
+  </section>
+
+  <section class="contact" id="form" aria-labelledby="form-title">
+    <div class="sec-head">
+      <span class="sec-label mono"><span class="cm">//</span> 06 · контакты</span>
+      <h2 class="sec-title" id="form-title">Обсудим проект?</h2>
+      <p class="sec-lead">Опишите задачу в двух словах. Перезвоним в рабочее время, зададим вопросы и предложим решение.</p>
+    </div>
+    <div class="contact-body">
+      <!-- ЗАГЛУШКА: форма никуда не отправляет. Решить, куда идут заявки: почта, Telegram или CRM Битрикс24 -->
+      <form class="form" id="lead-form" novalidate>
+        <div class="form-fields">
+          <div class="form-grid">
+            <label class="field"><span class="mono">Имя</span><input name="name" autocomplete="name" placeholder="Как к вам обращаться" required></label>
+            <label class="field"><span class="mono">Телефон или почта</span><input name="contact" autocomplete="tel" placeholder="+7 ___ ___-__-__" required></label>
+          </div>
+          <label class="field"><span class="mono">Задача</span><textarea name="task" rows="3" placeholder="Новый магазин, доработка, интеграция с 1С…"></textarea></label>
+          <label class="agree"><input type="checkbox" name="agree" required><span>Согласен с <a href="https://designcodes.ru/police/" target="_blank" rel="noopener">политикой конфиденциальности</a> и обработкой персональных данных</span></label>
+          <div class="form-actions">
+            <button class="btn btn-lg" type="submit">Отправить заявку <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <span class="form-note mono" aria-live="polite"></span>
+          </div>
+        </div>
+        <p class="form-done" role="status">Спасибо! Заявка принята, скоро свяжемся.</p>
+      </form>
+
+      <div class="contact-info">
+        <div class="ci-row"><span class="mono">Телефон</span><a href="tel:+79262901420">+7 (926) 290-14-20</a></div>
+        <div class="ci-row"><span class="mono">Почта</span><a href="mailto:ask@designcodes.ru">ask@designcodes.ru</a></div>
+        <div class="ci-row"><span class="mono">Telegram</span><a href="https://t.me/klimova_oxana" target="_blank" rel="noopener">@klimova_oxana</a></div>
+        <div class="ci-row"><span class="mono">Адрес</span><span>Москва, ул. Академика Пилюгина, 14, корп. 2</span></div>
+      </div>
+    </div>
+  </section>
 </main>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a class="logo" href="/" aria-label="Дизайн+Код — на главную">
+        <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="7" aria-hidden="true">
+          <path d="M595 57H297L10 211l287 154h155"/><path d="M140 137v142"/><path d="M706 3L515 412"/><path d="M725 57l305 154-305 154"/>
+          <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+            <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text><text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+          </g>
+        </svg>
+      </a>
+      <p>Разработка сайтов на 1С-Битрикс. Золотой партнёр 1С-Битрикс.</p>
+    </div>
+    <nav class="footer-col" aria-label="Услуги">
+      <span class="mono">Услуги</span>
+      <a href="/services/corporate-sites/">Корпоративные сайты</a>
+      <a href="/services/online-stores/">Интернет-магазины</a>
+      <a href="/services/integrations-1c/">Интеграция с 1С</a>
+      <a href="/services/support/">Поддержка</a>
+      <a href="/bitrix24/">Битрикс24</a>
+    </nav>
+    <nav class="footer-col" aria-label="Компания">
+      <span class="mono">Компания</span>
+      <a href="/about/">О студии</a>
+      <a href="#works">Портфолио</a>
+      <a href="/process/">Как мы работаем</a>
+      <a href="/company-documents/">Документы</a>
+      <a href="#form">Контакты</a>
+    </nav>
+    <div class="footer-col">
+      <span class="mono">Связь</span>
+      <a href="tel:+79262901420">+7 (926) 290-14-20</a>
+      <a href="mailto:ask@designcodes.ru">ask@designcodes.ru</a>
+      <a href="https://t.me/klimova_oxana" target="_blank" rel="noopener">Telegram</a>
+    </div>
+  </div>
+  <div class="footer-legal">
+    <span>© 2014–2026 ООО «Дизайнкод» · ИНН 7736666610 · ОГРН 5137746015138</span>
+    <span><a href="https://designcodes.ru/police/" target="_blank" rel="noopener">Политика конфиденциальности</a></span>
+    <a class="to-top mono" href="#top">Наверх <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <span class="disc">117393, г. Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582. Информация на сайте не является публичной офертой (ст. 437 ГК РФ).</span>
+  </div>
+</footer>
 
 <script>
 
@@ -680,6 +1022,20 @@
   }
   menuBtn.addEventListener('click', () => toggleMenu());
   menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+  // Форма заявки: проверка полей. ЗАГЛУШКА — отправки пока нет
+  const form = document.getElementById('lead-form');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const note = form.querySelector('.form-note');
+    const bad = [...form.querySelectorAll('[required]')].find(f => f.type === 'checkbox' ? !f.checked : !f.value.trim());
+    if (bad) {
+      note.textContent = bad.type === 'checkbox' ? 'Нужно согласие на обработку данных' : 'Заполните имя и контакт';
+      bad.focus();
+      return;
+    }
+    form.classList.add('sent');
+  });
 </script>
 </body>
 </html>
