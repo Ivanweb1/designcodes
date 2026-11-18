@@ -469,39 +469,38 @@
     .sec-lead { font-size: 15px; margin-top: 16px; }
   }
 
-  /* ---------- 03 Как работаем: типографическая таблица — огромный номер · название · описание ---------- */
-  .steps { border-top: 1px solid var(--line); counter-reset: none; }
-  .step {
-    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; align-items: end;
-    padding: clamp(20px, 2.4vw, 32px) 0; border-bottom: 1px solid var(--line);
+  /* ---------- 03 Как работаем: одна фраза со сносками (редакционная вёрстка, реф. JH Editorial, Swiss Website Design) ---------- */
+  .phrase {
+    margin: 0 0 clamp(48px, 6vw, 96px); max-width: 17em;
+    font-weight: var(--tw); font-size: clamp(34px, 5vw, 92px); line-height: 1.04; letter-spacing: var(--tls);
   }
-  .step-num {
-    grid-column: 1 / 4; align-self: start;
-    font-weight: 300; font-size: clamp(88px, 13vw, 240px); line-height: .78; letter-spacing: -0.06em;
-    font-variant-numeric: tabular-nums;
-    transition: color .25s;
+  .phrase .dim { color: var(--muted); }
+  .phrase .ph { transition: color .2s; }
+  .phrase sup {
+    font-family: var(--mono); font-weight: 400; font-size: max(.22em, 11px); letter-spacing: 0;
+    color: var(--accent); vertical-align: top; position: relative; top: .45em; margin-left: .08em;
   }
-  .step h3 {
-    grid-column: 4 / 9; margin: 0;
-    font-weight: var(--tw); font-size: clamp(30px, 3.6vw, 64px); line-height: 1; letter-spacing: var(--tls);
-  }
-  .step h3 .dim { display: block; color: var(--muted); }
-  .step-text { grid-column: 9 / 13; }
-  .step-text p { margin: 0; color: var(--muted); }
-  .step-text .mono { display: block; margin-top: 14px; color: var(--ink); }
-  .step:hover .step-num { color: var(--accent); }
-  @media (max-width: 960px) {
-    .step { row-gap: 16px; }
-    .step-num { grid-column: 1 / 5; grid-row: 1 / 3; }
-    .step h3 { grid-column: 5 / 13; }
-    .step-text { grid-column: 5 / 13; }
+  .process-label { display: block; color: var(--muted); margin-bottom: clamp(28px, 3vw, 44px); }
+  .notes { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; margin: 0; padding: 0; list-style: none; }
+  .note { position: relative; padding-top: 16px; border-top: 1px solid var(--line); }
+  .note + .note::before { content: ""; position: absolute; left: -20px; top: 0; bottom: 0; width: 1px; background: var(--line); }
+  .note-head { display: flex; align-items: baseline; gap: 10px; }
+  .note-head .mono { color: var(--accent); }
+  .note h3 { margin: 0; font-size: clamp(20px, 1.7vw, 26px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; }
+  .note p { margin: 12px 0 0; color: var(--muted); max-width: 26em; }
+  .note .tags { display: block; margin-top: 16px; }
+  /* наведение на сноску подсвечивает её часть фразы */
+  #process:has(.note[data-n="1"]:hover) .ph[data-n="1"],
+  #process:has(.note[data-n="2"]:hover) .ph[data-n="2"],
+  #process:has(.note[data-n="3"]:hover) .ph[data-n="3"] { color: var(--accent); }
+  @media (max-width: 860px) {
+    .notes { grid-template-columns: 1fr; }
+    .note { padding: 16px 0 22px; }
+    .note + .note::before { display: none; }
   }
   @media (max-width: 560px) {
-    .step { grid-template-columns: 1fr; padding: 18px 0 22px; }
-    .step-num, .step h3, .step-text { grid-column: 1; grid-row: auto; }
-    .step-num { font-size: 72px; margin-bottom: 4px; }
-    .step h3 { font-size: 26px; }
-    .step-text p { font-size: 15px; }
+    .phrase { font-size: 30px; margin-bottom: 36px; }
+    .note p { font-size: 15px; }
   }
 
   /* ---------- 04 Битрикс24: нумерованный аккордеон с тегами (реф. Boulevard, GP Industrial) ---------- */
@@ -844,37 +843,26 @@
   </section>
 
   <section class="sec" id="process" aria-labelledby="process-title">
-    <div class="sec-head">
-      <span class="sec-label mono"><span class="cm">//</span> 03 · как работаем</span>
-      <h2 class="sec-title" id="process-title">Три шага <span class="l dim">до&nbsp;нового сайта</span></h2>
-      <p class="sec-lead">Вы утверждаете не картинки, а работающий прототип. К разработке переходим, когда вы уже видели и пощупали будущий сайт.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <span class="step-num" aria-hidden="true">01</span>
-        <h3>Подготовка <span class="dim">и&nbsp;договор</span></h3>
-        <div class="step-text">
-          <p>Вы рассказываете о задаче и заполняете бриф. Заключаем договор и готовим техническое задание.</p>
-          <span class="mono">бриф · договор · ТЗ</span>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-num" aria-hidden="true">02</span>
-        <h3>Дизайн <span class="dim">и&nbsp;прототип</span></h3>
-        <div class="step-text">
-          <p>Делаем дизайн как рабочую модель сайта: на утверждение вы получаете прототип со всеми эффектами.</p>
-          <span class="mono">дизайн · прототип · правки</span>
-        </div>
-      </div>
-      <div class="step">
-        <span class="step-num" aria-hidden="true">03</span>
-        <h3>Разработка <span class="dim">и&nbsp;запуск</span></h3>
-        <div class="step-text">
-          <p>Разрабатываем сайт на 1С-Битрикс, тестируем, наполняем текстами и картинками. Поможем с доменом и хостингом.</p>
-          <span class="mono">код · тесты · запуск</span>
-        </div>
-      </div>
-    </div>
+    <span class="sec-label mono process-label"><span class="cm">//</span> 03 · как работаем</span>
+    <h2 class="visually-hidden" id="process-title">Как мы работаем</h2>
+    <p class="phrase"><span class="dim">Сначала</span> <span class="ph" data-n="1">бриф и&nbsp;договор</span><span class="dim">,</span><sup>1</sup> <span class="dim">потом</span> <span class="ph" data-n="2">прототип, который можно пощупать</span><span class="dim">,</span><sup>2</sup> <span class="dim">и&nbsp;только затем</span> <span class="ph" data-n="3">код и&nbsp;запуск</span><sup>3</sup></p>
+    <ol class="notes">
+      <li class="note" data-n="1">
+        <div class="note-head"><span class="mono">1</span><h3>Подготовка</h3></div>
+        <p>Вы рассказываете о задаче и заполняете бриф. Заключаем договор и готовим техническое задание.</p>
+        <span class="tags mono">бриф · договор · ТЗ</span>
+      </li>
+      <li class="note" data-n="2">
+        <div class="note-head"><span class="mono">2</span><h3>Дизайн и прототип</h3></div>
+        <p>Вы утверждаете не картинки, а рабочую модель сайта со всеми эффектами. К разработке переходим, когда вы её уже пощупали.</p>
+        <span class="tags mono">дизайн · прототип · правки</span>
+      </li>
+      <li class="note" data-n="3">
+        <div class="note-head"><span class="mono">3</span><h3>Разработка и запуск</h3></div>
+        <p>Разрабатываем сайт на 1С-Битрикс, тестируем, наполняем текстами и картинками. Поможем с доменом и хостингом.</p>
+        <span class="tags mono">код · тесты · запуск</span>
+      </li>
+    </ol>
   </section>
 
   <section class="sec" id="bitrix24" aria-labelledby="b24-title">
