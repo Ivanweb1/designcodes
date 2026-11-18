@@ -439,6 +439,54 @@
     .works-foot .link-arrow { width: 100%; justify-content: center; }
   }
 
+  /* ---------- Портфолио: типографический список + превью у курсора ---------- */
+  .wlist { border-top: 1px solid var(--line); }
+  .wrow {
+    position: relative;
+    display: grid; grid-template-columns: 56px minmax(0, 1.25fr) minmax(0, 1fr) 150px; column-gap: 16px; align-items: baseline;
+    padding: clamp(14px, 1.6vw, 22px) 0; border-bottom: 1px solid var(--line);
+  }
+  .wrow .num { color: var(--muted); transition: color .2s; }
+  .wname { font-weight: var(--tw); font-size: clamp(30px, 4.2vw, 76px); line-height: 1; letter-spacing: var(--tls); transition: transform .35s cubic-bezier(.2,.7,.2,1), color .2s; }
+  .wdesc { color: var(--muted); font-size: 15px; line-height: 1.35; max-width: 22em; }
+  .wdom { color: var(--muted); white-space: nowrap; text-align: right; transition: color .2s; }
+  .wthumb { display: none; }
+  .wlist:hover .wrow .wname { color: var(--muted); }
+  .wlist .wrow:hover .wname { color: var(--ink); transform: translateX(14px); }
+  .wrow:hover .num, .wrow:hover .wdom { color: var(--accent); }
+
+  .wpreview {
+    position: fixed; left: 0; top: 0; z-index: 15; pointer-events: none;
+    width: clamp(300px, 30vw, 460px);
+    background: var(--bg); border: 1px solid var(--ink);
+    opacity: 0; transform: translate3d(-50%, -50%, 0) scale(.92);
+    transition: opacity .25s;
+  }
+  .wpreview.on { opacity: 1; }
+  .wbar { display: flex; align-items: center; gap: 5px; height: 28px; padding: 0 10px; border-bottom: 1px solid var(--ink); color: var(--muted); font-size: 11px; }
+  .wbar i { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--muted); }
+  .wbar b { font-weight: 400; margin-left: 8px; }
+  /* одинаковая обрезка для всех: верх первого экрана, без нижних полос */
+  .wimg { display: block; aspect-ratio: 12 / 5; overflow: hidden; background: #E8E6E0; }
+  .wimg img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+  @media (max-width: 960px) {
+    .wrow { grid-template-columns: 40px 1fr 150px; }
+    .wdesc { grid-column: 2 / 4; grid-row: 2; margin-top: 8px; }
+  }
+  /* сенсорные экраны: наведения нет — показываем миниатюру в строке */
+  @media (hover: none), (max-width: 720px) {
+    .wpreview { display: none; }
+    .wrow { grid-template-columns: 30px 1fr; row-gap: 6px; }
+    .wname { font-size: clamp(26px, 7vw, 40px); }
+    .wdesc { grid-column: 2; grid-row: auto; margin: 0; font-size: 14px; }
+    .wdom { grid-column: 2; text-align: left; }
+    .wthumb { display: block; grid-column: 2; margin-top: 10px; aspect-ratio: 12 / 5; overflow: hidden; border: 1px solid var(--line); }
+    .wthumb img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .wlist:hover .wrow .wname { color: var(--ink); }
+    .wlist .wrow:hover .wname { transform: none; }
+  }
+
   /* ---------- Общие для секций ---------- */
   .sec { padding: clamp(64px, 9vw, 128px) var(--gutter); border-top: 1px solid var(--line); scroll-margin-top: var(--header-h); }
   .sec-head {
@@ -837,32 +885,16 @@
       <h2 class="works-title" id="works-title">Работы<sup>100+</sup></h2>
       <p class="works-lead">Больше 100 сайтов за 15 лет: интернет-магазины брендов и дилеров, каталоги, корпоративные сайты. Всё — на 1С-Битрикс.</p>
     </div>
-    <div class="works-grid">
-      <a class="case" href="https://happybaby.ru/" target="_blank" rel="noopener">
-        <span class="case-shot"><img src="img/cases/happybaby.webp" alt="Сайт Happy Baby" width="1200" height="600" loading="lazy"></span>
-        <span class="case-meta"><span class="num mono">01</span><span class="case-name">Happy Baby<span class="case-desc">Интернет-магазин крупной марки детских товаров</span></span><span class="case-domain mono">happybaby.ru</span></span>
-      </a>
-      <a class="case" href="https://3electro.ru/" target="_blank" rel="noopener">
-        <span class="case-shot"><img src="img/cases/troika.webp" alt="Сайт ТРОЙКА Electro" width="1200" height="600" loading="lazy"></span>
-        <span class="case-meta"><span class="num mono">02</span><span class="case-name">ТРОЙКА Electro<span class="case-desc">Сайт-каталог бутика электротехники в Москве</span></span><span class="case-domain mono">3electro.ru</span></span>
-      </a>
-      <a class="case" href="https://kenwood.kz/" target="_blank" rel="noopener">
-        <span class="case-shot"><img src="img/cases/kenwood.webp" alt="Сайт Kenwood" width="1200" height="600" loading="lazy"></span>
-        <span class="case-meta"><span class="num mono">03</span><span class="case-name">Kenwood<span class="case-desc">Интернет-магазин официального дилера Kenwood</span></span><span class="case-domain mono">kenwood.kz</span></span>
-      </a>
-      <a class="case" href="https://delonghi.kz/" target="_blank" rel="noopener">
-        <span class="case-shot"><img src="img/cases/delonghi.webp" alt="Сайт DeLonghi" width="1200" height="600" loading="lazy"></span>
-        <span class="case-meta"><span class="num mono">04</span><span class="case-name">DeLonghi<span class="case-desc">Интернет-магазин официального дилера DeLonghi</span></span><span class="case-domain mono">delonghi.kz</span></span>
-      </a>
-      <a class="case" href="https://new.moto-falcon.ru/" target="_blank" rel="noopener">
-        <span class="case-shot"><img src="img/cases/falcon.webp" alt="Сайт Falcon" width="1200" height="600" loading="lazy"></span>
-        <span class="case-meta"><span class="num mono">05</span><span class="case-name">Falcon<span class="case-desc">Оригинальные запчасти для мототехники и сервис</span></span><span class="case-domain mono">moto-falcon.ru</span></span>
-      </a>
-      <a class="case" href="https://nutribullet.ru/" target="_blank" rel="noopener">
-        <span class="case-shot"><img src="img/cases/nutribullet.webp" alt="Сайт NutriBullet" width="1200" height="600" loading="lazy"></span>
-        <span class="case-meta"><span class="num mono">06</span><span class="case-name">NutriBullet<span class="case-desc">Адаптивный магазин на 1С-Битрикс для официального дилера</span></span><span class="case-domain mono">nutribullet.ru</span></span>
-      </a>
+    <div class="wlist">
+      <a class="wrow" href="https://happybaby.ru/" target="_blank" rel="noopener" data-img="img/cases/happybaby.webp" data-domain="happybaby.ru"><span class="num mono">01</span><span class="wname">Happy Baby</span><span class="wdesc">Интернет-магазин крупной марки детских товаров</span><span class="wdom mono">happybaby.ru</span><span class="wthumb"><img src="img/cases/happybaby.webp" alt="Сайт Happy Baby" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://3electro.ru/" target="_blank" rel="noopener" data-img="img/cases/troika.webp" data-domain="3electro.ru"><span class="num mono">02</span><span class="wname">ТРОЙКА Electro</span><span class="wdesc">Сайт-каталог бутика электротехники в Москве</span><span class="wdom mono">3electro.ru</span><span class="wthumb"><img src="img/cases/troika.webp" alt="Сайт ТРОЙКА Electro" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://kenwood.kz/" target="_blank" rel="noopener" data-img="img/cases/kenwood.webp" data-domain="kenwood.kz"><span class="num mono">03</span><span class="wname">Kenwood</span><span class="wdesc">Интернет-магазин официального дилера</span><span class="wdom mono">kenwood.kz</span><span class="wthumb"><img src="img/cases/kenwood.webp" alt="Сайт Kenwood" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://delonghi.kz/" target="_blank" rel="noopener" data-img="img/cases/delonghi.webp" data-domain="delonghi.kz"><span class="num mono">04</span><span class="wname">DeLonghi</span><span class="wdesc">Интернет-магазин официального дилера</span><span class="wdom mono">delonghi.kz</span><span class="wthumb"><img src="img/cases/delonghi.webp" alt="Сайт DeLonghi" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://new.moto-falcon.ru/" target="_blank" rel="noopener" data-img="img/cases/falcon.webp" data-domain="moto-falcon.ru"><span class="num mono">05</span><span class="wname">Falcon</span><span class="wdesc">Оригинальные запчасти для мототехники и сервис</span><span class="wdom mono">moto-falcon.ru</span><span class="wthumb"><img src="img/cases/falcon.webp" alt="Сайт Falcon" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://nutribullet.ru/" target="_blank" rel="noopener" data-img="img/cases/nutribullet.webp" data-domain="nutribullet.ru"><span class="num mono">06</span><span class="wname">NutriBullet</span><span class="wdesc">Адаптивный магазин для официального дилера</span><span class="wdom mono">nutribullet.ru</span><span class="wthumb"><img src="img/cases/nutribullet.webp" alt="Сайт NutriBullet" width="1200" height="600" loading="lazy"></span></a>
     </div>
+    <!-- превью у курсора: одна рамка на все кейсы, картинка подставляется скриптом -->
+    <div class="wpreview" aria-hidden="true"><span class="wbar mono"><i></i><i></i><i></i><b></b></span><span class="wimg"><img alt=""></span></div>
     <div class="works-foot">
       <a class="link-arrow" href="https://designcodes.ru/portfolio/" target="_blank" rel="noopener">Все работы</a>
     </div>
@@ -1094,6 +1126,27 @@
     if (opened) opened.focus();
     toggleMenu(false);
   });
+
+  // Портфолио: превью у курсора, плавно догоняет мышь
+  const wprev = document.querySelector('.wpreview');
+  if (wprev && matchMedia('(hover: hover) and (min-width: 721px)').matches) {
+    const wimg = wprev.querySelector('img'), wdom = wprev.querySelector('b');
+    let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
+    const loop = () => {
+      x += (tx - x) * .18; y += (ty - y) * .18;
+      wprev.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%) scale(${wprev.classList.contains('on') ? 1 : .92})`;
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > .3 ? requestAnimationFrame(loop) : 0;
+    };
+    document.querySelectorAll('.wrow').forEach(row => {
+      row.addEventListener('mouseenter', e => {
+        wimg.src = row.dataset.img; wdom.textContent = row.dataset.domain;
+        if (!wprev.classList.contains('on')) { x = tx = e.clientX; y = ty = e.clientY; }
+        wprev.classList.add('on');
+      });
+      row.addEventListener('mousemove', e => { tx = e.clientX + 40; ty = e.clientY; if (!raf) raf = requestAnimationFrame(loop); });
+      row.addEventListener('mouseleave', () => { wprev.classList.remove('on'); if (!raf) raf = requestAnimationFrame(loop); });
+    });
+  }
 
   // Мобильное меню
   const menuBtn = document.getElementById('menu-toggle');
