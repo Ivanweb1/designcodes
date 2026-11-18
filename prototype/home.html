@@ -487,29 +487,6 @@
     .wlist .wrow:hover .wname { transform: none; }
   }
 
-  /* ---------- Портфолио, вариант «скриншот за текстом» (?works=bg): картинка заливает строку, текст белый ---------- */
-  @media (hover: hover) and (min-width: 721px) {
-    .works.wl-bg .wpreview { display: none; }
-    .works.wl-bg .wrow {
-      isolation: isolate; overflow: hidden;
-      margin: 0 calc(var(--gutter) * -1); padding-left: var(--gutter); padding-right: var(--gutter);
-      grid-template-columns: 56px minmax(0, 1.25fr) minmax(0, 1fr) 150px;
-      transition: color .25s;
-    }
-    .works.wl-bg .wthumb {
-      display: block; position: absolute; inset: 0; z-index: -1;
-      opacity: 0; transition: opacity .35s;
-    }
-    .works.wl-bg .wthumb img {
-      display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%;
-      transform: scale(1.08); transition: transform .9s cubic-bezier(.2,.7,.2,1);
-    }
-    .works.wl-bg .wthumb::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(17,17,16,.82), rgba(17,17,16,.45) 60%, rgba(17,17,16,.7)); }
-    .works.wl-bg .wrow:hover .wthumb { opacity: 1; }
-    .works.wl-bg .wrow:hover .wthumb img { transform: scale(1); }
-    .works.wl-bg .wrow:hover, .works.wl-bg .wrow:hover .wname, .works.wl-bg .wrow:hover .wdesc, .works.wl-bg .wrow:hover .wdom, .works.wl-bg .wrow:hover .num { color: #fff; }
-    .works.wl-bg .wlist .wrow:hover .wname { transform: translateX(14px); }
-  }
   /* ---------- Общие для секций ---------- */
   .sec { padding: clamp(64px, 9vw, 128px) var(--gutter); border-top: 1px solid var(--line); scroll-margin-top: var(--header-h); }
   .sec-head {
@@ -1150,12 +1127,9 @@
     toggleMenu(false);
   });
 
-  // Вариант портфолио для сравнения: ?works=bg
-  if (new URLSearchParams(location.search).get('works') === 'bg') document.getElementById('works').classList.add('wl-bg');
-
   // Портфолио: превью у курсора, плавно догоняет мышь
   const wprev = document.querySelector('.wpreview');
-  if (wprev && !document.getElementById('works').classList.contains('wl-bg') && matchMedia('(hover: hover) and (min-width: 721px)').matches) {
+  if (wprev && matchMedia('(hover: hover) and (min-width: 721px)').matches) {
     const wimg = wprev.querySelector('img'), wdom = wprev.querySelector('b');
     let tx = 0, ty = 0, x = 0, y = 0, raf = 0;
     const loop = () => {
