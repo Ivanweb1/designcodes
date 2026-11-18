@@ -488,7 +488,9 @@
   .note-head .mono { color: var(--accent); }
   .note h3 { margin: 0; font-size: clamp(20px, 1.7vw, 26px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; }
   .note p { margin: 12px 0 0; color: var(--muted); max-width: 26em; }
-  .note .tags { display: block; margin-top: 16px; }
+  /* подписи прижаты к низу колонки: в одну линию при любой длине описания */
+  .note { display: flex; flex-direction: column; }
+  .note .tags { display: block; margin-top: auto; padding-top: 16px; }
   /* наведение на сноску подсвечивает её часть фразы */
   #process:has(.note[data-n="1"]:hover) .ph[data-n="1"],
   #process:has(.note[data-n="2"]:hover) .ph[data-n="2"],
