@@ -474,7 +474,7 @@
   .split-left .sec-label { margin: 0; color: var(--muted); }
   .split-left .sec-title { font-size: clamp(40px, 5.4vw, 104px); margin: 0; }
   .split-left .sec-lead { margin: 12px 0 0; max-width: 26em; color: var(--muted); }
-  .srows { grid-column: 7 / 13; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+  .srows { grid-column: 7 / 13; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
   .srow { display: grid; grid-template-columns: 56px 1fr; column-gap: 16px; padding: 24px 0 32px; border-bottom: 1px solid var(--line); }
   .srow .num { color: var(--accent); padding-top: .55em; }
   .srow h3 { margin: 0; font-size: clamp(26px, 2.6vw, 42px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; }
@@ -493,7 +493,7 @@
   }
 
   /* ---------- 04 Битрикс24: нумерованный аккордеон с тегами (реф. Boulevard, GP Industrial) ---------- */
-  .acc-list { border-top: 1px solid var(--ink); }
+  .acc-list { border-top: 1px solid var(--line); }
   .acc-item { border-bottom: 1px solid var(--line); }
   .acc-item summary {
     display: grid; grid-template-columns: 56px 1fr auto; column-gap: 16px; align-items: center;
@@ -537,10 +537,10 @@
     font-size: clamp(26px, 3.4vw, 56px); line-height: 1.12; letter-spacing: -0.03em;
   }
   .manifest p .dim { color: var(--muted); }
-  .facts { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--ink); }
-  .fact { display: flex; flex-direction: column; padding: 16px 24px 0 0; border-right: 1px solid var(--line); min-height: clamp(220px, 22vw, 340px); }
-  .fact + .fact { padding-left: 24px; }
-  .fact:last-child { border-right: 0; }
+  /* как оглавление на первом экране: линии тонкие и светлые, горизонтали не доходят до вертикалей (зазор 20px) */
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
+  .fact { position: relative; display: flex; flex-direction: column; padding-top: 16px; border-top: 1px solid var(--line); min-height: clamp(220px, 22vw, 340px); }
+  .fact + .fact::before { content: ""; position: absolute; left: -20px; top: 0; bottom: 0; width: 1px; background: var(--line); }
   .fact-top { display: flex; justify-content: space-between; color: var(--muted); }
   .fact-val {
     margin-top: auto;
@@ -553,8 +553,8 @@
   }
   @media (max-width: 720px) {
     .facts { grid-template-columns: 1fr; }
-    .fact, .fact + .fact { min-height: 0; padding: 14px 0 18px; border-right: 0; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 16px; }
-    .fact + .fact { border-top: 1px solid var(--line); }
+    .fact { min-height: 0; padding: 14px 0 18px; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 16px; }
+    .fact + .fact::before { display: none; }
     .fact-top { flex-direction: column; gap: 4px; order: 2; text-align: right; }
     .fact-val { margin: 0; font-size: 72px; }
   }
