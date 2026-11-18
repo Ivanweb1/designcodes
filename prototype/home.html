@@ -484,8 +484,10 @@
   .notes { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; margin: 0; padding: 0; list-style: none; }
   .note { position: relative; padding-top: 16px; border-top: 1px solid var(--line); }
   .note + .note::before { content: ""; position: absolute; left: -20px; top: 0; bottom: 0; width: 1px; background: var(--line); }
-  .note-head { display: flex; align-items: baseline; gap: 10px; }
-  .note-head .mono { color: var(--accent); }
+  /* номер — сноска, как ¹ ² ³ во фразе: мелкий, поднят к верху букв, вплотную к слову */
+  /* номер висит слева на поле, чтобы заголовок стоял ровно по левому краю текста */
+  .note-head { position: relative; }
+  .note-head .mono { position: absolute; right: 100%; top: .15em; margin-right: 3px; color: var(--accent); font-size: 11px; line-height: 1; }
   .note h3 { margin: 0; font-size: clamp(20px, 1.7vw, 26px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; }
   .note p { margin: 12px 0 0; color: var(--muted); max-width: 26em; }
   /* подписи прижаты к низу колонки: в одну линию при любой длине описания */
