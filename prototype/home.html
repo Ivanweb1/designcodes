@@ -735,6 +735,11 @@
     .footer-legal { flex-direction: column; }
   }
   .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  /* ---------- Появление контента снизу вверх (класс .rv ставит скрипт) ---------- */
+  .rv { opacity: 0; transform: translate3d(0, 28px, 0); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--rd, 0s); }
+  .rv.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
+
 </style>
 </head>
 <body id="top">
@@ -1088,6 +1093,35 @@
   }
 
   fitFont();
+
+  // Появление контента снизу вверх: блоки одной группы идут друг за другом с небольшой задержкой
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const groups = [
+      '.hb-left > *', '.hb-index-head, .hb-row',
+      '.works-head > *', '.wrow', '.works-foot',
+      '.process-label, .phrase', '.note',
+      '#bitrix24 .sec-head > *', '.acc-item', '.b24-foot',
+      '.manifest > *', '.fact',
+      '.contact-head > *', '.form-intro, .form',
+      '.footer-col', '.footer-legal'
+    ];
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      el.classList.add('in'); io.unobserve(el);
+      // после появления убираем служебные классы, чтобы не мешать собственным transition элемента
+      el.addEventListener('transitionend', function done(ev) {
+        if (ev.target !== el || ev.propertyName !== 'transform') return;
+        el.removeEventListener('transitionend', done);
+        el.classList.remove('rv', 'in'); el.style.removeProperty('--rd');
+      });
+    }), { rootMargin: '0px 0px -8% 0px' });
+    groups.forEach(sel => document.querySelectorAll(sel).forEach((el, i) => {
+      el.classList.add('rv');
+      el.style.setProperty('--rd', Math.min(i, 6) * 0.08 + 's');
+      io.observe(el);
+    }));
+  }
 
   // Надпись «Дизайн+Код» в подвале: кегль под ширину между полями страницы
   const wordmark = document.querySelector('.wordmark');
