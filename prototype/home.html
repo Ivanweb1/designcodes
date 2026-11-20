@@ -533,11 +533,10 @@
     font-family: var(--mono); font-weight: 400; font-size: max(.22em, 11px); letter-spacing: 0;
     color: var(--accent); vertical-align: top; position: relative; top: .45em; margin-left: .08em;
   }
-  .process-label { display: block; color: var(--muted); margin-bottom: clamp(28px, 3vw, 44px); }
+  .process-label { display: flex; justify-content: space-between; color: var(--muted); margin-bottom: clamp(28px, 3vw, 44px); }
   .notes { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; row-gap: clamp(36px, 4vw, 56px); margin: 0; padding: 0; list-style: none; }
   /* вертикальная линия только между колонками одного ряда */
   .note:nth-child(3n+1)::before { display: none; }
-  .process-foot { display: flex; justify-content: flex-end; margin-top: clamp(36px, 4vw, 56px); }
   .note { position: relative; padding-top: 16px; border-top: 1px solid var(--line); }
   .note + .note::before { content: ""; position: absolute; left: -20px; top: 0; bottom: 0; width: 1px; background: var(--line); }
   /* номер — сноска, как ¹ ² ³ во фразе: мелкий, поднят к верху букв, вплотную к слову */
@@ -563,7 +562,6 @@
   }
   @media (max-width: 860px) {
     .notes { grid-template-columns: 1fr; row-gap: 0; }
-    .process-foot { justify-content: flex-start; }
     .note { padding: 16px 0 22px; }
     .note + .note::before { display: none; }
   }
@@ -958,7 +956,7 @@
   </section>
 
   <section class="sec" id="process" aria-labelledby="process-title">
-    <span class="sec-label mono process-label"><span class="cm">//</span> 03 · как работаем</span>
+    <div class="sec-label mono process-label"><span><span class="cm">//</span> 03 · как работаем</span><a class="hb-all" href="/process/">подробнее</a></div>
     <h2 class="visually-hidden" id="process-title">Как мы работаем</h2>
     <p class="phrase"><span class="dim">Сначала</span> <span class="ph" data-n="1">задача</span><sup>1</sup> <span class="dim">и</span> <span class="ph" data-n="2">прототип</span><span class="dim">,</span><sup>2</sup> <span class="dim">потом</span> <span class="ph" data-n="3">дизайн</span><sup>3</sup> <span class="dim">и</span> <span class="ph" data-n="4">код</span><span class="dim">,</span><sup>4</sup> <span class="dim">затем</span> <span class="ph" data-n="5">запуск</span><sup>5</sup> <span class="dim">— и&nbsp;мы</span> <span class="ph" data-n="6">остаёмся рядом</span><sup>6</sup></p>
     <!-- 6 этапов по ТЗ: действие студии + результат для заказчика; без неподтверждённых гарантий -->
@@ -994,7 +992,6 @@
         <span class="tags mono">результат: сайт продолжает работать</span>
       </li>
     </ol>
-    <div class="process-foot"><a class="link-arrow" href="/process/">Подробнее о работе</a></div>
   </section>
 
   <section class="sec" id="bitrix24" aria-labelledby="b24-title">
@@ -1201,7 +1198,7 @@
       '.works-head > *', '.wrow', '.works-foot',
       '.process-label, .phrase', '.note',
       '#bitrix24 .sec-head > *', '.acc-item', '.b24-foot',
-      '.manifest > *', '.fact', '.process-foot',
+      '.manifest > *', '.fact',
       '#trust .sec-label, .letters > *', '.ievent',
       '.contact-head > *', '.form-intro, .form',
       '.footer-col', '.footer-legal'
