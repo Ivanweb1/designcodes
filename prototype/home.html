@@ -370,9 +370,10 @@
   }
 
   @media (max-width: 560px) {
-    .hb { min-height: 0; align-content: start; }  /* без растягивания на весь экран: оглавление сразу под кнопками */
-    .hb-left { padding: 14px 0 24px; }
-    .hb-title { font-size: min(calc(12vw / var(--fk, 1)), 7.6svh); margin-top: 14px; }
+    .hb { min-height: 0; align-content: start; }
+    /* первый экран телефона — только заголовок, текст и кнопки ровно в высоту экрана; направления начинаются ниже */
+    .hb-left { min-height: calc(100svh - var(--header-h)); padding: 14px 0 28px; }
+    .hb-title { font-size: min(calc(16vw / var(--fk, 1)), 9svh); margin-top: auto; }
     .hb-lead { font-size: 15px; margin-top: 12px; }
     .hb-actions { margin-top: 14px; gap: 12px 20px; }
     .hb-actions .btn { width: auto; flex: 1; }
