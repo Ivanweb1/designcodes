@@ -534,24 +534,29 @@
     color: var(--accent); vertical-align: top; position: relative; top: .45em; margin-left: .08em;
   }
   .process-label { display: flex; justify-content: space-between; color: var(--muted); margin-bottom: clamp(28px, 3vw, 44px); }
-  /* шесть этапов — «лестница»: каждое следующее название сдвинуто вправо, путь от задачи к сопровождению читается по диагонали */
-  .notes { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  /* шесть этапов — колонки-ступени: каждая следующая выше предыдущей, результаты выровнены по нижней линии */
+  .notes {
+    --step: clamp(26px, 3.2vw, 52px);
+    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none;
+    border-bottom: 1px solid var(--line);
+  }
   .note {
-    display: grid; grid-template-columns: 56px minmax(0, 1.2fr) minmax(0, 1fr); column-gap: 16px; align-items: baseline;
-    padding: clamp(18px, 2vw, 28px) 0; border-bottom: 1px solid var(--line);
+    display: flex; flex-direction: column; margin-top: calc((5 - var(--i)) * var(--step));
+    padding: 14px 18px 22px; border-top: 1px solid var(--ink); border-left: 1px solid var(--line);
+    transition: border-color .2s;
   }
-  .note .num { color: var(--muted); transition: color .2s; }
+  .note:first-child { border-left: 0; padding-left: 0; }
+  .note .num { color: var(--accent); }
   .note h3 {
-    margin: 0; padding-left: calc(var(--i) * clamp(14px, 2.6vw, 44px));
-    font-weight: var(--tw); font-size: clamp(28px, 3.3vw, 58px); line-height: 1; letter-spacing: var(--tls);
-    transition: color .2s, transform .35s cubic-bezier(.2,.7,.2,1);
+    margin: clamp(20px, 2.4vw, 40px) 0 0; font-weight: var(--tw); font-size: clamp(20px, 1.6vw, 28px); line-height: 1.05; letter-spacing: -0.03em;
+    transition: color .2s;
   }
-  .note-body p { margin: 0; color: var(--muted); max-width: 28em; }
-  .note .tags { display: block; margin-top: 10px; }
+  .note-body { display: flex; flex-direction: column; flex: 1; }
+  .note-body p { margin: 12px 0 0; color: var(--muted); font-size: 15px; line-height: 1.4; }
+  .note .tags { display: block; margin-top: auto; padding-top: 22px; font-size: 11px; line-height: 1.5; }
   .note .tags b { font-weight: 400; color: var(--accent); }
-  .notes:hover .note h3 { color: var(--muted); }
-  .notes .note:hover h3 { color: var(--ink); transform: translateX(14px); }
-  .note:hover .num { color: var(--accent); }
+  .note:hover { border-top-color: var(--accent); }
+  .note:hover h3 { color: var(--accent); }
   /* наведение на этап подсвечивает его слово во фразе */
   #process:has(.note[data-n="1"]:hover) .ph[data-n="1"],
   #process:has(.note[data-n="2"]:hover) .ph[data-n="2"],
@@ -559,19 +564,19 @@
   #process:has(.note[data-n="4"]:hover) .ph[data-n="4"],
   #process:has(.note[data-n="5"]:hover) .ph[data-n="5"],
   #process:has(.note[data-n="6"]:hover) .ph[data-n="6"] { color: var(--accent); }
-  @media (max-width: 860px) {
-    .note { grid-template-columns: 30px 1fr; row-gap: 10px; }
-    .note-body { grid-column: 2; }
-    .note h3 { padding-left: 0; }
-  }
-  @media (hover: none) {
-    .notes:hover .note h3 { color: var(--ink); }
-    .notes .note:hover h3 { transform: none; }
+  /* уже 1200px: шесть колонок не помещаются — вертикальная линия времени с точками */
+  @media (max-width: 1200px) {
+    .notes { grid-template-columns: 1fr; border-bottom: 0; border-left: 1px solid var(--line); margin-left: 4px; }
+    .note, .note:first-child { position: relative; margin: 0; padding: 0 0 32px 28px; border: 0; }
+    .note:last-child { padding-bottom: 0; }
+    .note::before { content: ""; position: absolute; left: -5px; top: .35em; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 1px solid var(--accent); }
+    .note:hover::before { background: var(--accent); }
+    .note h3 { margin-top: 6px; font-size: clamp(24px, 3.4vw, 36px); }
+    .note-body p { max-width: 32em; }
+    .note .tags { padding-top: 10px; }
   }
   @media (max-width: 560px) {
     .phrase { font-size: 30px; margin-bottom: 36px; }
-    .note h3 { font-size: 24px; }
-    .note-body p { font-size: 15px; }
   }
 
   /* ---------- 04 Битрикс24: нумерованный аккордеон с тегами (реф. Boulevard, GP Industrial) ---------- */
