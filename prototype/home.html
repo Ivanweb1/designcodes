@@ -326,6 +326,9 @@
 
   .hb-index { grid-column: 7 / 13; display: flex; flex-direction: column; padding: 20px 0 0 20px; }
   .hb-index-head { display: flex; justify-content: space-between; color: var(--muted); padding-bottom: 16px; }
+  .hb-all { color: var(--muted); text-decoration: none; transition: color .2s; }
+  .hb-all:hover { color: var(--accent); }
+  .hb-all::after { content: " →"; }
   .hb-row {
     flex: 1;
     display: grid; grid-template-columns: 56px 1fr auto; align-items: center; column-gap: 16px;
@@ -451,6 +454,8 @@
   .wdesc { color: var(--muted); font-size: 15px; line-height: 1.35; max-width: 22em; }
   .wdom { color: var(--muted); white-space: nowrap; text-align: right; transition: color .2s; }
   .wthumb { display: none; }
+  /* отрасль проекта — моно-подпись над описанием */
+  .wind { display: block; margin-bottom: 4px; font-size: 11px; color: var(--ink); }
   .wlist:hover .wrow .wname { color: var(--muted); }
   .wlist .wrow:hover .wname { color: var(--ink); transform: translateX(14px); }
   .wrow:hover .num, .wrow:hover .wdom { color: var(--accent); }
@@ -529,7 +534,10 @@
     color: var(--accent); vertical-align: top; position: relative; top: .45em; margin-left: .08em;
   }
   .process-label { display: block; color: var(--muted); margin-bottom: clamp(28px, 3vw, 44px); }
-  .notes { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; margin: 0; padding: 0; list-style: none; }
+  .notes { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; row-gap: clamp(36px, 4vw, 56px); margin: 0; padding: 0; list-style: none; }
+  /* вертикальная линия только между колонками одного ряда */
+  .note:nth-child(3n+1)::before { display: none; }
+  .process-foot { display: flex; justify-content: flex-end; margin-top: clamp(36px, 4vw, 56px); }
   .note { position: relative; padding-top: 16px; border-top: 1px solid var(--line); }
   .note + .note::before { content: ""; position: absolute; left: -20px; top: 0; bottom: 0; width: 1px; background: var(--line); }
   /* номер — сноска, как ¹ ² ³ во фразе: мелкий, поднят к верху букв, вплотную к слову */
@@ -544,9 +552,18 @@
   /* наведение на сноску подсвечивает её часть фразы */
   #process:has(.note[data-n="1"]:hover) .ph[data-n="1"],
   #process:has(.note[data-n="2"]:hover) .ph[data-n="2"],
-  #process:has(.note[data-n="3"]:hover) .ph[data-n="3"] { color: var(--accent); }
+  #process:has(.note[data-n="3"]:hover) .ph[data-n="3"],
+  #process:has(.note[data-n="4"]:hover) .ph[data-n="4"],
+  #process:has(.note[data-n="5"]:hover) .ph[data-n="5"],
+  #process:has(.note[data-n="6"]:hover) .ph[data-n="6"] { color: var(--accent); }
+  @media (max-width: 1100px) and (min-width: 861px) {
+    .notes { grid-template-columns: repeat(2, 1fr); }
+    .note::before { display: none; }
+    .note:nth-child(2n)::before { display: block; }
+  }
   @media (max-width: 860px) {
-    .notes { grid-template-columns: 1fr; }
+    .notes { grid-template-columns: 1fr; row-gap: 0; }
+    .process-foot { justify-content: flex-start; }
     .note { padding: 16px 0 22px; }
     .note + .note::before { display: none; }
   }
@@ -617,6 +634,37 @@
     .acc-body p { font-size: 15px; }
   }
 
+  /* ---------- 06 Письма и I-Event ---------- */
+  .trust { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; border-top: 1px solid var(--line); padding-top: 24px; }
+  .letters { grid-column: 1 / 8; display: flex; flex-direction: column; align-items: flex-start; }
+  .trust-title { margin: 0; font-weight: var(--tw); font-size: clamp(30px, 3.4vw, 56px); line-height: 1; letter-spacing: var(--tls); }
+  .trust-lead { margin: 16px 0 0; max-width: 30em; color: var(--muted); }
+  .letter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%; margin: 32px 0; padding: 0; list-style: none; }
+  .letter { display: flex; flex-direction: column; gap: 10px; color: var(--muted); }
+  .sheet { display: flex; flex-direction: column; gap: 7px; aspect-ratio: 210 / 297; padding: 18% 14%; background: #fff; border: 1px solid var(--line); box-shadow: 0 1px 0 var(--line); }
+  .sheet i { display: block; height: 4px; background: var(--line); }
+  .sheet i:first-child { width: 45%; height: 6px; margin-bottom: 10px; background: var(--muted); opacity: .5; }
+  .sheet i:nth-child(3) { width: 85%; } .sheet i:last-child { width: 30%; margin-top: auto; }
+  .ievent {
+    grid-column: 9 / 13; display: flex; flex-direction: column; gap: 14px; align-self: stretch;
+    padding: 24px; background: var(--ink); color: var(--bg); text-decoration: none; transition: background .25s;
+  }
+  .ievent:hover { background: var(--accent); }
+  .ievent-tag { color: rgba(243,242,238,.6); }
+  .ievent-name { font-weight: var(--tw); font-size: clamp(44px, 5vw, 88px); line-height: .9; letter-spacing: var(--tls); }
+  .ievent-text { max-width: 22em; font-size: 16px; line-height: 1.4; color: rgba(243,242,238,.8); }
+  .ievent-more { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 24px; }
+  @media (max-width: 960px) {
+    .letters { grid-column: 1 / 13; }
+    .ievent { grid-column: 1 / 13; margin-top: 40px; }
+  }
+  @media (max-width: 560px) {
+    .letter-grid { gap: 10px; margin: 24px 0; }
+    .letter { font-size: 10px; gap: 6px; }
+    .sheet { gap: 4px; } .sheet i { height: 2px; } .sheet i:first-child { height: 3px; margin-bottom: 5px; }
+    .letters .link-arrow { width: 100%; justify-content: center; }
+  }
+
   /* ---------- 05 О студии: манифест + крупные цифры в акценте (реф. Swiss Website Design, LUMA, Boulevard) ---------- */
   .manifest { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; margin-bottom: clamp(56px, 7vw, 112px); }
   .manifest .sec-label { grid-column: 1 / 4; margin: 0; padding-top: .7em; }
@@ -630,6 +678,9 @@
   .fact { position: relative; display: flex; flex-direction: column; padding-top: 16px; border-top: 1px solid var(--line); }
   .fact + .fact::before { content: ""; position: absolute; left: -20px; top: 0; bottom: 0; width: 1px; background: var(--line); }
   .fact-num { color: var(--muted); }
+  a.fact-link { color: inherit; text-decoration: none; }
+  a.fact-link .fact-cap { display: inline-flex; align-items: center; gap: 6px; transition: color .2s; }
+  a.fact-link:hover .fact-cap { color: var(--accent); }
   .fact-cap { margin-top: 16px; color: var(--muted); }
   .fact-val {
     margin-top: clamp(28px, 3vw, 48px);
@@ -875,7 +926,7 @@
     </div>
 
     <nav class="hb-index" aria-label="Направления">
-      <div class="hb-index-head mono"><span><span class="cm">//</span> направления</span><span>06</span></div>
+      <div class="hb-index-head mono"><span><span class="cm">//</span> направления</span><a class="hb-all" href="/services/bitrix/">все услуги</a></div>
       <a class="hb-row" href="/services/corporate-sites/"><span class="num mono">01</span><span class="name">Корпоративные сайты<span class="desc">Представительства, B2B-каталоги, кабинеты</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
       <a class="hb-row" href="/services/online-stores/"><span class="num mono">02</span><span class="name">Интернет-магазины<span class="desc">Каталог, доставка, маркетплейсы, оптовые цены</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
       <a class="hb-row" href="/services/integrations-1c/"><span class="num mono">03</span><span class="name">Интеграция с 1С<span class="desc">Номенклатура, цены, остатки, заказы</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
@@ -888,45 +939,62 @@
   <section class="works" id="works" aria-labelledby="works-title">
     <div class="works-head">
       <span class="works-label mono"><span class="cm">//</span> 02 · портфолио</span>
-      <h2 class="works-title" id="works-title">Работы<sup>100+</sup></h2>
-      <p class="works-lead">Больше 100 сайтов за 15 лет: интернет-магазины брендов и дилеров, каталоги, корпоративные сайты. Всё — на 1С-Битрикс.</p>
+      <h2 class="works-title" id="works-title">Работы<sup>130+</sup></h2>
+      <p class="works-lead">Больше 130 сайтов с 2013 года: интернет-магазины брендов и дилеров, каталоги, корпоративные сайты. Всё — на 1С-Битрикс.</p>
     </div>
     <div class="wlist">
-      <a class="wrow" href="https://happybaby.ru/" target="_blank" rel="noopener" data-img="img/cases/happybaby.webp" data-domain="happybaby.ru"><span class="num mono">01</span><span class="wname">Happy Baby</span><span class="wdesc">Интернет-магазин крупной марки детских товаров</span><span class="wdom mono">happybaby.ru</span><span class="wthumb"><img src="img/cases/happybaby.webp" alt="Сайт Happy Baby" width="1200" height="600" loading="lazy"></span></a>
-      <a class="wrow" href="https://3electro.ru/" target="_blank" rel="noopener" data-img="img/cases/troika.webp" data-domain="3electro.ru"><span class="num mono">02</span><span class="wname">ТРОЙКА Electro</span><span class="wdesc">Сайт-каталог бутика электротехники в Москве</span><span class="wdom mono">3electro.ru</span><span class="wthumb"><img src="img/cases/troika.webp" alt="Сайт ТРОЙКА Electro" width="1200" height="600" loading="lazy"></span></a>
-      <a class="wrow" href="https://kenwood.kz/" target="_blank" rel="noopener" data-img="img/cases/kenwood.webp" data-domain="kenwood.kz"><span class="num mono">03</span><span class="wname">Kenwood</span><span class="wdesc">Интернет-магазин официального дилера</span><span class="wdom mono">kenwood.kz</span><span class="wthumb"><img src="img/cases/kenwood.webp" alt="Сайт Kenwood" width="1200" height="600" loading="lazy"></span></a>
-      <a class="wrow" href="https://delonghi.kz/" target="_blank" rel="noopener" data-img="img/cases/delonghi.webp" data-domain="delonghi.kz"><span class="num mono">04</span><span class="wname">DeLonghi</span><span class="wdesc">Интернет-магазин официального дилера</span><span class="wdom mono">delonghi.kz</span><span class="wthumb"><img src="img/cases/delonghi.webp" alt="Сайт DeLonghi" width="1200" height="600" loading="lazy"></span></a>
-      <a class="wrow" href="https://new.moto-falcon.ru/" target="_blank" rel="noopener" data-img="img/cases/falcon.webp" data-domain="moto-falcon.ru"><span class="num mono">05</span><span class="wname">Falcon</span><span class="wdesc">Оригинальные запчасти для мототехники и сервис</span><span class="wdom mono">moto-falcon.ru</span><span class="wthumb"><img src="img/cases/falcon.webp" alt="Сайт Falcon" width="1200" height="600" loading="lazy"></span></a>
-      <a class="wrow" href="https://nutribullet.ru/" target="_blank" rel="noopener" data-img="img/cases/nutribullet.webp" data-domain="nutribullet.ru"><span class="num mono">06</span><span class="wname">NutriBullet</span><span class="wdesc">Адаптивный магазин для официального дилера</span><span class="wdom mono">nutribullet.ru</span><span class="wthumb"><img src="img/cases/nutribullet.webp" alt="Сайт NutriBullet" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://happybaby.ru/" target="_blank" rel="noopener" data-img="img/cases/happybaby.webp" data-domain="happybaby.ru"><span class="num mono">01</span><span class="wname">Happy Baby</span><span class="wdesc"><span class="wind mono">детские товары</span>Интернет-магазин крупной марки детских товаров</span><span class="wdom mono">happybaby.ru</span><span class="wthumb"><img src="img/cases/happybaby.webp" alt="Сайт Happy Baby" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://3electro.ru/" target="_blank" rel="noopener" data-img="img/cases/troika.webp" data-domain="3electro.ru"><span class="num mono">02</span><span class="wname">ТРОЙКА Electro</span><span class="wdesc"><span class="wind mono">гольфкары и электротранспорт</span>Сайт-каталог официального дистрибьютора в Москве</span><span class="wdom mono">3electro.ru</span><span class="wthumb"><img src="img/cases/troika.webp" alt="Сайт ТРОЙКА Electro" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://kenwood.kz/" target="_blank" rel="noopener" data-img="img/cases/kenwood.webp" data-domain="kenwood.kz"><span class="num mono">03</span><span class="wname">Kenwood</span><span class="wdesc"><span class="wind mono">кухонная техника</span>Интернет-магазин официального дилера в Казахстане</span><span class="wdom mono">kenwood.kz</span><span class="wthumb"><img src="img/cases/kenwood.webp" alt="Сайт Kenwood" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://delonghi.kz/" target="_blank" rel="noopener" data-img="img/cases/delonghi.webp" data-domain="delonghi.kz"><span class="num mono">04</span><span class="wname">DeLonghi</span><span class="wdesc"><span class="wind mono">кофемашины и бытовая техника</span>Интернет-магазин официального дилера в Казахстане</span><span class="wdom mono">delonghi.kz</span><span class="wthumb"><img src="img/cases/delonghi.webp" alt="Сайт DeLonghi" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://new.moto-falcon.ru/" target="_blank" rel="noopener" data-img="img/cases/falcon.webp" data-domain="moto-falcon.ru"><span class="num mono">05</span><span class="wname">Falcon</span><span class="wdesc"><span class="wind mono">мототехника</span>Оригинальные запчасти для мототехники и сервис</span><span class="wdom mono">moto-falcon.ru</span><span class="wthumb"><img src="img/cases/falcon.webp" alt="Сайт Falcon" width="1200" height="600" loading="lazy"></span></a>
+      <a class="wrow" href="https://nutribullet.ru/" target="_blank" rel="noopener" data-img="img/cases/nutribullet.webp" data-domain="nutribullet.ru"><span class="num mono">06</span><span class="wname">NutriBullet</span><span class="wdesc"><span class="wind mono">блендеры</span>Адаптивный магазин для официального дилера</span><span class="wdom mono">nutribullet.ru</span><span class="wthumb"><img src="img/cases/nutribullet.webp" alt="Сайт NutriBullet" width="1200" height="600" loading="lazy"></span></a>
     </div>
     <!-- превью у курсора: одна рамка на все кейсы, картинка подставляется скриптом -->
     <div class="wpreview" aria-hidden="true"><span class="wbar mono"><i></i><i></i><i></i><b></b></span><span class="wimg"><img alt=""></span></div>
     <div class="works-foot">
-      <a class="link-arrow" href="https://designcodes.ru/portfolio/" target="_blank" rel="noopener">Все работы</a>
+      <a class="link-arrow" href="/portfolio/">Все работы</a>
     </div>
   </section>
 
   <section class="sec" id="process" aria-labelledby="process-title">
     <span class="sec-label mono process-label"><span class="cm">//</span> 03 · как работаем</span>
     <h2 class="visually-hidden" id="process-title">Как мы работаем</h2>
-    <p class="phrase"><span class="dim">Сначала</span> <span class="ph" data-n="1">бриф и&nbsp;договор</span><span class="dim">,</span><sup>1</sup> <span class="dim">потом</span> <span class="ph" data-n="2">прототип, который можно пощупать</span><span class="dim">,</span><sup>2</sup> <span class="dim">и&nbsp;только затем</span> <span class="ph" data-n="3">код и&nbsp;запуск</span><sup>3</sup></p>
+    <p class="phrase"><span class="dim">Сначала</span> <span class="ph" data-n="1">задача</span><sup>1</sup> <span class="dim">и</span> <span class="ph" data-n="2">прототип</span><span class="dim">,</span><sup>2</sup> <span class="dim">потом</span> <span class="ph" data-n="3">дизайн</span><sup>3</sup> <span class="dim">и</span> <span class="ph" data-n="4">код</span><span class="dim">,</span><sup>4</sup> <span class="dim">затем</span> <span class="ph" data-n="5">запуск</span><sup>5</sup> <span class="dim">— и&nbsp;мы</span> <span class="ph" data-n="6">остаёмся рядом</span><sup>6</sup></p>
+    <!-- 6 этапов по ТЗ: действие студии + результат для заказчика; без неподтверждённых гарантий -->
     <ol class="notes">
       <li class="note" data-n="1">
-        <div class="note-head"><span class="mono">1</span><h3>Подготовка</h3></div>
-        <p>Вы рассказываете о задаче и заполняете бриф. Заключаем договор и готовим техническое задание.</p>
-        <span class="tags mono">бриф · договор · ТЗ</span>
+        <div class="note-head"><span class="mono">1</span><h3>Задача</h3></div>
+        <p>Вы рассказываете, что нужно, хоть обычными словами. Мы задаём вопросы, предлагаем решение и оценку.</p>
+        <span class="tags mono">результат: договор и ТЗ</span>
       </li>
       <li class="note" data-n="2">
-        <div class="note-head"><span class="mono">2</span><h3>Дизайн и прототип</h3></div>
-        <p>Вы утверждаете не картинки, а рабочую модель сайта со всеми эффектами. К разработке переходим, когда вы её уже пощупали.</p>
-        <span class="tags mono">дизайн · прототип · правки</span>
+        <div class="note-head"><span class="mono">2</span><h3>Проектирование</h3></div>
+        <p>Продумываем структуру и сценарии и собираем рабочий прототип, а не набор картинок.</p>
+        <span class="tags mono">результат: прототип, который можно пощупать</span>
       </li>
       <li class="note" data-n="3">
-        <div class="note-head"><span class="mono">3</span><h3>Разработка и запуск</h3></div>
-        <p>Разрабатываем сайт на 1С-Битрикс, тестируем, наполняем текстами и картинками. Поможем с доменом и хостингом.</p>
-        <span class="tags mono">код · тесты · запуск</span>
+        <div class="note-head"><span class="mono">3</span><h3>Дизайн</h3></div>
+        <p>Оформляем согласованный прототип: типовые страницы, состояния и мобильные версии.</p>
+        <span class="tags mono">результат: утверждённые макеты</span>
+      </li>
+      <li class="note" data-n="4">
+        <div class="note-head"><span class="mono">4</span><h3>Разработка</h3></div>
+        <p>Разрабатываем сайт на 1С-Битрикс, подключаем обмен с 1С и CRM, наполняем материалами.</p>
+        <span class="tags mono">результат: сайт на тестовом сервере</span>
+      </li>
+      <li class="note" data-n="5">
+        <div class="note-head"><span class="mono">5</span><h3>Тестирование и запуск</h3></div>
+        <p>Проверяем сайт на устройствах и в браузерах, переносим на хостинг, помогаем с доменом.</p>
+        <span class="tags mono">результат: сайт открыт посетителям</span>
+      </li>
+      <li class="note" data-n="6">
+        <div class="note-head"><span class="mono">6</span><h3>Сопровождение</h3></div>
+        <p>По отдельной договорённости обновляем платформу, исправляем ошибки и развиваем сайт.</p>
+        <span class="tags mono">результат: сайт продолжает работать</span>
       </li>
     </ol>
+    <div class="process-foot"><a class="link-arrow" href="/process/">Подробнее о работе</a></div>
   </section>
 
   <section class="sec" id="bitrix24" aria-labelledby="b24-title">
@@ -990,12 +1058,40 @@
     <h2 class="visually-hidden" id="studio-title">О студии</h2>
     <div class="manifest">
       <span class="sec-label mono"><span class="cm">//</span> 05 · о студии</span>
-      <p>Делаем сайты почти 15 лет, из них десять — как студия. <span class="dim">Знаем 1С-Битрикс изнутри и берёмся за проекты, где сайт связан с 1С, складом и CRM</span></p>
+      <p>Делаем сайты на 1С-Битрикс с 2013 года. <span class="dim">Знаем платформу изнутри и берёмся за проекты, где сайт связан с 1С, складом и CRM</span></p>
     </div>
     <div class="facts">
-      <div class="fact"><span class="fact-num mono">01</span><span class="fact-val">15</span><span class="fact-cap mono">лет в разработке</span></div>
-      <div class="fact"><span class="fact-num mono">02</span><span class="fact-val">100+</span><span class="fact-cap mono">сайтов в портфолио</span></div>
-      <div class="fact"><span class="fact-num mono">03</span><span class="fact-val">10</span><span class="fact-cap mono">лет золотой партнёр 1С-Битрикс</span></div>
+      <!-- факты по ТЗ: с 2013 года · 130+ сайтов · золотой партнёр 1С-Битрикс. Перед публикацией проверить числа и статус -->
+      <div class="fact"><span class="fact-num mono">01</span><span class="fact-val">2013</span><span class="fact-cap mono">год основания студии</span></div>
+      <div class="fact"><span class="fact-num mono">02</span><span class="fact-val">130+</span><span class="fact-cap mono">созданных сайтов</span></div>
+      <!-- ЗАГЛУШКА: ссылку на официальный профиль партнёра на 1c-bitrix.ru/partners/ даст студия -->
+      <a class="fact fact-link" href="https://www.1c-bitrix.ru/partners/" target="_blank" rel="noopener"><span class="fact-num mono">03</span><span class="fact-val">Gold</span><span class="fact-cap mono">золотой партнёр 1С-Битрикс <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+    </div>
+  </section>
+
+  <!-- ТЗ: благодарственные письма + анонс I-Event с переходом в /solutions/ -->
+  <section class="sec" id="trust" aria-labelledby="trust-title">
+    <span class="sec-label mono"><span class="cm">//</span> 06 · отзывы и решения</span>
+    <h2 class="visually-hidden" id="trust-title">Благодарственные письма и готовые решения</h2>
+    <div class="trust">
+      <div class="letters">
+        <h3 class="trust-title">Благодарственные письма</h3>
+        <p class="trust-lead">Оригиналы писем от заказчиков. Каждое можно открыть целиком и сопоставить с проектом из портфолио.</p>
+        <!-- ЗАГЛУШКА: миниатюры писем, название компании и дату даст студия после правовой проверки -->
+        <ul class="letter-grid" aria-label="Письма клиентов">
+          <li class="letter"><span class="sheet" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="mono">письмо 01</span></li>
+          <li class="letter"><span class="sheet" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="mono">письмо 02</span></li>
+          <li class="letter"><span class="sheet" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="mono">письмо 03</span></li>
+          <li class="letter"><span class="sheet" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><span class="mono">письмо 04</span></li>
+        </ul>
+        <a class="link-arrow" href="/letters/">Все письма</a>
+      </div>
+      <a class="ievent" href="/solutions/">
+        <span class="mono ievent-tag">готовое решение студии</span>
+        <span class="ievent-name">I-Event</span>
+        <span class="ievent-text">Сайт мероприятия, конференции или форума на 1С-Битрикс. Можно посмотреть демоверсию и обсудить адаптацию.</span>
+        <span class="ievent-more mono">Готовые решения <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+      </a>
     </div>
   </section>
 </main>
@@ -1003,7 +1099,7 @@
 <div class="final">
   <section class="contact" id="form" aria-labelledby="form-title">
     <div class="contact-head">
-      <span class="sec-label mono"><span class="cm">//</span> 06 · есть проект? напишите</span>
+      <span class="sec-label mono"><span class="cm">//</span> 07 · есть проект? напишите</span>
       <a class="big-mail" href="mailto:ask@designcodes.ru">ask@designcodes.ru <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <div class="side">
         <a href="tel:+79262901420">+7 (926) 290-14-20</a>
@@ -1016,8 +1112,9 @@
         <h2 id="form-title">Или оставьте заявку</h2>
         <p>Опишите задачу в двух словах. Перезвоним в рабочее время, зададим вопросы и предложим решение.</p>
       </div>
-      <!-- ЗАГЛУШКА: форма никуда не отправляет. Решить, куда идут заявки: почта, Telegram или CRM Битрикс24 -->
-      <form class="form" id="lead-form" novalidate>
+      <!-- МЕСТО ПОД CRM-ФОРМУ БИТРИКС24 (по ТЗ). Код встраивания даёт заказчик, разработчик вставляет его вместо этой формы.
+           Форма ниже — только макет для показа: поля, валидацию и согласия задаёт сама CRM-форма. Кнопки с data-open-form ведут сюда. -->
+      <form class="form" id="lead-form" data-b24-slot novalidate>
         <div class="form-fields">
           <div class="form-grid">
             <label class="field"><span class="mono">Имя</span><input name="name" autocomplete="name" placeholder="Как к вам обращаться" required></label>
@@ -1039,11 +1136,14 @@
     <div class="footer-top">
       <nav class="footer-col" aria-label="Услуги">
         <span class="mono">Услуги</span>
+        <a href="/services/bitrix/">Разработка на 1С-Битрикс</a>
         <a href="/services/corporate-sites/">Корпоративные сайты</a>
         <a href="/services/online-stores/">Интернет-магазины</a>
         <a href="/services/integrations-1c/">Интеграция с 1С</a>
         <a href="/services/support/">Поддержка</a>
+        <a href="/services/messenger-bots/">Чат-боты и мессенджеры</a>
         <a href="/bitrix24/">Битрикс24</a>
+        <a href="/prices/">Стоимость работ</a>
       </nav>
       <nav class="footer-col" aria-label="Компания">
         <span class="mono">Компания</span>
@@ -1067,7 +1167,7 @@
       </div>
     </div>
     <div class="footer-legal">
-      <span>© 2014–2026 ООО «Дизайнкод» · ИНН 7736666610 · ОГРН 5137746015138</span>
+      <span>© 2013–2026 ООО «Дизайнкод» · ИНН 7736666610 · ОГРН 5137746015138</span>
       <span>117393, Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582</span>
       <a href="https://designcodes.ru/police/" target="_blank" rel="noopener">Политика конфиденциальности</a>
     </div>
@@ -1101,7 +1201,8 @@
       '.works-head > *', '.wrow', '.works-foot',
       '.process-label, .phrase', '.note',
       '#bitrix24 .sec-head > *', '.acc-item', '.b24-foot',
-      '.manifest > *', '.fact',
+      '.manifest > *', '.fact', '.process-foot',
+      '#trust .sec-label, .letters > *', '.ievent',
       '.contact-head > *', '.form-intro, .form',
       '.footer-col', '.footer-legal'
     ];
