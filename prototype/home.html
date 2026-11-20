@@ -760,19 +760,24 @@
   .form.sent .form-done { display: block; }
   .form.sent .form-fields { display: none; }
 
-  .footer {
-    --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55);
-    background: #1D1D1B; color: var(--bg);
-    padding: clamp(48px, 6vw, 88px) var(--gutter) 0;
-  }
-  /* Подвал-шторка: подвал закреплён снизу, страница уезжает вверх и открывает его.
-     Класс .curtain ставит скрипт, только если подвал целиком помещается в экран. */
-  .curtain .final {
+  /* Подвал выезжает из-под блока с формой: подвал прокручивается вместе со страницей,
+     а его содержимое (.footer-in) чуть отстаёт — сдвиг считает скрипт. Под скруглёнными углами
+     блока с формой виден фон подвала: подвал заходит под блок на величину скругления. */
+  .final {
+    --fr: clamp(24px, 3vw, 44px);
     position: relative; z-index: 1;
-    border-radius: 0 0 clamp(24px, 3vw, 44px) clamp(24px, 3vw, 44px);
-    box-shadow: 0 40px 80px rgba(0,0,0,.45);
+    border-radius: 0 0 var(--fr) var(--fr);
+    box-shadow: 0 30px 60px rgba(0,0,0,.35);
   }
-  .curtain .footer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 0; }
+  .footer {
+    --fr: clamp(24px, 3vw, 44px);
+    --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55);
+    position: relative; z-index: 0; overflow: hidden;
+    margin-top: calc(-1 * var(--fr));
+    background: #1D1D1B; color: var(--bg);
+    padding: calc(var(--fr) + clamp(48px, 6vw, 88px)) var(--gutter) 0;
+  }
+  .footer-in { will-change: transform; }
   /* Логотип в подвале: линии прорисовываются, когда подвал открылся */
   /* Логотип — узел на разделительной линии: линии идут от краёв страницы к концам ромба */
   /* линии по бокам не касаются логотипа: отступ 20px — как у разделителей между фактами и колонками сетки */
@@ -1159,6 +1164,7 @@
 </div>
 
   <footer class="footer js-draw">
+  <div class="footer-in">
     <div class="footer-top">
       <nav class="footer-col" aria-label="Услуги">
         <span class="mono">Услуги</span>
@@ -1213,6 +1219,7 @@
       <span>117393, Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582</span>
       <a href="https://designcodes.ru/police/" target="_blank" rel="noopener">Политика конфиденциальности</a>
     </div>
+  </div>
   </footer>
 
 <script>
@@ -1263,32 +1270,26 @@
     }));
   }
 
-  // Подвал-шторка и прорисовка логотипа
-  const finalBlock = document.querySelector('.final');
+  // Подвал: содержимое выезжает из-под блока с формой, логотип прорисовывается
   const footer = document.querySelector('.footer');
-  function layoutFooter() {
-    const h = footer.offsetHeight;
-    // шторка только если подвал целиком влезает в экран, иначе обычный подвал
-    const fits = h <= innerHeight - 40;
-    document.documentElement.classList.toggle('curtain', fits);
-    finalBlock.style.marginBottom = fits ? h + 'px' : '';
-    checkDraw();
+  const footerIn = footer.querySelector('.footer-in');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (still) footer.classList.add('drawn');
+  let fTick = false;
+  function onFooterScroll() {
+    if (fTick) return; fTick = true;
+    requestAnimationFrame(() => {
+      fTick = false;
+      const r = footer.getBoundingClientRect();
+      // 0 — подвал только показался снизу, 1 — виден целиком
+      const p = Math.min(1, Math.max(0, (innerHeight - r.top) / Math.min(r.height, innerHeight)));
+      if (!still) footerIn.style.transform = 'translate3d(0,' + (-(1 - p) * 160).toFixed(1) + 'px,0)';
+      if (p > 0.6) footer.classList.add('drawn');
+    });
   }
-  function checkDraw() {
-    if (footer.classList.contains('drawn')) return;
-    const shown = document.documentElement.classList.contains('curtain')
-      ? innerHeight - finalBlock.getBoundingClientRect().bottom   // сколько подвала уже открыто
-      : innerHeight - footer.getBoundingClientRect().top;
-    if (shown > footer.offsetHeight * 0.55) {
-      footer.classList.add('drawn');
-      removeEventListener('scroll', checkDraw);
-    }
-  }
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) footer.classList.add('drawn');
-  addEventListener('scroll', checkDraw, { passive: true });
-  addEventListener('resize', layoutFooter);
-  document.fonts.ready.then(layoutFooter);
-  layoutFooter();
+  addEventListener('scroll', onFooterScroll, { passive: true });
+  addEventListener('resize', onFooterScroll);
+  onFooterScroll();
 
   // Подменю: открытие по клику/касанию и с клавиатуры, Esc и клик вне закрывают
   const triggers = document.querySelectorAll('.nav-link[aria-controls]');
