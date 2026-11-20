@@ -760,22 +760,45 @@
   .form.sent .form-done { display: block; }
   .form.sent .form-fields { display: none; }
 
-  .footer { padding: clamp(72px, 9vw, 128px) var(--gutter) 0; }
-  .footer-top { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; padding: 32px 0 40px; border-top: 1px solid var(--cline); }
+  .footer {
+    --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55);
+    background: #1D1D1B; color: var(--bg);
+    padding: clamp(48px, 6vw, 88px) var(--gutter) 0;
+  }
+  /* Подвал-шторка: подвал закреплён снизу, страница уезжает вверх и открывает его.
+     Класс .curtain ставит скрипт, только если подвал целиком помещается в экран. */
+  .curtain .final {
+    position: relative; z-index: 1;
+    border-radius: 0 0 clamp(24px, 3vw, 44px) clamp(24px, 3vw, 44px);
+    box-shadow: 0 40px 80px rgba(0,0,0,.45);
+  }
+  .curtain .footer { position: fixed; left: 0; right: 0; bottom: 0; z-index: 0; }
+  /* Логотип в подвале: линии прорисовываются, когда подвал открылся */
+  /* Логотип — узел на разделительной линии: линии идут от краёв страницы к концам ромба */
+  /* линии по бокам не касаются логотипа: отступ 20px — как у разделителей между фактами и колонками сетки */
+  .footer-seal { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 20px; align-items: center; padding: clamp(28px, 3.5vw, 48px) 0; }
+  .footer-seal .ln { height: 1px; background: var(--cline); transform-origin: left center; transition: transform 1s cubic-bezier(.65,0,.35,1); }
+  .footer-seal .ln:last-child { transform-origin: right center; }
+  .footer.js-draw:not(.drawn) .footer-seal .ln { transform: scaleX(0); }
+  .footer-logo { display: block; width: clamp(200px, 20vw, 290px); color: var(--bg); transition: color .3s; }
+  .footer-logo:hover { color: var(--accent); }
+  .footer-logo svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .footer-logo path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1.2s cubic-bezier(.65,0,.35,1) .7s; }
+  .footer-logo path:nth-child(2) { transition-delay: .95s; }
+  .footer-logo path:nth-child(3) { transition-delay: 1.15s; }
+  .footer-logo path:nth-child(4) { transition-delay: .7s; }
+  .footer-logo g { transition: opacity .8s 1.7s; }
+  .footer.js-draw:not(.drawn) .footer-logo path { stroke-dashoffset: 1; }
+  .footer.js-draw:not(.drawn) .footer-logo g { opacity: 0; }
+  .footer-top { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; }
   .footer-col { grid-column: span 3; display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
   .footer-col .mono { color: var(--cdim); margin-bottom: 6px; }
   .footer-col a:hover { color: var(--accent); }
-  .footer-legal { display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding: 20px 0; border-top: 1px solid var(--cline); color: var(--cdim); font-size: 13px; }
+  .footer-legal { display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding: 0 0 24px; color: var(--cdim); font-size: 13px; }
   .footer-legal a:hover { color: var(--bg); }
   .to-top { display: inline-flex; align-items: center; gap: 8px; }
   .to-top .ico { transform: rotate(-90deg); }
   a.to-top:hover > .ico { transform: rotate(-90deg) translateX(4px); }
-  .wordmark {
-    display: block; width: max-content; margin: 0 0 -0.2em;  /* кегль подгоняет скрипт: надпись ровно во всю ширину */
-    font-weight: var(--tw); font-size: 15.6vw; line-height: 1; letter-spacing: -0.055em; white-space: nowrap;
-    user-select: none;
-  }
-  .wordmark .plus { color: var(--accent); }
   @media (max-width: 960px) {
     .big-mail { grid-column: 1 / 13; }
     .contact-head .side { grid-column: 1 / 13; justify-self: start; text-align: left; margin-top: 24px; }
@@ -789,7 +812,8 @@
     .form-grid { grid-template-columns: 1fr; }
     .form-actions .btn-lg { width: 100%; justify-content: center; }
     .field input, .field textarea { font-size: 18px; }
-    .footer { padding-top: 56px; }
+    .footer { padding-top: 40px; }
+    .footer-logo { width: 180px; }
     .footer-legal { flex-direction: column; }
   }
   .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
@@ -1132,7 +1156,9 @@
     </div>
   </section>
 
-  <footer class="footer">
+</div>
+
+  <footer class="footer js-draw">
     <div class="footer-top">
       <nav class="footer-col" aria-label="Услуги">
         <span class="mono">Услуги</span>
@@ -1166,14 +1192,28 @@
         <a href="https://t.me/klimova_oxana" target="_blank" rel="noopener">Telegram</a>
       </div>
     </div>
+    <div class="footer-seal">
+      <span class="ln" aria-hidden="true"></span>
+      <a class="footer-logo" href="/" aria-label="Дизайн+Код — на главную">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="5" aria-hidden="true">
+          <path pathLength="1" d="M595 57H297L10 211l287 154h155"/>
+          <path pathLength="1" d="M140 137v142"/>
+          <path pathLength="1" d="M706 3L515 412"/>
+          <path pathLength="1" d="M725 57l305 154-305 154"/>
+          <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+            <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
+            <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+          </g>
+        </svg>
+      </a>
+      <span class="ln" aria-hidden="true"></span>
+    </div>
     <div class="footer-legal">
       <span>© 2013–2026 ООО «Дизайнкод» · ИНН 7736666610 · ОГРН 5137746015138</span>
       <span>117393, Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582</span>
       <a href="https://designcodes.ru/police/" target="_blank" rel="noopener">Политика конфиденциальности</a>
     </div>
-    <span class="wordmark" aria-hidden="true">Дизайн<span class="plus">+</span>Код</span>
   </footer>
-</div>
 
 <script>
 
@@ -1203,8 +1243,7 @@
       '#bitrix24 .sec-head > *', '.acc-item', '.b24-foot',
       '.manifest > *', '.fact',
       '#trust .sec-label, .letters > *', '.ievent',
-      '.contact-head > *', '.form-intro, .form',
-      '.footer-col', '.footer-legal'
+      '.contact-head > *', '.form-intro, .form'
     ];
     const io = new IntersectionObserver(entries => entries.forEach(e => {
       if (!e.isIntersecting) return;
@@ -1224,17 +1263,32 @@
     }));
   }
 
-  // Надпись «Дизайн+Код» в подвале: кегль под ширину между полями страницы
-  const wordmark = document.querySelector('.wordmark');
-  function fitWordmark() {
-    const box = wordmark.parentElement, cs = getComputedStyle(box);
-    const avail = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-    wordmark.style.fontSize = '100px';
-    const w = wordmark.getBoundingClientRect().width;
-    wordmark.style.fontSize = (100 * avail / w).toFixed(2) + 'px';
+  // Подвал-шторка и прорисовка логотипа
+  const finalBlock = document.querySelector('.final');
+  const footer = document.querySelector('.footer');
+  function layoutFooter() {
+    const h = footer.offsetHeight;
+    // шторка только если подвал целиком влезает в экран, иначе обычный подвал
+    const fits = h <= innerHeight - 40;
+    document.documentElement.classList.toggle('curtain', fits);
+    finalBlock.style.marginBottom = fits ? h + 'px' : '';
+    checkDraw();
   }
-  document.fonts.ready.then(fitWordmark);
-  addEventListener('resize', fitWordmark);
+  function checkDraw() {
+    if (footer.classList.contains('drawn')) return;
+    const shown = document.documentElement.classList.contains('curtain')
+      ? innerHeight - finalBlock.getBoundingClientRect().bottom   // сколько подвала уже открыто
+      : innerHeight - footer.getBoundingClientRect().top;
+    if (shown > footer.offsetHeight * 0.55) {
+      footer.classList.add('drawn');
+      removeEventListener('scroll', checkDraw);
+    }
+  }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) footer.classList.add('drawn');
+  addEventListener('scroll', checkDraw, { passive: true });
+  addEventListener('resize', layoutFooter);
+  document.fonts.ready.then(layoutFooter);
+  layoutFooter();
 
   // Подменю: открытие по клику/касанию и с клавиатуры, Esc и клик вне закрывают
   const triggers = document.querySelectorAll('.nav-link[aria-controls]');
