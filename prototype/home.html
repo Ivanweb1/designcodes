@@ -534,14 +534,13 @@
     color: var(--accent); vertical-align: top; position: relative; top: .45em; margin-left: .08em;
   }
   .process-label { display: flex; justify-content: space-between; color: var(--muted); margin-bottom: clamp(28px, 3vw, 44px); }
-  /* шесть этапов — колонки-ступени: каждая следующая выше предыдущей, результаты выровнены по нижней линии */
+  /* шесть этапов — шесть колонок на одном уровне, результаты выровнены по нижней линии */
   .notes {
-    --step: clamp(26px, 3.2vw, 52px);
     display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none;
     border-bottom: 1px solid var(--line);
   }
   .note {
-    display: flex; flex-direction: column; margin-top: calc((5 - var(--i)) * var(--step));
+    display: flex; flex-direction: column;
     padding: 14px 18px 22px; border-top: 1px solid var(--ink); border-left: 1px solid var(--line);
     transition: border-color .2s;
   }
@@ -970,27 +969,27 @@
     <p class="phrase"><span class="dim">Сначала</span> <span class="ph" data-n="1">задача</span><sup>1</sup> <span class="dim">и</span> <span class="ph" data-n="2">прототип</span><span class="dim">,</span><sup>2</sup> <span class="dim">потом</span> <span class="ph" data-n="3">дизайн</span><sup>3</sup> <span class="dim">и</span> <span class="ph" data-n="4">код</span><span class="dim">,</span><sup>4</sup> <span class="dim">затем</span> <span class="ph" data-n="5">запуск</span><sup>5</sup> <span class="dim">— и&nbsp;мы</span> <span class="ph" data-n="6">остаёмся рядом</span><sup>6</sup></p>
     <!-- 6 этапов по ТЗ: действие студии + результат для заказчика; без неподтверждённых гарантий -->
     <ol class="notes">
-      <li class="note" data-n="1" style="--i:0">
+      <li class="note" data-n="1">
         <span class="num mono">01</span><h3>Задача</h3>
         <div class="note-body"><p>Вы рассказываете, что нужно, хоть обычными словами. Мы задаём вопросы, предлагаем решение и оценку.</p><span class="tags mono"><b>→</b> договор и ТЗ</span></div>
       </li>
-      <li class="note" data-n="2" style="--i:1">
+      <li class="note" data-n="2">
         <span class="num mono">02</span><h3>Проектирование</h3>
         <div class="note-body"><p>Продумываем структуру и сценарии и собираем рабочий прототип, а не набор картинок.</p><span class="tags mono"><b>→</b> прототип, который можно пощупать</span></div>
       </li>
-      <li class="note" data-n="3" style="--i:2">
+      <li class="note" data-n="3">
         <span class="num mono">03</span><h3>Дизайн</h3>
         <div class="note-body"><p>Оформляем согласованный прототип: типовые страницы, состояния и мобильные версии.</p><span class="tags mono"><b>→</b> утверждённые макеты</span></div>
       </li>
-      <li class="note" data-n="4" style="--i:3">
+      <li class="note" data-n="4">
         <span class="num mono">04</span><h3>Разработка</h3>
         <div class="note-body"><p>Разрабатываем сайт на 1С-Битрикс, подключаем обмен с 1С и CRM, наполняем материалами.</p><span class="tags mono"><b>→</b> сайт на тестовом сервере</span></div>
       </li>
-      <li class="note" data-n="5" style="--i:4">
+      <li class="note" data-n="5">
         <span class="num mono">05</span><h3>Тестирование и запуск</h3>
         <div class="note-body"><p>Проверяем сайт на устройствах и в браузерах, переносим на хостинг, помогаем с доменом.</p><span class="tags mono"><b>→</b> сайт открыт посетителям</span></div>
       </li>
-      <li class="note" data-n="6" style="--i:5">
+      <li class="note" data-n="6">
         <span class="num mono">06</span><h3>Сопровождение</h3>
         <div class="note-body"><p>По отдельной договорённости обновляем платформу, исправляем ошибки и развиваем сайт.</p><span class="tags mono"><b>→</b> сайт продолжает работать</span></div>
       </li>
