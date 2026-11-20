@@ -627,12 +627,12 @@
   .manifest p .dim { color: var(--muted); }
   /* как оглавление на первом экране: линии тонкие и светлые, горизонтали не доходят до вертикалей (зазор 20px) */
   .facts { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
-  .fact { position: relative; display: flex; flex-direction: column; padding-top: 16px; border-top: 1px solid var(--line); min-height: clamp(220px, 22vw, 340px); }
+  .fact { position: relative; display: flex; flex-direction: column; padding-top: 16px; border-top: 1px solid var(--line); }
   .fact + .fact::before { content: ""; position: absolute; left: -20px; top: 0; bottom: 0; width: 1px; background: var(--line); }
   .fact-num { color: var(--muted); }
   .fact-cap { margin-top: 16px; color: var(--muted); }
   .fact-val {
-    margin-top: auto;
+    margin-top: clamp(28px, 3vw, 48px);
     font-weight: var(--tw); font-size: clamp(72px, 10vw, 184px); line-height: .82; letter-spacing: -0.05em;
     color: var(--accent);
   }
