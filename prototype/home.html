@@ -629,7 +629,8 @@
   .facts { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
   .fact { position: relative; display: flex; flex-direction: column; padding-top: 16px; border-top: 1px solid var(--line); min-height: clamp(220px, 22vw, 340px); }
   .fact + .fact::before { content: ""; position: absolute; left: -20px; top: 0; bottom: 0; width: 1px; background: var(--line); }
-  .fact-top { display: flex; justify-content: space-between; color: var(--muted); }
+  .fact-num { color: var(--muted); }
+  .fact-cap { margin-top: 16px; color: var(--muted); }
   .fact-val {
     margin-top: auto;
     font-weight: var(--tw); font-size: clamp(72px, 10vw, 184px); line-height: .82; letter-spacing: -0.05em;
@@ -641,10 +642,10 @@
   }
   @media (max-width: 720px) {
     .facts { grid-template-columns: 1fr; }
-    .fact { min-height: 0; padding: 14px 0 18px; flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 16px; }
+    .fact { min-height: 0; padding: 14px 0 18px; }
     .fact + .fact::before { display: none; }
-    .fact-top { flex-direction: column; gap: 4px; order: 2; text-align: right; }
-    .fact-val { margin: 0; font-size: 72px; }
+    .fact-val { margin-top: 16px; font-size: 72px; }
+    .fact-cap { margin-top: 10px; }
   }
 
   /* ---------- 06 Финал: контакты, форма и подвал одним тёмным блоком (реф. Boulevard, Kreativy, LUMA) ---------- */
@@ -987,9 +988,9 @@
       <p>Делаем сайты почти 15 лет, из них десять — как студия. <span class="dim">Знаем 1С-Битрикс изнутри и берёмся за проекты, где сайт связан с 1С, складом и CRM</span></p>
     </div>
     <div class="facts">
-      <div class="fact"><span class="fact-top mono"><span>01</span><span>лет в разработке</span></span><span class="fact-val">15</span></div>
-      <div class="fact"><span class="fact-top mono"><span>02</span><span>сайтов в портфолио</span></span><span class="fact-val">100+</span></div>
-      <div class="fact"><span class="fact-top mono"><span>03</span><span>лет золотой партнёр 1С-Битрикс</span></span><span class="fact-val">10</span></div>
+      <div class="fact"><span class="fact-num mono">01</span><span class="fact-val">15</span><span class="fact-cap mono">лет в разработке</span></div>
+      <div class="fact"><span class="fact-num mono">02</span><span class="fact-val">100+</span><span class="fact-cap mono">сайтов в портфолио</span></div>
+      <div class="fact"><span class="fact-num mono">03</span><span class="fact-val">10</span><span class="fact-cap mono">лет золотой партнёр 1С-Битрикс</span></div>
     </div>
   </section>
 </main>
