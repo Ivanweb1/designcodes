@@ -902,6 +902,21 @@
 /* Действия в соседних карточках стоят на одной линии */
 .project-card { display:flex; flex-direction:column; }
 .card-actions { margin-top:auto; }
+
+/* Первый экран: вдвое меньше воздуха вокруг вступления */
+.port-hero { padding-bottom:clamp(31px,3.5vw,52px); }
+.port-hero-phrase { margin-top:clamp(40px,4.5vw,75px); margin-bottom:clamp(35px,4vw,65px); }
+@media(max-width:720px) { .port-hero-phrase { margin:35px 0 45px; } }
+/* Кнопки в стиле главной: Onest, круглая форма и центрированная стрелка */
+.card-actions { align-items:center; }
+.card-actions a { min-height:44px; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:0 17px; border:1px solid var(--ink); border-radius:100px; font-family:var(--font); font-size:15px; line-height:1; text-transform:none; }
+.card-actions .site-link { background:transparent; color:var(--ink); }
+.card-actions .project-link { background:var(--ink); color:var(--bg); }
+.card-actions .site-link:hover { background:var(--ink); color:var(--bg); border-color:var(--ink); }
+.card-actions .project-link:hover { background:var(--accent); border-color:var(--accent); color:#fff; }
+.image-open { background:var(--ink); color:var(--bg); font-family:var(--font); font-size:15px; line-height:1; text-transform:none; align-items:center; padding:13px 18px; }
+.image-open .ico,.card-actions .ico { display:block; flex:none; width:18px; height:18px; stroke-width:1.5; }
+.card-image:hover .image-open { color:var(--bg); }
 </style>
 </head>
 <body>
@@ -974,7 +989,7 @@
 
   <div class="header-right">
     <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
-    <a class="btn" href="#contact" data-open-form>Обсудить проект</a>
+    <a class="btn" href="#form" data-open-form>Обсудить проект</a>
     <a class="icon-btn" href="tel:+79262901420" aria-label="Позвонить">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
     </a>
@@ -1018,7 +1033,7 @@
       <a href="/contacts/">Контакты</a>
     </div>
   </details>
-  <a class="btn" href="#contact" data-open-form>Обсудить проект</a>
+  <a class="btn" href="#form" data-open-form>Обсудить проект</a>
   <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
 </div>
 
@@ -1026,11 +1041,11 @@
 <main class="portfolio-main">
   <section class="port-hero" aria-labelledby="portfolio-title">
     <div class="port-hero-top"><span class="mono"><span class="cm">//</span> Портфолио</span><span class="mono">Сайты и интернет-магазины · 1С-Битрикс</span></div>
-    <h1 class="phrase port-hero-phrase" id="portfolio-title"><span class="dim">Выберите</span> близкую отрасль, <span class="dim">откройте</span> работающий сайт <span class="dim">и</span> оцените интерфейс. <span class="dim">Понравился</span> подход <span class="dim">—</span> <span class="port-accent">обсудим</span> похожую задачу.</h1>
+    <h1 class="phrase port-hero-phrase" id="portfolio-title"><span class="dim">Выберите</span> близкую отрасль, <span class="dim">откройте</span> работающий сайт <span class="dim">и</span> оцените интерфейс. <span class="dim">Понравился</span> подход <span class="dim">—</span> <span class="port-accent">обсудим</span> похожую задачу</h1>
     
   </section>
-  <section class="port-list" id="projects" aria-labelledby="projects-title">
-    <div class="list-head"><h2 id="projects-title">Избранные работы</h2><span class="mono" id="visible-count" aria-live="polite">Показано 06 / 06</span></div>
+  <section class="port-list" id="projects" aria-label="Работы студии">
+    
     <div class="filters" role="group" aria-label="Фильтр по отраслям">
       <span class="mono">Отрасль <span class="cm">//</span></span>
       <button class="filter" type="button" data-filter="all" aria-pressed="true">Все <span class="filter-count">06</span></button>
@@ -1044,67 +1059,95 @@
   <div class="card-top mono"><span>01 / 06</span><span>Детские товары</span></div>
   <a class="card-image" href="https://happybaby.ru/" target="_blank" rel="noopener" aria-label="Смотреть сайт Happy Baby">
     <img src="../prototype/img/cases/happybaby.webp" alt="Скриншот сайта Happy Baby" width="1200" height="600" loading="eager">
-    <span class="image-open mono">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+    <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Детские товары</span><h2>Happy Baby</h2><p class="card-kind">Интернет-магазин крупной марки детских товаров</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Интернет-магазин детских товаров</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://happybaby.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#contact" data-discuss="Happy Baby">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://happybaby.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="Happy Baby">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
 <article class="project-card" data-industry="transport" data-project="ТРОЙКА Electro">
   <div class="card-top mono"><span>02 / 06</span><span>Электротранспорт</span></div>
   <a class="card-image" href="https://3electro.ru/" target="_blank" rel="noopener" aria-label="Смотреть сайт ТРОЙКА Electro">
     <img src="../prototype/img/cases/troika.webp" alt="Скриншот сайта ТРОЙКА Electro" width="1200" height="600" loading="eager">
-    <span class="image-open mono">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+    <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Электротранспорт</span><h2>ТРОЙКА Electro</h2><p class="card-kind">Сайт-каталог официального дистрибьютора в Москве</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Каталог гольфкаров и электротранспорта</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://3electro.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#contact" data-discuss="ТРОЙКА Electro">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://3electro.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="ТРОЙКА Electro">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
 <article class="project-card" data-industry="tech" data-project="Kenwood">
   <div class="card-top mono"><span>03 / 06</span><span>Техника</span></div>
   <a class="card-image" href="https://kenwood.kz/" target="_blank" rel="noopener" aria-label="Смотреть сайт Kenwood">
     <img src="../prototype/img/cases/kenwood.webp" alt="Скриншот сайта Kenwood" width="1200" height="600" loading="lazy">
-    <span class="image-open mono">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+    <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Кухонная техника</span><h2>Kenwood</h2><p class="card-kind">Интернет-магазин официального дилера в Казахстане</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Интернет-магазин кухонной техники</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://kenwood.kz/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#contact" data-discuss="Kenwood">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://kenwood.kz/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="Kenwood">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
 <article class="project-card" data-industry="tech" data-project="DeLonghi">
   <div class="card-top mono"><span>04 / 06</span><span>Техника</span></div>
   <a class="card-image" href="https://delonghi.kz/" target="_blank" rel="noopener" aria-label="Смотреть сайт DeLonghi">
     <img src="../prototype/img/cases/delonghi.webp" alt="Скриншот сайта DeLonghi" width="1200" height="600" loading="lazy">
-    <span class="image-open mono">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+    <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Бытовая техника</span><h2>DeLonghi</h2><p class="card-kind">Интернет-магазин официального дилера в Казахстане</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Интернет-магазин кофемашин и бытовой техники</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://delonghi.kz/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#contact" data-discuss="DeLonghi">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://delonghi.kz/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="DeLonghi">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
 <article class="project-card" data-industry="materials" data-project="Fanera">
   <div class="card-top mono"><span>05 / 06</span><span>Материалы</span></div>
   <a class="card-image" href="https://fanera.ru/" target="_blank" rel="noopener" aria-label="Смотреть сайт Fanera">
     <img src="../prototype/img/cases/fanera.webp" alt="Скриншот сайта Fanera" width="1200" height="600" loading="lazy">
-    <span class="image-open mono">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+    <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Фанера</span><h2>Fanera</h2><p class="card-kind">Сайт поставщика фанеры</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Подбор листа по шагам</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://fanera.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#contact" data-discuss="Fanera">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://fanera.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="Fanera">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
 <article class="project-card" data-industry="manufacturing" data-project="Фавор-Гарант">
   <div class="card-top mono"><span>06 / 06</span><span>Производство</span></div>
   <a class="card-image" href="https://favor-garant.ru/" target="_blank" rel="noopener" aria-label="Смотреть сайт Фавор-Гарант">
     <img src="../prototype/img/cases/favor.webp" alt="Скриншот сайта Фавор-Гарант" width="1200" height="600" loading="lazy">
-    <span class="image-open mono">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+    <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Металлоконструкции</span><h2>Фавор-Гарант</h2><p class="card-kind">Сайт-каталог производителя конструкций для городской среды</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Каталог конструкций для городской среды</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://favor-garant.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#contact" data-discuss="Фавор-Гарант">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://favor-garant.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="Фавор-Гарант">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article></div>
   </section>
-  <section class="port-contact" id="contact" aria-labelledby="contact-title">
-    <div class="contact-layout"><span class="contact-kicker mono"><span class="cm">//</span> 02 / Обсудить задачу</span><div class="contact-copy">
-      <h2 id="contact-title">Есть похожая <em>задача?</em></h2>
-      <p>Расскажите, какой сайт вам нужен. <span class="contact-selected" id="project-context">Можно сослаться на понравившийся проект из портфолио.</span></p>
-      <div class="contact-actions"><a class="contact-email" id="contact-email" href="mailto:ask@designcodes.ru?subject=%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%20%D1%81%D0%B0%D0%B9%D1%82%D0%B0">Написать о проекте <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="contact-phone" href="tel:+79262901420">+7 (926) 290-14-20</a></div>
-      <div class="crm-slot" data-b24-slot data-project-context="" aria-live="polite"></div>
-    </div></div>
+  </main>
+<div class="final">
+<section class="contact" id="form" aria-labelledby="form-title">
+    <div class="contact-head">
+      <span class="sec-label mono"><span class="cm">//</span> 07 · есть проект? напишите</span>
+      <a class="big-mail" href="mailto:ask@designcodes.ru">ask@designcodes.ru <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <div class="side">
+        <a href="tel:+79262901420">+7 (926) 290-14-20</a>
+        <a href="https://t.me/klimova_oxana" target="_blank" rel="noopener">Telegram @klimova_oxana</a>
+        <span class="mono" style="color:var(--cdim)">Москва, ул. Академика Пилюгина, 14</span>
+      </div>
+    </div>
+    <div class="contact-body">
+      <div class="form-intro">
+        <h2 id="form-title">Или оставьте заявку</h2>
+        <p>Опишите задачу в двух словах. Перезвоним в рабочее время, зададим вопросы и предложим решение.</p>
+      </div>
+      <!-- МЕСТО ПОД CRM-ФОРМУ БИТРИКС24 (по ТЗ). Код встраивания даёт заказчик, разработчик вставляет его вместо этой формы.
+           Форма ниже — только макет для показа: поля, валидацию и согласия задаёт сама CRM-форма. Кнопки с data-open-form ведут сюда. -->
+      <form class="form" id="lead-form" data-b24-slot novalidate>
+        <div class="form-fields">
+          <div class="form-grid">
+            <label class="field"><span class="mono">Имя</span><input name="name" autocomplete="name" placeholder="Как к вам обращаться" required></label>
+            <label class="field"><span class="mono">Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" maxlength="18" required></label>
+          </div>
+          <label class="field"><span class="mono">Задача</span><textarea name="task" rows="3" placeholder="Новый магазин, доработка, интеграция с 1С…"></textarea></label>
+          <label class="agree"><input type="checkbox" name="agree" required><span>Согласен с <a href="https://designcodes.ru/police/" target="_blank" rel="noopener">политикой конфиденциальности</a> и обработкой персональных данных</span></label>
+          <div class="form-actions">
+            <button class="btn btn-lg" type="submit">Отправить заявку <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <span class="form-note mono" aria-live="polite"></span>
+          </div>
+        </div>
+        <p class="form-done" role="status">Спасибо! Заявка принята, скоро свяжемся.</p>
+      </form>
+    </div>
   </section>
-</main>
-<footer class="footer js-draw drawn">
+
+<footer class="footer js-draw">
     <div class="footer-top">
       <nav class="footer-col" aria-label="Услуги">
         <span class="mono">Услуги</span>
@@ -1160,6 +1203,7 @@
       <a href="https://designcodes.ru/police/" target="_blank" rel="noopener">Политика конфиденциальности</a>
     </div>
   </footer>
+</div>
 <script>
 const triggers = document.querySelectorAll('.nav-link[aria-controls]');
 function closeAll(except) { triggers.forEach(t => { if(t===except)return; t.setAttribute('aria-expanded','false'); document.getElementById(t.getAttribute('aria-controls')).classList.remove('open'); }); }
@@ -1170,8 +1214,71 @@ function toggleMenu(force){const open=force??menuBtn.getAttribute('aria-expanded
 menuBtn.addEventListener('click',()=>toggleMenu());
 menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const opened=document.querySelector('.nav-link[aria-expanded="true"]');closeAll();if(opened)opened.focus();toggleMenu(false);}});
-const filters=document.querySelectorAll('.filter'),projects=document.querySelectorAll('.project-card'),count=document.getElementById('visible-count');
-filters.forEach(button=>button.addEventListener('click',()=>{const selected=button.dataset.filter;filters.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));let visible=0;projects.forEach(card=>{card.hidden=selected!=='all'&&card.dataset.industry!==selected;if(!card.hidden)visible++;});count.textContent='Показано '+String(visible).padStart(2,'0')+' / '+String(projects.length).padStart(2,'0');}));
-document.querySelectorAll('[data-discuss]').forEach(link=>link.addEventListener('click',()=>{const name=link.dataset.discuss;document.getElementById('project-context').textContent='Вам понравился '+name+'. Расскажите, что хотите сделать для своего бизнеса.';document.querySelector('[data-b24-slot]').dataset.projectContext=name;document.getElementById('contact-email').href='mailto:ask@designcodes.ru?subject='+encodeURIComponent('Проект по примеру '+name)+'&body='+encodeURIComponent('Здравствуйте! Хочу обсудить проект по примеру '+name+'.\n\nМоя задача: ');}));
+const filters=document.querySelectorAll('.filter'),projects=document.querySelectorAll('.project-card');
+filters.forEach(button=>button.addEventListener('click',()=>{const selected=button.dataset.filter;filters.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));let visible=0;projects.forEach(card=>{card.hidden=selected!=='all'&&card.dataset.industry!==selected;if(!card.hidden)visible++;});}));
+document.querySelectorAll('[data-discuss]').forEach(link=>link.addEventListener('click',()=>{const name=link.dataset.discuss;const task=document.querySelector('#lead-form textarea[name="task"]');task.value='Хочу обсудить проект по примеру «'+name+'».\n\nМоя задача: ';}));
+
+  // Подвал: логотип прорисовывается, когда подвал виден больше чем наполовину
+  const footer = document.querySelector('.footer');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) footer.classList.add('drawn');
+  function checkDraw() {
+    const r = footer.getBoundingClientRect();
+    if ((innerHeight - r.top) / Math.min(r.height, innerHeight) > 0.6) {
+      footer.classList.add('drawn');
+      removeEventListener('scroll', checkDraw);
+    }
+  }
+  addEventListener('scroll', checkDraw, { passive: true });
+  checkDraw();
+
+
+  // Маска телефона: +7 (___) ___-__-__
+  const phone = document.querySelector('#lead-form input[type="tel"]');
+  // 10 цифр номера без кода страны
+  function nationalDigits(v) {
+    let d = v.replace(/\D/g, '');
+    if (v.trim().startsWith('+7')) d = d.slice(1);           // уже есть «+7»: первая 7 — код страны
+    else if (/^[78]\d{10}$/.test(d)) d = d.slice(1);          // вставили 8 926… или 7 926…
+    return d;
+  }
+  let prevNational = '';
+  function formatPhone(v) {
+    let d = nationalDigits(v);
+    if (!prevNational && /^[78]/.test(d)) d = d.slice(1);     // первой набрали 8 или 7 — это код страны, не номер
+    d = d.slice(0, 10);
+    if (!d) return '';
+    let out = '+7 (' + d.slice(0, 3);
+    if (d.length >= 3) out += ') ' + d.slice(3, 6);
+    if (d.length >= 6) out += '-' + d.slice(6, 8);
+    if (d.length >= 8) out += '-' + d.slice(8, 10);
+    return out;
+  }
+  phone.addEventListener('input', e => {
+    // при стирании не мешаем удалять скобки и дефисы
+    if (e.inputType && e.inputType.startsWith('delete')) {
+      if (!/\d/.test(phone.value.replace(/^\+7/, ''))) phone.value = '+7 (';
+      prevNational = nationalDigits(phone.value);
+      return;
+    }
+    phone.value = formatPhone(phone.value) || '+7 (';
+    prevNational = nationalDigits(phone.value);
+  });
+  phone.addEventListener('focus', () => { if (!phone.value) phone.value = '+7 ('; });
+  phone.addEventListener('blur', () => { if (phone.value.replace(/\D/g, '').length <= 1) phone.value = ''; });
+
+  // Форма заявки: проверка полей. ЗАГЛУШКА — отправки пока нет
+  const form = document.getElementById('lead-form');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const note = form.querySelector('.form-note');
+    const bad = [...form.querySelectorAll('[required]')].find(f =>
+      f.type === 'checkbox' ? !f.checked : f.type === 'tel' ? f.value.replace(/\D/g, '').length !== 11 : !f.value.trim());
+    if (bad) {
+      note.textContent = bad.type === 'checkbox' ? 'Нужно согласие на обработку данных' : bad.type === 'tel' ? 'Введите телефон полностью' : 'Заполните имя';
+      bad.focus();
+      return;
+    }
+    form.classList.add('sent');
+  });
 </script>
 </body></html>
