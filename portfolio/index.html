@@ -889,6 +889,12 @@
 .card-image img { width:100%; height:auto; object-fit:contain; transform:none; }
 .card-image:hover img { transform:none; filter:brightness(.9); }
 @media(max-width:500px) { .card-image { aspect-ratio:auto; } }
+
+/* Вступление в типографике блока «Как мы работаем» на главной */
+.port-hero-phrase { margin:clamp(80px,9vw,150px) 0 clamp(70px,8vw,130px); max-width:17em; font-size:clamp(44px,5vw,92px); font-weight:var(--tw); line-height:1.04; letter-spacing:var(--tls); }
+.port-hero-phrase .dim { color:var(--muted); }
+.port-hero-phrase .port-accent { color:var(--accent); }
+@media(max-width:720px) { .port-hero-phrase { font-size:clamp(38px,7vw,56px); margin:70px 0 90px; } }
 </style>
 </head>
 <body>
@@ -1012,9 +1018,9 @@
 
 <main class="portfolio-main">
   <section class="port-hero" aria-labelledby="portfolio-title">
-    <div class="port-hero-top"><span class="mono"><span class="cm">//</span> Дизайн+Код / Избранные работы</span><span class="mono">Сайты и интернет-магазины · 1С-Битрикс</span></div>
-    <h1 class="port-hero-title" id="portfolio-title">Портфолио</h1>
-    <div class="port-hero-bottom"><span class="mono">01 / Проекты</span><p>Выберите близкую отрасль, откройте работающий сайт и оцените интерфейс. Понравился подход — обсудим похожую задачу.</p><a href="#projects">Смотреть работы <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    <div class="port-hero-top"><span class="mono"><span class="cm">//</span> Портфолио</span><span class="mono">Сайты и интернет-магазины · 1С-Битрикс</span></div>
+    <h1 class="phrase port-hero-phrase" id="portfolio-title"><span class="dim">Выберите</span> близкую отрасль, <span class="dim">откройте</span> работающий сайт <span class="dim">и</span> оцените интерфейс. <span class="dim">Понравился</span> подход <span class="dim">—</span> <span class="port-accent">обсудим</span> похожую задачу.</h1>
+    <div class="port-hero-bottom"><span class="mono">01 / Проекты</span><a href="#projects">Смотреть работы <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
   </section>
   <section class="port-list" id="projects" aria-labelledby="projects-title">
     <div class="list-head"><h2 id="projects-title">Избранные работы</h2><span class="mono" id="visible-count" aria-live="polite">Показано 06 / 06</span></div>
