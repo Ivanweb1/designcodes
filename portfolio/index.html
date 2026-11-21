@@ -875,7 +875,7 @@
 .port-contact + .footer { margin-top:0; }
 @media(max-width:900px) { .port-hero-bottom .mono{grid-column:1/3}.port-hero-bottom p{grid-column:3/11}.port-hero-bottom a{grid-column:3/11;justify-self:start}.contact-kicker{grid-column:1/13}.contact-copy{grid-column:1/13} }
 @media(max-width:720px) { .port-hero{min-height:auto}.port-hero-title{font-size:clamp(61px,14vw,112px);margin-top:90px}.port-hero-title span:last-child{margin-left:0}.port-hero-bottom{grid-template-columns:1fr;gap:20px}.port-hero-bottom .mono,.port-hero-bottom p,.port-hero-bottom a{grid-column:1}.list-head{align-items:start}.filters{gap:7px}.filters .mono{width:100%;margin-bottom:8px}.project-grid{grid-template-columns:1fr;gap:64px}.card-info{grid-template-columns:1fr}.card-feature{border-left:0;border-top:1px solid var(--line);padding:15px 0 0}.contact-layout{display:block}.contact-copy h2{margin-top:34px} }
-@media(max-width:500px) { .port-hero-top .mono:last-child{display:none}.port-hero-title{font-size:16vw}.port-hero-bottom p{font-size:21px}.filter{font-size:13px;padding:9px 12px}.list-head h2{font-size:42px}.card-image{aspect-ratio:1.2}.card-actions{flex-direction:column;gap:8px}.contact-actions{align-items:start;flex-direction:column}.contact-actions .contact-email{width:100%;justify-content:space-between} }
+@media(max-width:500px) { .port-hero-top .mono:not(:first-child){display:none}.port-hero-title{font-size:16vw}.port-hero-bottom p{font-size:21px}.filter{font-size:13px;padding:9px 12px}.list-head h2{font-size:42px}.card-image{aspect-ratio:1.2}.card-actions{flex-direction:column;gap:8px}.contact-actions{align-items:start;flex-direction:column}.contact-actions .contact-email{width:100%;justify-content:space-between} }
 @media(prefers-reduced-motion:reduce) { .card-image img,.image-open{transition:none} }
 
 /* Одинаковые диагональные стрелки и цельный заголовок портфолио */
@@ -1055,7 +1055,7 @@
 
 <main class="portfolio-main">
   <section class="port-hero" aria-labelledby="portfolio-title">
-    <div class="port-hero-top"><span class="mono"><span class="cm">//</span> Портфолио</span></div>
+    <div class="port-hero-top"><span class="mono"><span class="cm">//</span> 01 · Портфолио</span></div>
     <h1 class="phrase port-hero-phrase" id="portfolio-title"><span class="dim">Выберите</span> близкую отрасль, <span class="dim">откройте</span> работающий сайт <span class="dim">и</span> <span class="dim">оцените</span> интерфейс. <span class="dim">Понравился</span> подход <span class="dim">—</span> <span class="port-accent">обсудим</span> похожую задачу</h1>
     
   </section>
