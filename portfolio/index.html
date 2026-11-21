@@ -917,6 +917,21 @@
 .image-open { background:var(--ink); color:var(--bg); font-family:var(--font); font-size:15px; line-height:1; text-transform:none; align-items:center; padding:13px 18px; }
 .image-open .ico,.card-actions .ico { display:block; flex:none; width:18px; height:18px; stroke-width:1.5; }
 .card-image:hover .image-open { color:var(--bg); }
+
+.cta-short { display:none; }
+@media(max-width:720px) {
+  .filters { display:flex; flex-wrap:nowrap; gap:8px; overflow-x:auto; overflow-y:hidden; padding:14px var(--gutter) 26px 0; margin-right:calc(var(--gutter) * -1); -webkit-overflow-scrolling:touch; scrollbar-width:none; scroll-snap-type:x proximity; }
+  .filters::-webkit-scrollbar { display:none; }
+  .filters > .mono { display:none; }
+  .filter { flex:none; white-space:nowrap; scroll-snap-align:start; }
+}
+@media(max-width:600px) {
+  .card-actions { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:8px; align-items:stretch; }
+  .card-actions a { min-height:44px; width:100%; padding:0 9px; font-size:13px; gap:6px; white-space:nowrap; }
+  .card-actions .ico { width:16px; height:16px; }
+  .cta-long { display:none; }
+  .cta-short { display:inline; }
+}
 </style>
 </head>
 <body>
@@ -1062,7 +1077,7 @@
     <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Детские товары</span><h2>Happy Baby</h2><p class="card-kind">Интернет-магазин крупной марки детских товаров</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Интернет-магазин детских товаров</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://happybaby.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="Happy Baby">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://happybaby.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="Happy Baby"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
 <article class="project-card" data-industry="transport" data-project="ТРОЙКА Electro">
   <div class="card-top mono"><span>02 / 06</span><span>Электротранспорт</span></div>
@@ -1071,7 +1086,7 @@
     <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Электротранспорт</span><h2>ТРОЙКА Electro</h2><p class="card-kind">Сайт-каталог официального дистрибьютора в Москве</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Каталог гольфкаров и электротранспорта</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://3electro.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="ТРОЙКА Electro">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://3electro.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="ТРОЙКА Electro"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
 <article class="project-card" data-industry="tech" data-project="Kenwood">
   <div class="card-top mono"><span>03 / 06</span><span>Техника</span></div>
@@ -1080,7 +1095,7 @@
     <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Кухонная техника</span><h2>Kenwood</h2><p class="card-kind">Интернет-магазин официального дилера в Казахстане</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Интернет-магазин кухонной техники</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://kenwood.kz/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="Kenwood">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://kenwood.kz/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="Kenwood"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
 <article class="project-card" data-industry="tech" data-project="DeLonghi">
   <div class="card-top mono"><span>04 / 06</span><span>Техника</span></div>
@@ -1089,7 +1104,7 @@
     <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Бытовая техника</span><h2>DeLonghi</h2><p class="card-kind">Интернет-магазин официального дилера в Казахстане</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Интернет-магазин кофемашин и бытовой техники</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://delonghi.kz/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="DeLonghi">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://delonghi.kz/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="DeLonghi"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
 <article class="project-card" data-industry="materials" data-project="Fanera">
   <div class="card-top mono"><span>05 / 06</span><span>Материалы</span></div>
@@ -1098,7 +1113,7 @@
     <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Фанера</span><h2>Fanera</h2><p class="card-kind">Сайт поставщика фанеры</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Подбор листа по шагам</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://fanera.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="Fanera">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://fanera.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="Fanera"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
 <article class="project-card" data-industry="manufacturing" data-project="Фавор-Гарант">
   <div class="card-top mono"><span>06 / 06</span><span>Производство</span></div>
@@ -1107,7 +1122,7 @@
     <span class="image-open">Открыть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span>
   </a>
   <div class="card-info"><div><span class="card-tag mono">Металлоконструкции</span><h2>Фавор-Гарант</h2><p class="card-kind">Сайт-каталог производителя конструкций для городской среды</p></div><div class="card-feature"><span class="mono">В проекте</span><p>Каталог конструкций для городской среды</p></div></div>
-  <div class="card-actions"><a class="site-link" href="https://favor-garant.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" data-discuss="Фавор-Гарант">Обсудить похожий проект <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  <div class="card-actions"><a class="site-link" href="https://favor-garant.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="Фавор-Гарант"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article></div>
   </section>
   </main>
