@@ -1,0 +1,787 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Политика обработки персональных данных — Дизайн+Код</title>
+<meta name="description" content="Политика ООО «ДИЗАЙНКОД» в отношении обработки персональных данных посетителей сайта.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+  /* Страница /privacy/ (раздел 21 ТЗ).
+     Дизайн-система: типографический минимализм (B), без коммерческого CTA и CRM-формы. */
+  :root {
+    --bg: #F3F2EE;
+    --ink: #111110;
+    --muted: #6B6A66;
+    --line: #D6D4CE;
+    --accent: #F0441C;
+    --font: Onest, "Helvetica Neue", Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    --gutter: clamp(16px, 3vw, 40px);
+    --header-h: 72px;
+    --tw: 400;
+    --tls: -0.03em;
+    interpolate-size: allow-keywords;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .cm { color: var(--accent); }
+
+  /* ---------- Шапка (логотип по центру) ---------- */
+  .header {
+    position: sticky; top: 0; z-index: 20;
+    height: var(--header-h);
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+    padding: 0 var(--gutter);
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .header .nav { grid-column: 1; grid-row: 1; display: flex; gap: 4px; }
+  .header .logo { grid-column: 2; grid-row: 1; display: block; flex: none; }
+  .header .header-right { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: 24px; }
+  .logo-svg { display: block; height: 46px; width: auto; }
+  .nav-item { position: relative; }
+  .nav-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 40px; padding: 0 12px;
+    font-size: 15px; font-weight: 400;
+    border-radius: 999px;
+  }
+  .nav-link::before { content: "/"; color: var(--accent); width: 0; overflow: hidden; display: inline-block; transition: width .2s; }
+  .nav-link:hover::before, .nav-link[aria-expanded="true"]::before { width: .6em; }
+  .nav-link:hover, .nav-link[aria-expanded="true"] { background: rgba(17,17,16,.06); }
+  .caret { width: 9px; height: 9px; transition: transform .2s; }
+  .nav-link[aria-expanded="true"] .caret { transform: rotate(180deg); }
+
+  .submenu {
+    position: absolute; top: calc(100% + 14px); left: 0;
+    min-width: 300px;
+    padding: 10px 0;
+    background: var(--bg);
+    border: 1px solid var(--ink);
+    display: none;
+  }
+  .submenu.open { display: block; }
+  .submenu a {
+    display: grid; grid-template-columns: 34px 1fr; align-items: baseline;
+    padding: 9px 20px;
+    font-size: 15px;
+  }
+  .submenu a:hover, .submenu a[aria-current="page"] { background: var(--ink); color: var(--bg); }
+  .submenu a .mono { color: var(--muted); }
+  .submenu a:hover .mono, .submenu a[aria-current="page"] .mono { color: var(--accent); }
+  .submenu .sub-group { padding: 12px 20px 4px; color: var(--muted); }
+
+  .phone { font-family: var(--mono); font-size: 14px; white-space: nowrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 44px; padding: 0 20px;
+    background: var(--ink); color: var(--bg);
+    font-size: 15px; font-weight: 400;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background .2s, color .2s;
+  }
+  .btn:hover { background: var(--accent); color: #fff; }
+
+  .icon-btn {
+    display: none;
+    width: 44px; height: 44px;
+    align-items: center; justify-content: center;
+    border: 1px solid var(--ink); border-radius: 999px;
+  }
+  .icon-btn svg { width: 18px; height: 18px; }
+
+  .ico { width: 1em; height: 1em; vertical-align: -0.14em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; overflow: visible; transition: transform .25s ease; }
+  a:hover > .ico, button:hover > .ico { transform: translateX(4px); }
+
+  /* ---------- Мобильное меню ---------- */
+  .mobile-menu {
+    position: fixed; inset: var(--header-h) 0 0 0; z-index: 19;
+    background: var(--bg);
+    overflow-y: auto;
+    padding: 8px var(--gutter) 32px;
+    display: none;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu details { border-bottom: 1px solid var(--line); }
+  .mobile-menu summary, .mobile-menu > a:not(.btn):not(.phone) {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 0;
+    font-size: 24px; font-weight: 400; letter-spacing: -0.02em;
+    list-style: none; cursor: pointer;
+  }
+  .mobile-menu > a:not(.btn):not(.phone) { border-bottom: 1px solid var(--line); }
+  .mobile-menu summary::-webkit-details-marker { display: none; }
+  .mobile-menu details[open] summary .caret { transform: rotate(180deg); }
+  .mobile-menu details a { display: block; padding: 8px 0 8px 16px; font-size: 17px; }
+  .mobile-menu details > div { padding-bottom: 16px; }
+  .mobile-menu .btn { margin-top: 28px; width: 100%; justify-content: center; height: 56px; }
+  .mobile-menu .phone { display: block; margin-top: 20px; text-align: center; }
+
+  @media (max-width: 1180px) { .header .phone { display: none; } }
+  @media (max-width: 1080px) {
+    .header .nav, .header .header-right .btn, .header .phone { display: none; }
+    .header .header-right { display: contents; }
+    .header .icon-btn { display: inline-flex; }
+    .header a.icon-btn { grid-column: 1; grid-row: 1; justify-self: start; }
+    .header #menu-toggle { grid-column: 3; grid-row: 1; justify-self: end; }
+  }
+  @media (max-width: 560px) {
+    :root { --header-h: 64px; }
+    .logo-svg { height: 40px; }
+  }
+
+  /* ---------- Заголовок юридического документа ---------- */
+  .doc-main { overflow: clip; }
+  .doc-hero {
+    padding: clamp(24px, 3vw, 40px) var(--gutter) clamp(40px, 5vw, 64px);
+  }
+  .doc-kicker { color: var(--muted); }
+  .doc-hero h1 {
+    margin: clamp(18px, 2.2vw, 32px) 0 clamp(28px, 3.6vw, 48px);
+    max-width: 1400px;
+    font-size: clamp(38px, 5.4vw, 96px);
+    line-height: 1;
+    letter-spacing: var(--tls);
+    font-weight: var(--tw);
+    color: var(--ink);
+  }
+  .doc-meta-bar {
+    border-top: 1px solid var(--ink);
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px 32px;
+  }
+  .doc-meta-item .mono { display: block; color: var(--muted); margin-bottom: 6px; }
+  .doc-meta-item p { margin: 0; font-size: 15px; line-height: 1.45; }
+
+  /* ---------- Тело документа: оглавление + разделы ---------- */
+  .doc-body {
+    padding: clamp(44px, 6vw, 88px) var(--gutter) clamp(72px, 9vw, 128px);
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(20px, 3vw, 48px);
+    align-items: start;
+  }
+  .doc-toc {
+    grid-column: 1 / 5;
+    position: sticky;
+    top: calc(var(--header-h) + 28px);
+  }
+  .doc-toc > .mono { display: block; color: var(--muted); margin-bottom: 16px; }
+  .doc-toc ol {
+    margin: 0; padding: 0; list-style: none;
+    border-top: 1px solid var(--ink);
+  }
+  .doc-toc li { border-bottom: 1px solid var(--line); }
+  .doc-toc a {
+    display: grid; grid-template-columns: 32px 1fr; gap: 8px; align-items: baseline;
+    padding: 10px 0;
+    font-size: 14px; line-height: 1.35; color: var(--muted);
+    transition: color .2s;
+  }
+  .doc-toc a .mono { color: var(--accent); }
+  .doc-toc a:hover { color: var(--ink); }
+  .doc-toc-links {
+    margin-top: 24px;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  }
+  .doc-toc-links a {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; color: var(--ink);
+    border-bottom: 1px solid var(--line); padding-bottom: 3px;
+    transition: color .2s, border-color .2s;
+  }
+  .doc-toc-links a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .doc-content {
+    grid-column: 5 / 13;
+    max-width: 72ch;
+  }
+  .doc-section {
+    padding: 0 0 clamp(36px, 4.5vw, 56px);
+    margin-bottom: clamp(36px, 4.5vw, 56px);
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+  .doc-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+  .doc-section > .mono { display: block; color: var(--accent); margin-bottom: 10px; }
+  .doc-section h2 {
+    margin: 0 0 18px;
+    font-size: clamp(24px, 2.4vw, 36px);
+    line-height: 1.12; letter-spacing: -0.03em; font-weight: 400;
+  }
+  .doc-section p { margin: 0 0 14px; font-size: 16px; line-height: 1.65; color: var(--ink); }
+  .doc-section p:last-child { margin-bottom: 0; }
+  .doc-list {
+    margin: 10px 0 16px; padding: 0; list-style: none;
+  }
+  .doc-list li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    font-size: 16px; line-height: 1.6; color: var(--ink);
+  }
+  .doc-list li::before {
+    content: "—";
+    position: absolute; left: 0; top: 0;
+    color: var(--accent);
+  }
+  .doc-list li:last-child { margin-bottom: 0; }
+
+  .operator-card {
+    margin: 18px 0 0;
+    border-top: 1px solid var(--ink);
+  }
+  .operator-row {
+    display: grid; grid-template-columns: 180px 1fr; gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px; line-height: 1.45;
+  }
+  .operator-row dt { color: var(--muted); }
+  .operator-row dd { margin: 0; }
+  .operator-row a { border-bottom: 1px solid var(--line); padding-bottom: 1px; }
+  .operator-row a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .doc-inline-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
+  }
+  .doc-inline-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ---------- Подвал (без коммерческой формы) ---------- */
+  .footer {
+    --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55);
+    background: var(--ink); color: var(--bg);
+    padding: clamp(48px, 6vw, 88px) var(--gutter) 0;
+  }
+  .footer-seal { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 20px; align-items: center; padding: clamp(28px, 3.5vw, 48px) 0; }
+  .footer-seal .ln { height: 1px; background: var(--cline); transform-origin: left center; transition: transform 1s cubic-bezier(.65,0,.35,1); }
+  .footer-seal .ln:last-child { transform-origin: right center; }
+  .footer.js-draw:not(.drawn) .footer-seal .ln { transform: scaleX(0); }
+  .footer-logo { display: block; width: clamp(200px, 20vw, 290px); color: var(--bg); transition: color .3s; }
+  .footer-logo:hover { color: var(--accent); }
+  .footer-logo svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .footer-logo path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1.2s cubic-bezier(.65,0,.35,1) .7s; }
+  .footer-logo path:nth-child(2) { transition-delay: .95s; }
+  .footer-logo path:nth-child(3) { transition-delay: 1.15s; }
+  .footer-logo path:nth-child(4) { transition-delay: .7s; }
+  .footer-logo g { transition: opacity .8s 1.7s; }
+  .footer.js-draw:not(.drawn) .footer-logo path { stroke-dashoffset: 1; }
+  .footer.js-draw:not(.drawn) .footer-logo g { opacity: 0; }
+  .footer-top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; padding-top: 32px; border-top: 1px solid var(--cline); }
+  .footer-col { grid-column: span 3; display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+  .footer-col .mono { color: var(--cdim); margin-bottom: 6px; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-legal { display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding: 0 0 24px; color: var(--cdim); font-size: 13px; }
+  .footer-legal a:hover { color: var(--bg); }
+
+  /* ---------- Адаптив ---------- */
+  @media (max-width: 960px) {
+    .doc-meta-bar { grid-template-columns: 1fr; }
+    .doc-body { grid-template-columns: 1fr; row-gap: 40px; }
+    .doc-toc { grid-column: 1; position: static; }
+    .doc-content { grid-column: 1; max-width: none; }
+    .footer-col { grid-column: span 6; margin-bottom: 28px; }
+  }
+  @media (max-width: 680px) {
+    .doc-hero h1 { font-size: clamp(32px, 9.5vw, 54px); }
+    .operator-row { grid-template-columns: 1fr; gap: 4px; }
+    .footer { padding-top: 40px; }
+    .footer-logo { width: 180px; }
+    .footer-legal { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M8.5 4.5L16 12l-7.5 7.5"/></symbol>
+</svg>
+
+<header class="header">
+  <a class="logo" href="../prototype/home.html" aria-label="Дизайн+Код — на главную">
+    <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="7" aria-hidden="true">
+      <path d="M595 57H297L10 211l287 154h155"/>
+      <path d="M140 137v142"/>
+      <path d="M706 3L515 412"/>
+      <path d="M725 57l305 154-305 154"/>
+      <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+        <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
+        <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+      </g>
+    </svg>
+  </a>
+
+  <nav class="nav" aria-label="Основное меню">
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-services">Услуги
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-services">
+        <div class="sub-group mono">Сайты</div>
+        <a href="../services/bitrix/"><span class="mono">01</span>Разработка на 1С-Битрикс</a>
+        <a href="../services/online-stores/"><span class="mono">02</span>Интернет-магазины</a>
+        <a href="../services/corporate-sites/"><span class="mono">03</span>Корпоративные сайты</a>
+        <a href="../services/support/"><span class="mono">04</span>Поддержка</a>
+        <div class="sub-group mono">Интеграции</div>
+        <a href="../services/integrations-1c/"><span class="mono">05</span>Сайт и 1С</a>
+        <a href="../services/messenger-bots/"><span class="mono">06</span>Мессенджеры и чат-боты</a>
+        <div class="sub-group mono">Ещё</div>
+        <a href="../bitrix24/"><span class="mono">07</span>Битрикс24</a>
+        <a href="../solutions/"><span class="mono">08</span>Готовые решения</a>
+        <a href="../prices/"><span class="mono">09</span>Стоимость работ</a>
+      </div>
+    </div>
+    <div class="nav-item"><a class="nav-link" href="../portfolio/">Портфолио</a></div>
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-licenses">Лицензии
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-licenses">
+        <a href="../licenses/"><span class="mono">01</span>Обзор</a>
+        <a href="../licenses/bitrix/"><span class="mono">02</span>Покупка 1С-Битрикс</a>
+        <a href="../licenses/bitrix-renewal/"><span class="mono">03</span>Продление 1С-Битрикс</a>
+        <a href="../licenses/bitrix24/"><span class="mono">04</span>Тарифы Битрикс24</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-about">О компании
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-about">
+        <a href="../about/"><span class="mono">01</span>О студии</a>
+        <a href="../process/"><span class="mono">02</span>Как мы работаем</a>
+        <a href="../letters/"><span class="mono">03</span>Благодарственные письма</a>
+        <a href="../company-documents/"><span class="mono">04</span>Документы и реквизиты</a>
+        <a href="../contacts/"><span class="mono">05</span>Контакты</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="header-right">
+    <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
+    <a class="btn" href="../contacts/#form">Контакты</a>
+    <a class="icon-btn" href="tel:+79262901420" aria-label="Позвонить">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="icon-btn" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Открыть меню">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18M3 16h18" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <details>
+    <summary>Услуги <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="../services/bitrix/">Разработка на 1С-Битрикс</a>
+      <a href="../services/online-stores/">Интернет-магазины</a>
+      <a href="../services/corporate-sites/">Корпоративные сайты</a>
+      <a href="../services/support/">Поддержка</a>
+      <a href="../services/integrations-1c/">Сайт и 1С</a>
+      <a href="../services/messenger-bots/">Мессенджеры и чат-боты</a>
+      <a href="../bitrix24/">Битрикс24</a>
+      <a href="../solutions/">Готовые решения</a>
+      <a href="../prices/">Стоимость работ</a>
+    </div>
+  </details>
+  <a href="../portfolio/">Портфолио</a>
+  <details>
+    <summary>Лицензии <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="../licenses/">Обзор</a>
+      <a href="../licenses/bitrix/">Покупка 1С-Битрикс</a>
+      <a href="../licenses/bitrix-renewal/">Продление 1С-Битрикс</a>
+      <a href="../licenses/bitrix24/">Тарифы Битрикс24</a>
+    </div>
+  </details>
+  <details>
+    <summary>О компании <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="../about/">О студии</a>
+      <a href="../process/">Как мы работаем</a>
+      <a href="../letters/">Благодарственные письма</a>
+      <a href="../company-documents/">Документы и реквизиты</a>
+      <a href="../contacts/">Контакты</a>
+    </div>
+  </details>
+  <a class="btn" href="../contacts/#form">Контакты</a>
+  <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
+</div>
+
+<main class="doc-main">
+  <!-- 01 · Заголовок и реквизиты документа -->
+  <section class="doc-hero" aria-labelledby="doc-title">
+    <div class="doc-kicker mono"><span class="cm">//</span> 01 · Правовой документ</div>
+    <h1 id="doc-title">Политика конфиденциальности</h1>
+    <div class="doc-meta-bar">
+      <div class="doc-meta-item">
+        <span class="mono">Оператор</span>
+        <p>ООО «ДизайнКод» (ИНН/КПП 7736666610/773601001, ОГРН 5137746015138)</p>
+      </div>
+      <div class="doc-meta-item">
+        <span class="mono">Дата последнего обновления</span>
+        <p>28 мая 2025 года</p>
+      </div>
+      <div class="doc-meta-item">
+        <span class="mono">Связанные документы</span>
+        <p><a class="doc-inline-link" href="../personal-data-consent/">Согласие на обработку ПД <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · Содержание политики -->
+  <div class="doc-body">
+    <aside class="doc-toc" aria-label="Содержание документа">
+      <span class="mono"><span class="cm">//</span> 02 · Содержание</span>
+      <ol>
+        <li><a href="#sec-1"><span class="mono">01</span>Общие положения</a></li>
+        <li><a href="#sec-2"><span class="mono">02</span>Основные понятия</a></li>
+        <li><a href="#sec-3"><span class="mono">03</span>Принципы и цели обработки</a></li>
+        <li><a href="#sec-4"><span class="mono">04</span>Объем и категории данных</a></li>
+        <li><a href="#sec-5"><span class="mono">05</span>Порядок и условия обработки</a></li>
+        <li><a href="#sec-6"><span class="mono">06</span>Основные права и обязанности</a></li>
+        <li><a href="#sec-7"><span class="mono">07</span>Порядок рассмотрения споров</a></li>
+        <li><a href="#sec-8"><span class="mono">08</span>Заключительные положения</a></li>
+        <li><a href="#sec-9"><span class="mono">09</span>Реквизиты оператора</a></li>
+        <li><a href="#app-1"><span class="mono">10</span>Приложение №1 (Согласие)</a></li>
+      </ol>
+      <div class="doc-toc-links">
+        <a href="../contacts/">Контакты оператора <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a href="../personal-data-consent/">Согласие на обработку ПД <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </aside>
+
+    <article class="doc-content">
+      <section class="doc-section" id="sec-1">
+        <span class="mono">Раздел 01</span>
+        <h2>1. Общие положения</h2>
+        <p>Настоящая политика конфиденциальности (далее — Политика) определяет основные принципы, цели, условия и способы обработки персональных данных Общество с ограниченной ответственностью «ДизайнКод» (сокращенное наименование — ООО «ДизайнКод», ОГРН 5137746015138, ИНН 7736666610, юридический адрес: 117393, г. Москва, ул. Академика Пилюгина, д. 14, корп. 2, 582) (далее — Оператор).</p>
+        <p><strong>1.1.</strong> Настоящая Политика разработана во исполнение требований п. 2 ч. 1 ст. 18.1 Федерального закона от 27.07.2006 № 152-ФЗ «О персональных данных» (далее — Закон о персональных данных) с учетом требований Закона о персональных данных и иных нормативных правовых актов Российской Федерации в области персональных данных.</p>
+        <p><strong>1.2.</strong> Действие настоящей Политики распространяется на все операции, совершаемые Оператором с персональными данными с использованием или без использования средств автоматизации. Оператор обрабатывает персональные данные субъекта персональных данных только в случае их заполнения и (или) отправки субъектом персональных данных самостоятельно через формы на сайте https://designcodes.ru (далее — Сайт), или направленные Оператору посредством электронной почты. Заполняя соответствующие формы и (или) отправляя свои персональные данные Оператору, субъект персональных данных выражает согласие с настоящей Политикой.</p>
+        <p><strong>1.3.</strong> Субъект персональных данных самостоятельно принимает решение о предоставлении его персональных данных и дает согласие свободно, своей волей и в своем интересе.</p>
+        <p><strong>1.4.</strong> Настоящая Политика подлежит актуализации по инициативе Оператора, а также в случае изменения законодательства Российской Федерации о персональных данных.</p>
+      </section>
+
+      <section class="doc-section" id="sec-2">
+        <span class="mono">Раздел 02</span>
+        <h2>2. Основные понятия</h2>
+        <p><strong>2.1.</strong> В целях настоящей Политики нижеприведенные термины используются в следующем значении:</p>
+        <ul class="doc-list">
+          <li><strong>Персональные данные</strong> — любая информация, относящаяся прямо или косвенно к определенному или определяемому физическому лицу (субъекту персональных данных).</li>
+          <li><strong>Биометрические персональные данные</strong> — сведения, которые характеризуют физиологические и биологические особенности человека, на основании которых можно установить его личность.</li>
+          <li><strong>Обработка персональных данных</strong> — любое действие (операция) или совокупность действий (операций), совершаемых с использованием средств автоматизации или без использования таких средств с персональными данными, включая сбор, запись, систематизацию, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, передачу (распространение, предоставление, доступ), обезличивание, блокирование, удаление, уничтожение персональных данных.</li>
+          <li><strong>Автоматизированная обработка персональных данных</strong> — обработка персональных данных с помощью средств вычислительной техники.</li>
+          <li><strong>Распространение персональных данных</strong> — действия, направленные на раскрытие персональных данных неопределенному кругу лиц.</li>
+          <li><strong>Предоставление персональных данных</strong> — действия, направленные на раскрытие персональных данных определенному лицу или определенному кругу лиц.</li>
+          <li><strong>Блокирование персональных данных</strong> — временное прекращение обработки персональных данных (за исключением случаев, если обработка необходима для уточнения персональных данных).</li>
+          <li><strong>Уничтожение персональных данных</strong> — действия, в результате которых становится невозможным восстановить содержание персональных данных в информационной системе персональных данных и (или) в результате которых уничтожаются материальные носители персональных данных.</li>
+          <li><strong>Обезличивание персональных данных</strong> — действия, в результате которых становится невозможным без использования дополнительной информации определить принадлежность персональных данных конкретному субъекту персональных данных.</li>
+          <li><strong>Субъект персональных данных, Субъект</strong> — физическое лицо, которое может быть прямо или косвенно определено с помощью персональных данных.</li>
+          <li><strong>Согласие на обработку персональных данных, Согласие</strong> — письменный или цифровой документ, который подтверждает добровольное решение Субъекта передать Оператору персональные данные в объеме, условиях и для целей, определенных настоящей Политикой и договорами, заключенными между Субъектом и Оператором.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section" id="sec-3">
+        <span class="mono">Раздел 03</span>
+        <h2>3. Принципы и цели обработки персональных данных</h2>
+        <p><strong>3.1.</strong> Обработка персональных данных Оператором осуществляется с учетом необходимости обеспечения защиты прав и свобод субъектов персональных данных, в том числе защиты права на неприкосновенность частной жизни, личную и семейную тайну, на основе следующих принципов:</p>
+        <ul class="doc-list">
+          <li>обработка персональных данных осуществляется на законной основе;</li>
+          <li>обработка персональных данных ограничивается достижением конкретных, заранее определенных и законных целей;</li>
+          <li>не допускается обработка персональных данных, несовместимая с целями сбора персональных данных;</li>
+          <li>содержание и объем обрабатываемых персональных данных соответствует заявленным целям обработки. Не допускается избыточность обрабатываемых персональных данных по отношению к заявленным целям их обработки;</li>
+          <li>при обработке персональных данных обеспечиваются точность персональных данных, их достаточность, а в необходимых случаях — актуальность по отношению к целям обработки персональных данных;</li>
+          <li>хранение персональных данных осуществляется в форме, позволяющей определить субъекта персональных данных, не дольше, чем того требуют цели обработки персональных данных, если срок хранения персональных данных не установлен федеральным законом, договором, стороной которого, выгодоприобретателем или поручителем по которому является Субъект персональных данных;</li>
+          <li>обрабатываемые персональные данные уничтожаются либо обезличиваются по достижении целей обработки или в случае утраты необходимости в достижении этих целей, если иное не предусмотрено федеральным законом.</li>
+        </ul>
+        <p><strong>3.2.</strong> Обработка персональных данных Оператором осуществляется в следующих целях:</p>
+        <ul class="doc-list">
+          <li>идентификация Субъекта с целью заключения любых договоров с Оператором и их дальнейшего исполнения;</li>
+          <li>проведение Оператором акций, опросов, интервью, тестирований и исследований на Сайте;</li>
+          <li>установление с Субъектом обратной связи, включая, но не ограничиваясь: направление рассылок, уведомлений в форме смс, электронных писем, устных и письменных запросов, обработка запросов и заявок от Субъекта;</li>
+          <li>подтверждение достоверности и полноты персональных данных, предоставленных Субъектом;</li>
+          <li>статистические и иные исследовательские и (или) аналитические цели при условии обезличивания персональных данных Субъекта.</li>
+        </ul>
+      </section>
+
+      <section class="doc-section" id="sec-4">
+        <span class="mono">Раздел 04</span>
+        <h2>4. Объем и категории обрабатываемых персональных данных, категории субъектов</h2>
+        <p><strong>4.1.</strong> Оператор может обрабатывать персональные данные следующих Субъектов:</p>
+        <ul class="doc-list">
+          <li>контрагенты — физические лица и представители контрагентов — юридических лиц;</li>
+          <li>посетители Сайта.</li>
+        </ul>
+        <p><strong>4.2.</strong> К персональным данным, обрабатываемым Оператором, относятся:</p>
+        <ul class="doc-list">
+          <li>фамилия, имя, отчество Субъекта персональных данных;</li>
+          <li>адрес места жительства/пребывания или иной адрес, указанный Субъектом при заключении договоров с Оператором;</li>
+          <li>номер мобильного телефона;</li>
+          <li>адрес электронной почты (email);</li>
+          <li>история запросов и просмотров на Сайте и его сервисах;</li>
+          <li>файлы cookie, сведения о местоположении пользователя, сведения о действиях пользователя на Сайте, сведения об оборудовании пользователя, дата и время сессии.</li>
+        </ul>
+        <p><strong>4.3.</strong> Оператор обеспечивает соответствие содержания и объема обрабатываемых персональных данных заявленным целям обработки и, в случае необходимости, принимает меры по устранению их избыточности по отношению к заявленным целям обработки.</p>
+      </section>
+
+      <section class="doc-section" id="sec-5">
+        <span class="mono">Раздел 05</span>
+        <h2>5. Порядок и условия обработки персональных данных</h2>
+        <p><strong>5.1.</strong> Обработка персональных данных Оператором осуществляется следующими способами:</p>
+        <ul class="doc-list">
+          <li>неавтоматизированная обработка персональных данных;</li>
+          <li>автоматизированная обработка персональных данных с передачей полученной информации по информационно-телекоммуникационным сетям или без таковой, включая обработку при помощи автоматизированных систем управления базами данных и иных программных средств;</li>
+          <li>смешанная обработка персональных данных.</li>
+        </ul>
+        <p><strong>5.2.</strong> Перечень действий, совершаемых Оператором с персональными данными: сбор, систематизация, накопление, хранение, уточнение (обновление, изменение), использование, распространение (в том числе передача), обезличивание, блокирование, уничтожение на территории Российской Федерации в соответствии с действующим законодательством Российской Федерации.</p>
+        <p><strong>5.3.</strong> Субъект персональных данных принимает решение о предоставлении его персональных данных и дает Согласие свободно, своей волей и в своем интересе.</p>
+        <p><strong>5.4.</strong> Оператор не осуществляет обработку биометрических персональных данных.</p>
+        <p><strong>5.5.</strong> Трансграничная передача персональных данных Оператором не осуществляется.</p>
+        <p><strong>5.6.</strong> Обработка специальных категорий персональных данных, касающихся расовой, национальной принадлежности, политических взглядов, религиозных или философских убеждений, интимной жизни, Оператором не осуществляется.</p>
+        <p><strong>5.7.</strong> Условием прекращения обработки персональных данных может являться достижение целей обработки персональных данных, истечение срока действия Согласия или отзыв Согласия Субъектом персональных данных, а также выявление неправомерной обработки персональных данных.</p>
+        <p><strong>5.8.</strong> Срок обработки персональных данных является неограниченным. Субъект может в любой момент отозвать свое Согласие на обработку персональных данных, направив Оператору уведомление посредством электронной почты на электронный адрес Оператора, указанный в разделе 9 настоящей Политики, с пометкой «Отзыв согласия на обработку персональных данных».</p>
+        <p><strong>5.9.</strong> Оператор обязуется прекратить обработку персональных данных Субъекта в течение 5 (пяти) рабочих дней с даты получения уведомления согласно п. 5.8 настоящей Политики.</p>
+      </section>
+
+      <section class="doc-section" id="sec-6">
+        <span class="mono">Раздел 06</span>
+        <h2>6. Основные права и обязанности</h2>
+        <p><strong>6.1.</strong> Оператор имеет право:</p>
+        <ul class="doc-list">
+          <li>получать от Субъекта достоверные информацию и (или) документы, содержащие персональные данные;</li>
+          <li>требовать от Субъекта персональных данных своевременного уточнения предоставленных персональных данных.</li>
+        </ul>
+        <p><strong>6.2.</strong> Оператор обязан:</p>
+        <ul class="doc-list">
+          <li>обрабатывать персональные данные в порядке, установленном действующим законодательством Российской Федерации;</li>
+          <li>рассматривать обращения Субъекта персональных данных (его законного представителя) по вопросам обработки персональных данных и давать мотивированные ответы;</li>
+          <li>предоставлять Субъекту персональных данных (его законному представителю) возможность безвозмездного свободного доступа к его персональным данным;</li>
+          <li>принимать меры по уточнению, уничтожению персональных данных субъекта персональных данных в связи с его (его законного представителя) обращением с законными и обоснованными требованиями;</li>
+          <li>организовывать защиту персональных данных в соответствии с требованиями законодательства Российской Федерации.</li>
+        </ul>
+        <p><strong>6.3.</strong> Субъекты персональных данных имеют право:</p>
+        <ul class="doc-list">
+          <li>на полную информацию об их персональных данных, обрабатываемых Оператором;</li>
+          <li>на доступ к их персональных данным, включая право на получение копии любой записи, содержащей их персональные данные, за исключением случаев, предусмотренных федеральным законом;</li>
+          <li>на уточнение их персональных данных, их блокирование или уничтожение в случаях, если персональные данные являются неполными, устаревшими, неточными, незаконно полученными или не являются необходимыми для заявленной цели обработки;</li>
+          <li>на отзыв Согласия на обработку персональных данных;</li>
+          <li>на принятие предусмотренных законом мер по защите своих прав;</li>
+          <li>на осуществление иных прав, предусмотренных законодательством Российской Федерации.</li>
+        </ul>
+        <p><strong>6.4.</strong> Субъекты персональных данных обязаны:</p>
+        <ul class="doc-list">
+          <li>предоставлять Оператору достоверные данные о себе;</li>
+          <li>предоставлять документы, содержащие персональные данные в объеме, необходимом для цели обработки;</li>
+          <li>сообщать Оператору об уточнении (обновлении, изменении) своих персональных данных.</li>
+        </ul>
+        <p><strong>6.5.</strong> Лица, передавшие Оператору недостоверные сведения о себе либо сведения о другом Субъекте персональных данных без согласия последнего, несут ответственность в соответствии с законодательством Российской Федерации.</p>
+      </section>
+
+      <section class="doc-section" id="sec-7">
+        <span class="mono">Раздел 07</span>
+        <h2>7. Порядок рассмотрения споров</h2>
+        <p><strong>7.1.</strong> Все споры и разногласия, которые могут возникнуть между Оператором и Субъектами по вопросам, не нашедшим своего разрешения в тексте Политики, должны разрешаться путем переговоров.</p>
+        <p><strong>7.2.</strong> Стороны обязаны соблюдать претензионный порядок разрешения споров. До обращения в суд с иском по спорам, возникающим из отношений между Субъектом и Оператором, предъявляется претензия (письменное предложение о добровольном урегулировании спора). Срок рассмотрения претензии составляет 30 (тридцать) календарных дней с момента получения претензии, если иной порядок досудебного урегулирования не установлен действующим законодательством РФ.</p>
+        <p><strong>7.3.</strong> При неурегулировании в процессе переговоров спорных вопросов, споры, вытекающие из Политики, разрешаются в суде общей юрисдикции по месту нахождения Оператора. К настоящей Политике и отношениям между Субъектом и Оператором применяется действующее законодательство Российской Федерации.</p>
+      </section>
+
+      <section class="doc-section" id="sec-8">
+        <span class="mono">Раздел 08</span>
+        <h2>8. Заключительные положения</h2>
+        <p><strong>8.1.</strong> Оператор имеет право вносить изменения в настоящую Политику. При внесении изменений в актуальной редакции указывается дата последнего обновления. Новая редакция Политики вступает в силу с момента ее размещения на Сайте, если иное не предусмотрено новой редакцией Политики. Действующая редакция постоянно доступна на Сайте.</p>
+        <p><strong>8.2.</strong> Настоящей Политикой утверждена форма Согласия на обработку персональных данных пользователей Сайта (Приложение №1 к настоящей Политике), которая размещается на Сайте в публичном доступе по той же ссылке.</p>
+      </section>
+
+      <section class="doc-section" id="sec-9">
+        <span class="mono">Раздел 09</span>
+        <h2>9. Реквизиты оператора</h2>
+        <dl class="operator-card">
+          <div class="operator-row">
+            <dt class="mono">Оператор</dt>
+            <dd>ООО «ДизайнКод»</dd>
+          </div>
+          <div class="operator-row">
+            <dt class="mono">Юридический адрес</dt>
+            <dd>117393, г. Москва, ул. Академика Пилюгина, д. 14, корп. 2, 582</dd>
+          </div>
+          <div class="operator-row">
+            <dt class="mono">ИНН / КПП</dt>
+            <dd>7736666610 / 773601001</dd>
+          </div>
+          <div class="operator-row">
+            <dt class="mono">ОГРН</dt>
+            <dd>5137746015138</dd>
+          </div>
+          <div class="operator-row">
+            <dt class="mono">Электронная почта</dt>
+            <dd><a href="mailto:klimova.oksana@gmail.com">klimova.oksana@gmail.com</a></dd>
+          </div>
+          <div class="operator-row">
+            <dt class="mono">Телефон</dt>
+            <dd><a href="tel:+79262901420">+7 (926) 290-14-20</a></dd>
+          </div>
+        </dl>
+        <p style="margin-top: 18px;"><a class="doc-inline-link" href="../contacts/">Перейти на страницу контактов <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </section>
+
+      <section class="doc-section" id="app-1">
+        <span class="mono">Приложение №1 к Политике конфиденциальности</span>
+        <h2>Форма согласия на обработку персональных данных для посетителей сайта</h2>
+        <p>Оставаясь на сайте https://designcodes.ru (далее — Сайт), я выражаю свое согласие ООО «ДизайнКод» (ОГРН 5137746015138, ИНН 7736666610, юридический адрес: 117393, г. Москва, ул. Академика Пилюгина, д. 14, корп. 2, 582) (далее — Оператор), на автоматизированную обработку моих персональных данных (файлы cookie, сведения о местоположении пользователя, сведения о действиях пользователя на сайте, сведения об оборудовании пользователя, дата и время сессии), в том числе с использованием программ для автоматического сбора аналитических данных Яндекс.Метрика, с совершением действий: сбор, запись, систематизация, накопление, хранение, уточнение (обновление, изменение), извлечение, использование, обезличивание, блокирование, удаление, уничтожение, передача (предоставление, доступ) контрагентам Оператора, оказывающим услуги в части использования указанных выше программ.</p>
+        <p>Обработка персональных данных осуществляется в целях:</p>
+        <ul class="doc-list">
+          <li>обеспечения и улучшения функционирования Сайта;</li>
+          <li>регистрации/авторизации Субъекта персональных данных на Сайте;</li>
+          <li>обработки Заказов Субъекта и для выполнения своих обязательств перед Субъектом;</li>
+          <li>для осуществления деятельности по продвижению товаров и услуг;</li>
+          <li>оценки и анализа работы Сайта;</li>
+          <li>анализа покупательских особенностей Субъекта и предоставления персональных рекомендаций;</li>
+          <li>информирования клиента об акциях и специальных предложениях посредством электронных и СМС-рассылок.</li>
+        </ul>
+        <p>Настоящее Согласие действует с момента его предоставления и в течение периода использования мной Сайта. В случае отказа от обработки персональных данных программами, указанными в настоящем Согласии, я проинформирован о необходимости прекратить использование Сайта или отключить файлы cookie в настройках браузера.</p>
+      </section>
+    </article>
+  </div>
+</main>
+
+<footer class="footer js-draw">
+  <div class="footer-top">
+    <nav class="footer-col" aria-label="Услуги">
+      <span class="mono">Услуги</span>
+      <a href="../services/bitrix/">Разработка на 1С-Битрикс</a>
+      <a href="../services/corporate-sites/">Корпоративные сайты</a>
+      <a href="../services/online-stores/">Интернет-магазины</a>
+      <a href="../services/integrations-1c/">Интеграция с 1С</a>
+      <a href="../services/support/">Поддержка</a>
+      <a href="../services/messenger-bots/">Чат-боты и мессенджеры</a>
+      <a href="../bitrix24/">Битрикс24</a>
+      <a href="../prices/">Стоимость работ</a>
+    </nav>
+    <nav class="footer-col" aria-label="Компания">
+      <span class="mono">Компания</span>
+      <a href="../about/">О студии</a>
+      <a href="../portfolio/">Портфолио</a>
+      <a href="../process/">Как мы работаем</a>
+      <a href="../letters/">Благодарственные письма</a>
+      <a href="../company-documents/">Документы и реквизиты</a>
+    </nav>
+    <nav class="footer-col" aria-label="Лицензии">
+      <span class="mono">Лицензии</span>
+      <a href="../licenses/bitrix/">Покупка 1С-Битрикс</a>
+      <a href="../licenses/bitrix-renewal/">Продление 1С-Битрикс</a>
+      <a href="../licenses/bitrix24/">Тарифы Битрикс24</a>
+    </nav>
+    <div class="footer-col">
+      <span class="mono">Связь</span>
+      <a href="tel:+79262901420">+7 (926) 290-14-20</a>
+      <a href="mailto:ask@designcodes.ru">ask@designcodes.ru</a>
+      <a href="https://t.me/klimova_oxana" target="_blank" rel="noopener">Telegram</a>
+    </div>
+  </div>
+  <div class="footer-seal">
+    <span class="ln" aria-hidden="true"></span>
+    <a class="footer-logo" href="../prototype/home.html" aria-label="Дизайн+Код — на главную">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="5" aria-hidden="true">
+        <path pathLength="1" d="M595 57H297L10 211l287 154h155"/>
+        <path pathLength="1" d="M140 137v142"/>
+        <path pathLength="1" d="M706 3L515 412"/>
+        <path pathLength="1" d="M725 57l305 154-305 154"/>
+        <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+          <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
+          <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+        </g>
+      </svg>
+    </a>
+    <span class="ln" aria-hidden="true"></span>
+  </div>
+  <div class="footer-legal">
+    <span>© 2013–2026 ООО «Дизайнкод» · ИНН 7736666610 · ОГРН 5137746015138</span>
+    <span>117393, Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582</span>
+    <a href="./" aria-current="page">Политика конфиденциальности</a>
+  </div>
+</footer>
+
+<script>
+  const triggers = document.querySelectorAll('.nav-link[aria-controls]');
+  function closeAll(except) {
+    triggers.forEach(t => {
+      if (t === except) return;
+      t.setAttribute('aria-expanded', 'false');
+      document.getElementById(t.getAttribute('aria-controls')).classList.remove('open');
+    });
+  }
+  triggers.forEach(t => t.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = t.getAttribute('aria-expanded') === 'true';
+    closeAll(t);
+    t.setAttribute('aria-expanded', String(!open));
+    document.getElementById(t.getAttribute('aria-controls')).classList.toggle('open', !open);
+  }));
+  document.addEventListener('click', e => { if (!e.target.closest('.nav-item')) closeAll(); });
+
+  const menuBtn = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  function toggleMenu(force) {
+    const open = force ?? menuBtn.getAttribute('aria-expanded') !== 'true';
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    menu.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuBtn.addEventListener('click', () => toggleMenu());
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const opened = document.querySelector('.nav-link[aria-expanded="true"]');
+      closeAll();
+      if (opened) opened.focus();
+      toggleMenu(false);
+    }
+  });
+
+  const footer = document.querySelector('.footer');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) footer.classList.add('drawn');
+  function checkDraw() {
+    const r = footer.getBoundingClientRect();
+    if ((innerHeight - r.top) / Math.min(r.height, innerHeight) > 0.6) {
+      footer.classList.add('drawn');
+      removeEventListener('scroll', checkDraw);
+    }
+  }
+  addEventListener('scroll', checkDraw, { passive: true });
+  checkDraw();
+</script>
+</body>
+</html>

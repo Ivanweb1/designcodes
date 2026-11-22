@@ -4,26 +4,30 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Разработка сайтов на 1С-Битрикс — Дизайн+Код</title>
-<meta name="description" content="Разработка сайтов на 1С-Битрикс: готовые решения и индивидуальные проекты. Простой сайт от 70 000 ₽ с лицензией и шаблоном.">
+<meta name="description" content="Сайты на 1С-Битрикс: готовые решения и индивидуальная разработка. Простой сайт от 70 000 ₽ с лицензией и шаблоном. Сложные проекты — по смете.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
 <style>
-  /* Главная, утверждённая связка (17.11.2026): первый экран B «Оглавление»,
-     акцент «Сигнальный красный», шрифт Onest, заголовки Regular. */
+  /* Страница /services/bitrix/ — полная редакция по разделу 5 ТЗ («живой тон студии», 17.11.2026).
+     Дизайн-система: типографический минимализм, акцент «Сигнальный красный», Onest + JetBrains Mono. */
   :root {
     --bg: #F3F2EE;
     --ink: #111110;
     --muted: #6B6A66;
     --line: #D6D4CE;
-    --accent: #F0441C;          /* Сигнальный красный — выбран клиентом 17.11.2026 */
+    --accent: #F0441C;
     --font: Onest, "Helvetica Neue", Arial, sans-serif;
     --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
     --gutter: clamp(16px, 3vw, 40px);
     --header-h: 72px;
+    --tw: 400;
+    --tls: -0.03em;
+    interpolate-size: allow-keywords;
   }
 
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   html, body { margin: 0; }
   body {
     background: var(--bg);
@@ -36,6 +40,8 @@
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
 
   .mono {
     font-family: var(--mono);
@@ -43,20 +49,21 @@
     letter-spacing: 0.02em;
     text-transform: uppercase;
   }
-  .plus { color: var(--accent); }
+  .cm { color: var(--accent); }
 
-  /* ---------- Шапка ---------- */
+  /* ---------- Шапка (логотип по центру) ---------- */
   .header {
     position: sticky; top: 0; z-index: 20;
     height: var(--header-h);
-    display: flex; align-items: center; gap: 40px;
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
     padding: 0 var(--gutter);
     background: var(--bg);
     border-bottom: 1px solid var(--line);
   }
-  .logo { display: block; flex: none; }
+  .header .nav { grid-column: 1; grid-row: 1; display: flex; gap: 4px; }
+  .header .logo { grid-column: 2; grid-row: 1; display: block; flex: none; }
+  .header .header-right { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: 24px; }
   .logo-svg { display: block; height: 46px; width: auto; }
-  .nav { display: flex; gap: 4px; flex: 1; }
   .nav-item { position: relative; }
   .nav-link {
     display: inline-flex; align-items: center; gap: 6px;
@@ -64,6 +71,8 @@
     font-size: 15px; font-weight: 400;
     border-radius: 999px;
   }
+  .nav-link::before { content: "/"; color: var(--accent); width: 0; overflow: hidden; display: inline-block; transition: width .2s; }
+  .nav-link:hover::before, .nav-link[aria-expanded="true"]::before { width: .6em; }
   .nav-link:hover, .nav-link[aria-expanded="true"] { background: rgba(17,17,16,.06); }
   .caret { width: 9px; height: 9px; transition: transform .2s; }
   .nav-link[aria-expanded="true"] .caret { transform: rotate(180deg); }
@@ -82,14 +91,11 @@
     padding: 9px 20px;
     font-size: 15px;
   }
-  .submenu a:hover { background: var(--ink); color: var(--bg); }
+  .submenu a:hover, .submenu a[aria-current="page"] { background: var(--ink); color: var(--bg); }
   .submenu a .mono { color: var(--muted); }
-  .submenu a:hover .mono { color: var(--bg); }
-  .submenu .sub-group {
-    padding: 12px 20px 4px; color: var(--muted);
-  }
+  .submenu a:hover .mono, .submenu a[aria-current="page"] .mono { color: var(--accent); }
+  .submenu .sub-group { padding: 12px 20px 4px; color: var(--muted); }
 
-  .header-right { display: flex; align-items: center; gap: 24px; margin-left: auto; }
   .phone { font-family: var(--mono); font-size: 14px; white-space: nowrap; }
   .btn {
     display: inline-flex; align-items: center; gap: 10px;
@@ -98,9 +104,9 @@
     font-size: 15px; font-weight: 400;
     border-radius: 999px;
     white-space: nowrap;
-    transition: background .2s;
+    transition: background .2s, color .2s;
   }
-  .btn:hover { background: var(--accent); }
+  .btn:hover { background: var(--accent); color: #fff; }
   .btn-lg { height: 56px; padding: 0 28px; font-size: 17px; background: var(--accent); color: #fff; }
   .btn-lg:hover { background: var(--ink); }
 
@@ -112,89 +118,12 @@
   }
   .icon-btn svg { width: 18px; height: 18px; }
 
-  /* ---------- Первый экран ---------- */
-  .hero {
-    min-height: calc(100svh - var(--header-h));
-    display: grid;
-    grid-template-rows: auto 1fr auto auto;
-    padding: 0 var(--gutter);
-  }
-  .hero-meta {
-    display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;
-    padding: 20px 0;
-    color: var(--muted);
-  }
-  .hero-meta > :nth-child(1) { grid-column: 1 / 4; }
-  .hero-meta > :nth-child(2) { grid-column: 4 / 8; }
-  .hero-meta > :nth-child(3) { grid-column: 8 / 13; text-align: right; }
-
-  .hero-title {
-    align-self: end;
-    margin: 0;
-    padding: 4vh 0 0;
-    font-weight: var(--tw);
-    font-size: clamp(48px, calc(11.2vw / var(--fk, 1)), 210px);
-    line-height: 0.96;
-    letter-spacing: var(--tls);
-  }
-  .hero-title .line { display: block; }
-  .hero-title .idx {
-    font-family: var(--mono); font-weight: 400;
-    font-size: 0.16em; letter-spacing: 0;
-    vertical-align: top; color: var(--accent);
-    margin-left: 0.4em;
-    position: relative; top: 0.55em;
-  }
-
-  .hero-body {
-    display: grid; grid-template-columns: repeat(12, 1fr); gap: 20px;
-    align-items: end;
-    padding: clamp(28px, 5vh, 56px) 0 clamp(28px, 5vh, 48px);
-  }
-  .hero-label { grid-column: 1 / 4; color: var(--muted); align-self: start; padding-top: 6px; }
-  .hero-lead {
-    grid-column: 4 / 9;
-    margin: 0;
-    font-size: clamp(18px, 1.5vw, 22px);
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-    max-width: 34em;
-  }
-  .hero-actions {
-    grid-column: 9 / 13;
-    display: flex; flex-direction: column; align-items: flex-end; gap: 16px;
-  }
-  /* Вторая кнопка: контур, без подчёркивания */
-  .link-arrow {
-    display: inline-flex; align-items: center; gap: 10px;
-    height: 56px; padding: 0 24px;
-    border: 1px solid currentColor; border-radius: 999px;
-    font-size: 17px; font-weight: 400; white-space: nowrap;
-    transition: background .2s, color .2s, border-color .2s;
-  }
-  .link-arrow:hover { background: var(--ink); border-color: var(--ink); color: var(--bg); }
-  .show-sm { display: none; }
-
-  /* Указатель услуг — строка-таблица внизу экрана */
-  .hero-index {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    border-top: 1px solid var(--ink);
-    margin: 0 calc(var(--gutter) * -1);
-    padding: 0 var(--gutter);
-  }
-  .hero-index a {
-    display: flex; flex-direction: column; gap: 22px;
-    padding: 18px 20px 24px 0;
-    border-right: 1px solid var(--line);
-    transition: color .2s;
-  }
-  .hero-index a + a { padding-left: 20px; }
-  .hero-index a:last-child { border-right: 0; }
-  .hero-index .row { display: flex; justify-content: space-between; color: var(--muted); }
-  .hero-index .name { font-size: clamp(17px, 1.4vw, 21px); font-weight: 400; letter-spacing: -0.015em; line-height: 1.2; }
-  .hero-index a:hover .name, .hero-index a:hover .row { color: var(--accent); }
-  .hero-index .arr { transition: transform .2s; }
-  .hero-index a:hover .arr { transform: translate(3px, -3px); }
+  .ico { width: 1em; height: 1em; vertical-align: -0.14em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; overflow: visible; transition: transform .25s ease; }
+  a:hover > .ico, button:hover > .ico { transform: translateX(4px); }
+  .ico-down { transform: rotate(90deg); }
+  a:hover > .ico-down, button:hover > .ico-down { transform: rotate(90deg) translateX(4px); }
+  .ico-left { transform: rotate(180deg); }
+  a:hover > .ico-left, button:hover > .ico-left { transform: rotate(180deg) translateX(4px); }
 
   /* ---------- Мобильное меню ---------- */
   .mobile-menu {
@@ -216,55 +145,12 @@
   .mobile-menu summary::-webkit-details-marker { display: none; }
   .mobile-menu details[open] summary .caret { transform: rotate(180deg); }
   .mobile-menu details a { display: block; padding: 8px 0 8px 16px; font-size: 17px; }
+  .mobile-menu details a[aria-current="page"] { color: var(--accent); }
   .mobile-menu details > div { padding-bottom: 16px; }
   .mobile-menu .btn { margin-top: 28px; width: 100%; justify-content: center; height: 56px; }
   .mobile-menu .phone { display: block; margin-top: 20px; text-align: center; }
 
-  /* ---------- Адаптив ---------- */
-  @media (max-width: 1180px) {
-    .phone { display: none; }
-    .header { gap: 24px; }
-  }
-  @media (max-width: 960px) {
-    .nav, .header-right .btn { display: none; }
-    .icon-btn { display: inline-flex; }
-    .header-right { gap: 8px; }
-
-    .hero-meta > :nth-child(2) { display: none; }
-    .hero-meta > :nth-child(1) { grid-column: 1 / 7; }
-    .hero-meta > :nth-child(3) { grid-column: 7 / 13; }
-
-    .hero-label { display: none; }
-    .hero-lead { grid-column: 1 / 13; }
-    .hero-actions { grid-column: 1 / 13; flex-direction: row; align-items: center; justify-content: flex-start; gap: 24px; flex-wrap: wrap; }
-
-    .hero-index { grid-template-columns: repeat(2, 1fr); }
-    .hero-index a:nth-child(2) { border-right: 0; }
-    .hero-index a:nth-child(3) { padding-left: 0; }
-    .hero-index a:nth-child(n+3) { border-top: 1px solid var(--line); }
-  }
-  @media (max-width: 560px) {
-    :root { --header-h: 64px; }
-    .logo-svg { height: 40px; }
-    .hero-meta { grid-template-columns: 1fr; gap: 4px; }
-    .hero-meta > :nth-child(1), .hero-meta > :nth-child(3) { grid-column: 1; text-align: left; }
-    .hero-title { font-size: clamp(40px, calc(12.4vw / var(--fk, 1)), 64px); letter-spacing: var(--tls); padding-top: 2vh; }
-    .hero-title .idx { display: none; }
-    .hero-actions .btn { width: 100%; justify-content: center; }
-    .hero-index { grid-template-columns: 1fr; }
-    .hero-index a, .hero-index a + a { padding: 14px 0; border-right: 0; flex-direction: row; align-items: center; gap: 14px; }
-    .hero-index a + a { border-top: 1px solid var(--line); }
-    .hero-index .row { order: 0; gap: 14px; }
-    .hero-index .row .arr { display: none; }
-    .hero-index .name { flex: 1; }
-  }
-
-
-  /* ---------- Шапка: логотип по центру ---------- */
-  .header { display: grid; grid-template-columns: 1fr auto 1fr; gap: 24px; }
-  .header .nav { grid-column: 1; grid-row: 1; flex: none; }
-  .header .logo { grid-column: 2; grid-row: 1; }
-  .header .header-right { grid-column: 3; grid-row: 1; justify-self: end; margin-left: 0; }
+  @media (max-width: 1180px) { .header .phone { display: none; } }
   @media (max-width: 1080px) {
     .header .nav, .header .header-right .btn, .header .phone { display: none; }
     .header .header-right { display: contents; }
@@ -272,444 +158,285 @@
     .header a.icon-btn { grid-column: 1; grid-row: 1; justify-self: start; }
     .header #menu-toggle { grid-column: 3; grid-row: 1; justify-self: end; }
   }
-
-  /* ---------- Стрелка «гарпун» ---------- */
-  .ico { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; overflow: visible; transition: transform .25s ease; }
-  .ico-diag { transform: none; }
-  .ico-chat { width: 1.15em; height: 1.15em; }
-  a:hover > .ico-chat { transform: none; }
-  a:hover > .ico, a:hover .arr .ico { transform: translateX(4px); }
-  a:hover > .ico-diag, a:hover .arr .ico-diag { transform: translateX(4px); }
-
-
-  /* ---------- Микродетали из кода ---------- */
-  /* пункты меню: при наведении появляется слэш */
-  .nav-link::before { content: "/"; color: var(--accent); width: 0; overflow: hidden; display: inline-block; transition: width .2s; }
-  .nav-link:hover::before, .nav-link[aria-expanded="true"]::before { width: .6em; }
-  body.inv .nav-link::before { color: #fff; }
-  /* комментарий в коде */
-  .cm { color: var(--accent); }
-  .hc .cm, .inv .cm { color: #fff; }
-
-
-  /* Насыщенность заголовков: Regular */
-  :root { --tw: 400; --tls: -0.03em; }
-  :root[data-w="400"] { --tw: 400; --tls: -0.03em; }
-  :root[data-w="300"] { --tw: 300; --tls: -0.025em; }
-
-
-  /* ---------- Вариант B: оглавление ---------- */
-  .hb {
-    min-height: calc(100svh - var(--header-h));
-    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px;
-    padding: 0 var(--gutter);
+  @media (max-width: 560px) {
+    :root { --header-h: 64px; }
+    .logo-svg { height: 40px; }
   }
-  .hb-left {
-    grid-column: 1 / 7;
-    display: flex; flex-direction: column;
-    padding: 20px 40px 48px 0;
-    border-right: 1px solid var(--line);
-  }
-  .hb-left .mono { color: var(--muted); }
-  .hb-title {
-    margin: auto 0 0;
+
+  /* ---------- Страница услуги ---------- */
+  .svc-main { overflow: hidden; }
+  .svc-main .mono, .svc-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .03em; text-transform: uppercase; }
+  .svc-hero { padding: clamp(20px, 2vw, 32px) var(--gutter) clamp(48px, 6vw, 80px); }
+  .svc-kicker { color: var(--muted); }
+  .svc-hero h1 {
+    margin: clamp(18px, 2.2vw, 32px) 0 clamp(32px, 4vw, 56px);
+    max-width: 1500px;
+    font-size: clamp(46px, 6.6vw, 124px);
+    line-height: .98;
+    letter-spacing: var(--tls);
     font-weight: var(--tw);
-    font-size: clamp(40px, min(calc(6.6vw / var(--fk, 1)), 12svh), 124px);
-    line-height: 0.98; letter-spacing: var(--tls);
   }
-  .hb-title .acc { color: var(--accent); }
-  .hb-lead {
-    margin: 32px 0 0; max-width: 30em;
-    font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; letter-spacing: -0.01em;
+  .svc-hero h1 span { color: var(--ink); }
+  .svc-hero-bottom {
+    border-top: 1px solid var(--ink);
+    padding-top: 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+    gap: clamp(30px, 6vw, 100px);
+    align-items: start;
   }
-  .hb-actions { display: flex; align-items: center; gap: 12px; margin-top: 36px; flex-wrap: wrap; }
-
-  .hb-index { grid-column: 7 / 13; display: flex; flex-direction: column; padding: 20px 0 0 20px; }
-  .hb-index-head { display: flex; justify-content: space-between; color: var(--muted); padding-bottom: 16px; }
-  .hb-all { color: var(--muted); text-decoration: none; transition: color .2s; }
-  .hb-all:hover { color: var(--accent); }
-  .hb-row {
-    flex: 1;
-    display: grid; grid-template-columns: 56px 1fr auto; align-items: center; column-gap: 16px;
-    min-height: 76px;
-    padding: 0 16px 0 0;
+  .svc-hero-copy { display: flex; flex-direction: column; gap: 18px; max-width: 36em; }
+  .svc-lead {
+    margin: 0;
+    font-size: clamp(19px, 1.85vw, 26px);
+    line-height: 1.36;
+    letter-spacing: -.015em;
+  }
+  .svc-sublead {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .svc-hero-action {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
+  }
+  .svc-hero-action p { margin: 0; max-width: 30em; font-size: 17px; line-height: 1.5; }
+  .svc-hero-price {
+    padding: 12px 0;
     border-top: 1px solid var(--line);
-    transition: background .2s, color .2s, padding .2s;
+    border-bottom: 1px solid var(--line);
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.4;
   }
-  .hb-row:last-child { border-bottom: 1px solid var(--line); }
-  .hb-row .num { color: var(--muted); }
-  .hb-row .name { font-size: clamp(20px, 2vw, 32px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.1; }
-  .hb-row .desc { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); letter-spacing: 0; font-weight: 400; }
-  .hb-row .arr { font-size: 20px; transition: transform .2s; }
-  .hb-row:hover { background: var(--accent); color: #fff; padding-left: 16px; }
-  .hb-row:hover .num, .hb-row:hover .desc { color: rgba(255,255,255,.75); }
-  .hb-row:hover .arr { transform: translate(3px,-3px); }
+  .svc-hero-price strong { color: var(--accent); font-weight: 500; }
 
-  @media (max-width: 960px) {
-    .hb-left { grid-column: 1 / 13; border-right: 0; padding: 20px 0 40px; }
-    .hb-title { margin-top: 48px; }
-    .hb-index { grid-column: 1 / 13; padding: 0 0 24px; }
-    .hb-row { min-height: 56px; }
-    .hb-left { padding-bottom: 28px; }
-    .hb-title { margin-top: 28px; }
+  .svc-button {
+    display: inline-flex; align-items: center; justify-content: space-between; gap: 14px;
+    min-height: 56px; padding: 0 22px;
+    background: var(--accent); color: #fff;
+    border: 1px solid var(--accent); border-radius: 100px;
+    font-size: 16px; line-height: 1.2; white-space: nowrap;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  @media (max-width: 560px) {
-    .hb-title { font-size: clamp(40px, calc(12.4vw / var(--fk, 1)), 64px); margin-top: 32px; }
-    .hb-actions .btn { width: 100%; justify-content: center; }
-    .hb-row { grid-template-columns: 40px 1fr auto; min-height: 64px; padding: 12px 0; }
-    .hb-row .desc { font-size: 13px; }
-  }
+  .svc-button:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .svc-button span, .svc-text-link span { font-size: 20px; line-height: 1; }
 
-  /* ---------- Телефон: первый экран ровно в высоту экрана ---------- */
-  @media (max-width: 560px) {
-    .btn-lg { height: 52px; font-size: 16px; }
-    .link-arrow { height: 52px; padding: 0 18px; font-size: 16px; }
-    .hide-sm { display: none; }
-    .show-sm { display: inline; }
+  .svc-section {
+    padding: clamp(64px, 9vw, 128px) var(--gutter);
+    border-top: 1px solid var(--line);
+    scroll-margin-top: var(--header-h);
   }
-
-  @media (max-width: 560px) {
-    /* первый экран телефона ровно в высоту экрана: подпись сверху, всё остальное (заголовок, текст, кнопки, направления) прижато к низу */
-    .hb { min-height: calc(100svh - var(--header-h)); display: flex; flex-direction: column; }
-    .hb-left { flex: 1; padding: 14px 0 24px; }
-    .hb-title { font-size: min(calc(16vw / var(--fk, 1)), 9svh); margin-top: auto; }
-    .hb-lead { font-size: 15px; margin-top: 12px; }
-    .hb-actions { margin-top: 14px; gap: 12px 20px; }
-    .hb-actions .btn { width: auto; flex: 1; }
-    .hb-actions { flex-wrap: nowrap; }
-    .hb-index-head { display: none; }
-    .hb-index { padding: 0; }
-    .hb-row { min-height: 0; padding: 9px 0; grid-template-columns: 30px 1fr auto; }
-    .hb-row .desc { display: none; }
-    .hb-row .name { font-size: 15px; }
-    .hb-index { display: grid; grid-template-columns: 1fr 1fr; }
-    .hb-row { grid-template-columns: 24px 1fr; padding: 10px 8px 10px 0; }
-    .hb-row:nth-of-type(even) { padding-left: 10px; border-left: 1px solid var(--line); }
-    .hb-row .arr { display: none; }
-    .hb-row:last-child { border-bottom: 0; }
-    .hb-index { border-bottom: 1px solid var(--line); }
-  }
-
-  /* короткая подпись второй кнопки там, где тесно */
-  @media (max-width: 1180px) { .hide-sm { display: none; } .show-sm { display: inline; } }
-  @media (max-width: 400px) {
-    .btn-lg, .link-arrow { padding: 0 14px; font-size: 15px; gap: 8px; }
-    .btn-lg .ico { display: none; }
-  }
-
-  /* ---------- Портфолио ---------- */
-  html { scroll-behavior: smooth; }
-  .works { padding: clamp(64px, 9vw, 128px) var(--gutter) clamp(64px, 8vw, 112px); border-top: 1px solid var(--line); scroll-margin-top: var(--header-h); }
-  .works-head {
-    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; align-items: end;
+  .svc-section-head {
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; align-items: end;
     margin-bottom: clamp(40px, 5vw, 72px);
   }
-  .works-label { grid-column: 1 / 13; color: var(--muted); margin-bottom: 20px; }
-  .works-title {
-    grid-column: 1 / 7; margin: 0;
-    font-weight: var(--tw); font-size: clamp(44px, 6.6vw, 124px); line-height: 0.98; letter-spacing: var(--tls);
+  .svc-section-head > .mono { grid-column: 1 / -1; color: var(--muted); margin-bottom: 20px; }
+  .svc-section h2, .svc-price h2 {
+    grid-column: 1 / 9; margin: 0;
+    font-size: clamp(38px, 5.2vw, 102px); line-height: .98;
+    font-weight: var(--tw); letter-spacing: var(--tls);
   }
-  .works-title sup { font-family: var(--mono); font-weight: 400; font-size: 0.18em; letter-spacing: 0; color: var(--accent); vertical-align: top; margin-left: 6px; }
-  .works-lead { grid-column: 8 / 13; margin: 0; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; letter-spacing: -0.01em; }
-  .works-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 4vw, 64px) 20px; }
-  .case { display: flex; flex-direction: column; }
-  .case-shot { display: block; aspect-ratio: 2 / 1; overflow: hidden; border: 1px solid var(--line); background: #E8E6E0; }
-  .case-shot img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; transition: transform .6s cubic-bezier(.2,.7,.2,1); }
-  .case:hover .case-shot img { transform: scale(1.03); }
-  .case-meta { display: grid; grid-template-columns: 56px 1fr auto; column-gap: 16px; align-items: baseline; padding-top: 18px; border-bottom: 1px solid var(--line); padding-bottom: 18px; }
-  .case-meta .num { color: var(--muted); }
-  .case-name { font-size: clamp(20px, 2vw, 32px); font-weight: 400; letter-spacing: -0.025em; line-height: 1.1; transition: color .2s; }
-  .case-desc { display: block; margin-top: 8px; font-size: 14px; color: var(--muted); letter-spacing: 0; line-height: 1.4; }
-  .case-domain { color: var(--muted); white-space: nowrap; transition: color .2s; }
-  .case:hover .case-name, .case:hover .case-domain { color: var(--accent); }
-  .works-foot { display: flex; justify-content: center; margin-top: clamp(48px, 5vw, 72px); }
-
-  @media (max-width: 960px) {
-    .works-title { grid-column: 1 / 13; }
-    .works-lead { grid-column: 1 / 13; margin-top: 24px; max-width: 34em; }
-  }
-  @media (max-width: 720px) {
-    .works-grid { grid-template-columns: 1fr; gap: 36px; }
-    .case-meta { grid-template-columns: 30px 1fr; padding: 14px 0; }
-    .case-domain { grid-column: 2; margin-top: 6px; }
-    .case-name { font-size: 20px; }
-  }
-  @media (max-width: 560px) {
-    .works { padding-top: 56px; padding-bottom: 56px; }
-    .works-head { margin-bottom: 28px; }
-    .works-label { margin-bottom: 14px; }
-    .works-lead { font-size: 15px; margin-top: 16px; }
-    .works-foot .link-arrow { width: 100%; justify-content: center; }
+  .svc-section-lead {
+    grid-column: 9 / 13; margin: 0;
+    font-size: 17px; line-height: 1.48; color: var(--muted);
   }
 
-  /* ---------- Портфолио: типографический список + превью у курсора ---------- */
-  .wlist { border-top: 1px solid var(--line); }
-  .wrow {
-    position: relative;
-    display: grid; grid-template-columns: 56px minmax(0, 1.25fr) minmax(0, 1fr) 150px; column-gap: 16px; align-items: baseline;
-    padding: clamp(14px, 1.6vw, 22px) 0; border-bottom: 1px solid var(--line);
+  /* ---------- 02 Подход: две колонки + редакционная фраза ---------- */
+  .svc-split {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--ink); border-bottom: 1px solid var(--line);
   }
-  .wrow .num { color: var(--muted); transition: color .2s; }
-  .wname { font-weight: var(--tw); font-size: clamp(30px, 4.2vw, 76px); line-height: 1; letter-spacing: var(--tls); transition: transform .35s cubic-bezier(.2,.7,.2,1), color .2s; }
-  .wdesc { color: var(--muted); font-size: 15px; line-height: 1.35; max-width: 22em; }
-  .wdom { color: var(--muted); white-space: nowrap; text-align: right; transition: color .2s; }
-  .wthumb { display: none; }
-  /* отрасль проекта — моно-подпись над описанием */
-  .wind { display: block; margin-bottom: 4px; font-size: 11px; color: var(--ink); }
-  .wlist:hover .wrow .wname { color: var(--muted); }
-  .wlist .wrow:hover .wname { color: var(--ink); transform: translateX(14px); }
-  .wrow:hover .num, .wrow:hover .wdom { color: var(--accent); }
+  .svc-choice {
+    min-height: 280px;
+    padding: 20px clamp(20px, 3vw, 50px) 26px 0;
+    display: flex; flex-direction: column;
+  }
+  .svc-choice + .svc-choice {
+    border-left: 1px solid var(--line);
+    padding-left: clamp(20px, 3vw, 50px);
+  }
+  .svc-choice-top { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); }
+  .svc-choice-top .num { color: var(--accent); }
+  .svc-choice h3 {
+    margin: clamp(24px, 2.5vw, 40px) 0 18px;
+    font-size: clamp(32px, 3.4vw, 58px);
+    line-height: 1.02; font-weight: 400; letter-spacing: -.05em;
+  }
+  .svc-choice p { max-width: 34em; margin: 0 0 24px; font-size: 18px; line-height: 1.5; }
+  .svc-choice-note { margin-top: auto; color: var(--accent); }
+  .svc-editorial {
+    margin: clamp(40px, 5vw, 72px) 0 0;
+    max-width: 28em;
+    font-size: clamp(26px, 3.2vw, 52px);
+    line-height: 1.12;
+    letter-spacing: -.04em;
+  }
+  .svc-editorial span { color: var(--muted); }
 
-  .wpreview {
-    position: fixed; left: 0; top: 0; z-index: 15; pointer-events: none;
-    width: clamp(300px, 30vw, 460px);
-    background: var(--bg); border: 1px solid var(--ink);
-    opacity: 0; transform: translate3d(-50%, -50%, 0) scale(.92);
-    transition: opacity .25s;
+  /* ---------- 03 Какие сайты мы делаем / 05 Почему с нами / 07 Шаги ---------- */
+  .svc-services, .svc-steps {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--ink);
   }
-  .wpreview.on { opacity: 1; }
-  .wbar { display: flex; align-items: center; gap: 5px; height: 28px; padding: 0 10px; border-bottom: 1px solid var(--ink); color: var(--muted); font-size: 11px; }
-  .wbar i { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--muted); }
-  .wbar b { font-weight: 400; margin-left: 8px; }
-  /* одинаковая обрезка для всех: верх первого экрана, без нижних полос */
-  .wimg { display: block; aspect-ratio: 12 / 5; overflow: hidden; background: #E8E6E0; }
-  .wimg img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .svc-service, .svc-steps article {
+    min-height: 290px;
+    padding: 20px clamp(16px, 2.5vw, 40px) 26px 0;
+    display: flex; flex-direction: column;
+  }
+  .svc-service + .svc-service, .svc-steps article + article {
+    border-left: 1px solid var(--line);
+    padding-left: clamp(16px, 2.5vw, 40px);
+  }
+  .svc-service > .mono, .svc-steps .mono { color: var(--accent); }
+  .svc-service h3, .svc-steps h3 {
+    margin: clamp(22px, 2.4vw, 38px) 0 16px;
+    font-size: clamp(28px, 2.8vw, 48px);
+    line-height: 1.05; font-weight: 400; letter-spacing: -.045em;
+  }
+  .svc-service p, .svc-steps p {
+    margin: 0 0 32px; max-width: 26em;
+    font-size: 17px; line-height: 1.5;
+  }
+  .svc-service a {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    border-top: 1px solid var(--ink); padding-top: 15px; font-size: 15px;
+    transition: color .2s;
+  }
+  .svc-service a:hover, .svc-text-link:hover { color: var(--accent); }
+  .svc-steps { border-bottom: 1px solid var(--line); }
 
-  @media (max-width: 960px) {
-    .wrow { grid-template-columns: 40px 1fr 150px; }
-    .wdesc { grid-column: 2 / 4; grid-row: 2; margin-top: 8px; }
-  }
-  /* сенсорные экраны: наведения нет — показываем миниатюру в строке */
-  @media (hover: none), (max-width: 720px) {
-    .wpreview { display: none; }
-    .wrow { grid-template-columns: 30px 1fr; row-gap: 6px; }
-    .wname { font-size: clamp(26px, 7vw, 40px); }
-    .wdesc { grid-column: 2; grid-row: auto; margin: 0; font-size: 14px; }
-    .wdom { grid-column: 2; text-align: left; }
-    .wthumb { display: block; grid-column: 2; margin-top: 10px; aspect-ratio: 12 / 5; overflow: hidden; border: 1px solid var(--line); }
-    .wthumb img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
-    .wlist:hover .wrow .wname { color: var(--ink); }
-    .wlist .wrow:hover .wname { transform: none; }
-  }
-
-  /* ---------- Общие для секций ---------- */
-  .sec { padding: clamp(64px, 9vw, 128px) var(--gutter); border-top: 1px solid var(--line); scroll-margin-top: var(--header-h); }
-  .sec-head {
-    display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; align-items: end;
-    margin-bottom: clamp(40px, 5vw, 72px);
-  }
-  .sec-label { grid-column: 1 / 13; color: var(--muted); margin-bottom: 20px; }
-  .sec-title {
-    grid-column: 1 / 8; margin: 0;
-    font-weight: var(--tw); font-size: clamp(40px, 5.4vw, 104px); line-height: 0.98; letter-spacing: var(--tls);
-  }
-  .sec-title .acc { color: var(--accent); }
-  /* типографика заголовков: строки по смыслу, вторая — серым; индекс в моно и акценте, как «Работы 100+» */
-  .sec-title .l { display: block; }
-  .sec-title .dim { color: var(--muted); }
-  .sec-title sup { font-family: var(--mono); font-weight: 400; font-size: 0.18em; letter-spacing: 0; color: var(--accent); vertical-align: top; position: relative; top: .35em; margin-left: 6px; }
-  h1, h2, h3 { text-wrap: balance; }
-  p { text-wrap: pretty; }
-  .sec-lead { grid-column: 8 / 13; margin: 0; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; letter-spacing: -0.01em; }
-  @media (max-width: 960px) {
-    .sec-title { grid-column: 1 / 13; }
-    .sec-lead { grid-column: 1 / 13; margin-top: 24px; max-width: 34em; }
-  }
-  @media (max-width: 560px) {
-    .sec { padding-top: 56px; padding-bottom: 56px; }
-    .sec-head { margin-bottom: 28px; }
-    .sec-label { margin-bottom: 14px; }
-    .sec-lead { font-size: 15px; margin-top: 16px; }
-  }
-
-  /* ---------- 03 Как работаем: одна фраза со сносками (редакционная вёрстка, реф. JH Editorial, Swiss Website Design) ---------- */
-  .phrase {
-    margin: 0 0 clamp(48px, 6vw, 96px); max-width: 17em;
-    font-weight: var(--tw); font-size: clamp(34px, 5vw, 92px); line-height: 1.04; letter-spacing: var(--tls);
-  }
-  .phrase .dim { color: var(--muted); }
-  .phrase .ph { transition: color .2s; }
-  .phrase sup {
-    font-family: var(--mono); font-weight: 400; font-size: max(.22em, 11px); letter-spacing: 0;
-    color: var(--accent); vertical-align: top; position: relative; top: .45em; margin-left: .08em;
-  }
-  .process-label { display: flex; justify-content: space-between; color: var(--muted); margin-bottom: clamp(28px, 3vw, 44px); }
-  /* шесть этапов — шесть колонок на одном уровне, результаты выровнены по нижней линии */
-  .notes {
-    display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none;
+  /* ---------- 04 Практика студии ---------- */
+  .svc-practice-list { border-top: 1px solid var(--ink); }
+  .svc-practice-list article {
+    display: grid; grid-template-columns: minmax(160px, .8fr) minmax(0, 1.4fr) minmax(0, 1.6fr);
+    gap: 24px; padding: 28px 0 34px;
     border-bottom: 1px solid var(--line);
   }
-  .note {
-    display: flex; flex-direction: column;
-    padding: 14px 18px 22px; border-top: 1px solid var(--ink); border-left: 1px solid var(--line);
-    transition: border-color .2s;
+  .svc-practice-list .mono { color: var(--accent); padding-top: 8px; }
+  .svc-practice-list h3 {
+    margin: 0; max-width: 16em;
+    font-size: clamp(26px, 2.7vw, 44px);
+    line-height: 1.08; font-weight: 400; letter-spacing: -.04em;
   }
-  .note:first-child { border-left: 0; padding-left: 0; }
-  .note .num { color: var(--accent); }
-  .note h3 {
-    margin: clamp(20px, 2.4vw, 40px) 0 0; font-weight: var(--tw); font-size: clamp(20px, 1.6vw, 28px); line-height: 1.05; letter-spacing: -0.03em;
+  .svc-practice-list p { margin: 4px 0 0; max-width: 36em; font-size: 17px; line-height: 1.5; }
+  .svc-practice-note {
+    margin: 28px 0 0; max-width: 44em;
+    font-size: 16px; line-height: 1.5; color: var(--muted);
+  }
+  .svc-text-link {
+    margin-top: 28px;
+    display: inline-flex; align-items: center; gap: 18px;
+    border-bottom: 1px solid currentColor; padding-bottom: 6px;
+    font-size: 18px;
     transition: color .2s;
   }
-  .note-body { display: flex; flex-direction: column; flex: 1; }
-  .note-body p { margin: 12px 0 0; color: var(--muted); font-size: 15px; line-height: 1.4; }
-  .note .tags { display: block; margin-top: auto; padding-top: 22px; font-size: 11px; line-height: 1.5; }
-  .note .tags b { font-weight: 400; color: var(--accent); }
-  .note:hover { border-top-color: var(--accent); }
-  .note:hover h3 { color: var(--accent); }
-  /* наведение на этап подсвечивает его слово во фразе */
-  #process:has(.note[data-n="1"]:hover) .ph[data-n="1"],
-  #process:has(.note[data-n="2"]:hover) .ph[data-n="2"],
-  #process:has(.note[data-n="3"]:hover) .ph[data-n="3"],
-  #process:has(.note[data-n="4"]:hover) .ph[data-n="4"],
-  #process:has(.note[data-n="5"]:hover) .ph[data-n="5"],
-  #process:has(.note[data-n="6"]:hover) .ph[data-n="6"] { color: var(--accent); }
-  /* уже 1200px: шесть колонок не помещаются — вертикальная линия времени с точками */
-  @media (max-width: 1200px) {
-    .notes { grid-template-columns: 1fr; border-bottom: 0; border-left: 1px solid var(--line); margin-left: 4px; }
-    .note, .note:first-child { position: relative; margin: 0; padding: 0 0 32px 28px; border: 0; }
-    .note:last-child { padding-bottom: 0; }
-    .note::before { content: ""; position: absolute; left: -5px; top: .35em; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 1px solid var(--accent); }
-    .note:hover::before { background: var(--accent); }
-    .note h3 { margin-top: 6px; font-size: clamp(24px, 3.4vw, 36px); }
-    .note-body p { max-width: 32em; }
-    .note .tags { padding-top: 10px; }
-  }
-  @media (max-width: 560px) {
-    .phrase { font-size: 30px; margin-bottom: 36px; }
-  }
 
-  /* ---------- 04 Битрикс24: нумерованный аккордеон с тегами (реф. Boulevard, GP Industrial) ---------- */
-  .acc-list { border-top: 1px solid var(--line); }
-  .acc-item { border-bottom: 1px solid var(--line); }
-  .acc-item summary {
-    display: grid; grid-template-columns: 56px 1fr auto; column-gap: 16px; align-items: center;
-    min-height: 84px; padding: 12px 0;
-    list-style: none; cursor: pointer;
-    transition: color .2s;
+  /* ---------- 05 Почему с нами остаются надолго ---------- */
+  .why-facts {
+    display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px;
+    margin-bottom: clamp(40px, 5vw, 64px);
   }
-  .acc-item summary::-webkit-details-marker { display: none; }
-  .acc-item summary .num { color: var(--muted); }
-  .acc-item summary h3 { margin: 0; font-size: clamp(24px, 2.6vw, 42px); font-weight: 400; letter-spacing: -0.03em; line-height: 1.05; }
-  .acc-item summary:hover { color: var(--accent); }
-  .pm { position: relative; width: 22px; height: 22px; }
-  .pm::before, .pm::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: currentColor; transition: transform .25s; }
-  .pm::after { transform: rotate(90deg); }
-  .acc-item[open] .pm::after { transform: rotate(0); }
-  .acc-item[open] summary .num { color: var(--accent); }
-  .acc-body { display: grid; grid-template-columns: 56px repeat(12, 1fr); column-gap: 16px; padding: 0 0 32px; }
-  .acc-body p { grid-column: 2 / 7; margin: 0; color: var(--muted); max-width: 28em; }
-  .chips { grid-column: 8 / 14; display: flex; flex-wrap: wrap; gap: 8px; align-content: start; margin: 0; padding: 0; list-style: none; }
-  .chips li { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; line-height: 1.2; }
-  /* итоговая строка в той же сетке, что и пункты аккордеона: номер · текст · кнопка */
-  .b24-foot { display: grid; grid-template-columns: 56px 1fr auto; column-gap: 16px; align-items: center; padding: 28px 0 0; }
-  .b24-foot p { margin: 0; max-width: 30em; font-size: clamp(18px, 1.5vw, 22px); line-height: 1.35; letter-spacing: -0.01em; }
-  @media (max-width: 960px) {
-    .acc-body p { grid-column: 2 / 14; }
-    .chips { grid-column: 2 / 14; margin-top: 18px; }
+  .why-fact {
+    position: relative;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
   }
-  @media (max-width: 560px) {
-    .acc-item summary { grid-template-columns: 30px 1fr auto; min-height: 60px; }
-    .acc-item summary h3 { font-size: 20px; }
-    .acc-body { grid-template-columns: 30px 1fr; column-gap: 16px; padding-bottom: 22px; }
-    .acc-body p, .chips { grid-column: 2; font-size: 15px; }
-    .chips li { font-size: 13px; padding: 5px 10px; }
-    .b24-foot { grid-template-columns: 30px 1fr; row-gap: 20px; padding-top: 20px; }
-    .b24-foot p { font-size: 16px; }
-    .b24-foot .link-arrow { grid-column: 1 / 3; width: 100%; justify-content: center; }
+  .why-fact + .why-fact::before {
+    content: ""; position: absolute; left: -20px; top: 0; bottom: 0; width: 1px; background: var(--line);
   }
-  /* аккордеон, доработка: открыт один пункт; у закрытых видно, сколько внутри; список функций — таблица с нумерацией вместо плашек */
-  .acc-item summary { grid-template-columns: 56px 1fr auto 22px; column-gap: 24px; }
-  .acc-item summary h3 { transition: transform .3s cubic-bezier(.2,.7,.2,1); }
-  .acc-item summary:hover h3 { transform: translateX(10px); }
-  .acc-item summary:hover .num { color: var(--accent); }
-  .cnt { color: var(--muted); transition: opacity .2s; }
-  .acc-item[open] .cnt { opacity: 0; }
-  .acc-item::details-content { block-size: 0; overflow: clip; transition: block-size .45s cubic-bezier(.2,.7,.2,1), content-visibility .45s allow-discrete; }
-  .acc-item[open]::details-content { block-size: auto; }
-  :root { interpolate-size: allow-keywords; }
-  .acc-body p { color: var(--ink); font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; letter-spacing: -0.01em; }
-  .spec { grid-column: 8 / 14; display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; margin: 0; padding: 0; list-style: none; counter-reset: sp; border-bottom: 1px solid var(--line); }
-  .spec li { counter-increment: sp; display: flex; gap: 12px; align-items: baseline; padding: 10px 0; border-top: 1px solid var(--line); font-size: 15px; line-height: 1.3; }
-  .spec li::before { content: counter(sp, decimal-leading-zero); font-family: var(--mono); font-size: 11px; color: var(--muted); flex: none; width: 18px; }
-  @media (max-width: 960px) { .spec { grid-column: 2 / 14; margin-top: 22px; } }
-  @media (max-width: 560px) {
-    .acc-item summary { grid-template-columns: 30px 1fr 22px; column-gap: 12px; }
-    .cnt { display: none; }
-    .spec { grid-column: 2; grid-template-columns: 1fr; }
-    .spec li { font-size: 14px; padding: 8px 0; }
-    .acc-body p { font-size: 15px; }
-  }
-
-  /* ---------- 06 Письма и I-Event ---------- */
-  .trust { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; border-top: 1px solid var(--line); padding-top: 24px; }
-  .letters { grid-column: 1 / 8; display: flex; flex-direction: column; align-items: flex-start; }
-  .trust-title { margin: 0; font-weight: var(--tw); font-size: clamp(30px, 3.4vw, 56px); line-height: 1; letter-spacing: var(--tls); }
-  .trust-lead { margin: 16px 0 0; max-width: 30em; color: var(--muted); }
-  .letter-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; width: 100%; margin: 32px 0; padding: 0; list-style: none; }
-  .letter { display: flex; flex-direction: column; gap: 10px; color: var(--muted); }
-  .sheet { display: flex; flex-direction: column; gap: 7px; aspect-ratio: 210 / 297; padding: 18% 14%; background: #fff; border: 1px solid var(--line); box-shadow: 0 1px 0 var(--line); }
-  .sheet i { display: block; height: 4px; background: var(--line); }
-  .sheet i:first-child { width: 45%; height: 6px; margin-bottom: 10px; background: var(--muted); opacity: .5; }
-  .sheet i:nth-child(3) { width: 85%; } .sheet i:last-child { width: 30%; margin-top: auto; }
-  .ievent {
-    grid-column: 9 / 13; display: flex; flex-direction: column; gap: 14px; align-self: stretch;
-    padding: 24px; background: var(--ink); color: var(--bg); text-decoration: none; transition: background .25s;
-  }
-  .ievent:hover { background: var(--accent); }
-  .ievent-tag { color: rgba(243,242,238,.6); }
-  .ievent-name { font-weight: var(--tw); font-size: clamp(44px, 5vw, 88px); line-height: .9; letter-spacing: var(--tls); }
-  .ievent-text { max-width: 22em; font-size: 16px; line-height: 1.4; color: rgba(243,242,238,.8); }
-  .ievent-more { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 24px; }
-  @media (max-width: 960px) {
-    .letters { grid-column: 1 / 13; }
-    .ievent { grid-column: 1 / 13; margin-top: 40px; }
-  }
-  @media (max-width: 560px) {
-    .letter-grid { gap: 10px; margin: 24px 0; }
-    .letter { font-size: 10px; gap: 6px; }
-    .sheet { gap: 4px; } .sheet i { height: 2px; } .sheet i:first-child { height: 3px; margin-bottom: 5px; }
-    .letters .link-arrow { width: 100%; justify-content: center; }
-  }
-
-  /* ---------- 05 О студии: манифест + крупные цифры в акценте (реф. Swiss Website Design, LUMA, Boulevard) ---------- */
-  .manifest { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; margin-bottom: clamp(56px, 7vw, 112px); }
-  .manifest .sec-label { grid-column: 1 / 4; margin: 0; padding-top: .7em; }
-  .manifest p {
-    grid-column: 4 / 13; margin: 0;
-    font-size: clamp(26px, 3.4vw, 56px); line-height: 1.12; letter-spacing: -0.03em;
-  }
-  .manifest p .dim { color: var(--muted); }
-  /* как оглавление на первом экране: линии тонкие и светлые, горизонтали не доходят до вертикалей (зазор 20px) */
-  .facts { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; }
-  .fact { position: relative; display: flex; flex-direction: column; padding-top: 16px; border-top: 1px solid var(--line); }
-  .fact + .fact::before { content: ""; position: absolute; left: -20px; top: 0; bottom: 0; width: 1px; background: var(--line); }
-  .fact-num { color: var(--muted); }
-  a.fact-link { color: inherit; text-decoration: none; }
-  a.fact-link .fact-cap { display: inline-flex; align-items: center; gap: 6px; transition: color .2s; }
-  a.fact-link:hover .fact-cap { color: var(--accent); }
-  .fact-cap { margin-top: 16px; color: var(--muted); }
-  .fact-val {
-    margin-top: clamp(28px, 3vw, 48px);
-    font-weight: var(--tw); font-size: clamp(72px, 10vw, 184px); line-height: .82; letter-spacing: -0.05em;
+  .why-fact-val {
+    display: block;
+    margin-top: 18px;
+    font-size: clamp(48px, 6.2vw, 108px);
+    line-height: .9;
+    letter-spacing: -.05em;
     color: var(--accent);
   }
-  @media (max-width: 960px) {
-    .manifest .sec-label { grid-column: 1 / 13; margin-bottom: 20px; padding: 0; }
-    .manifest p { grid-column: 1 / 13; }
-  }
-  @media (max-width: 720px) {
-    .facts { grid-template-columns: 1fr; }
-    .fact { min-height: 0; padding: 14px 0 18px; }
-    .fact + .fact::before { display: none; }
-    .fact-val { margin-top: 16px; font-size: 72px; }
-    .fact-cap { margin-top: 10px; }
-  }
+  .why-fact-cap { display: block; margin-top: 12px; color: var(--muted); font-size: 15px; }
 
-  /* ---------- 06 Финал: контакты, форма и подвал одним тёмным блоком (реф. Boulevard, Kreativy, LUMA) ---------- */
+  /* ---------- 06 Стоимость (тёмный блок) ---------- */
+  .svc-price {
+    background: var(--ink); color: var(--bg);
+    padding: clamp(64px, 9vw, 128px) var(--gutter);
+    scroll-margin-top: var(--header-h);
+  }
+  .svc-price .svc-section-head > .mono { color: #a8a7a2; }
+  .svc-price-grid {
+    display: grid; grid-template-columns: 1.15fr 1fr;
+    gap: clamp(48px, 8vw, 130px);
+    border-top: 1px solid #676661;
+    padding-top: 28px;
+  }
+  .svc-price-grid .mono { color: #a8a7a2; }
+  .svc-price-number {
+    margin: clamp(36px, 5vw, 84px) 0 18px;
+    white-space: nowrap;
+    font-size: clamp(62px, 9.2vw, 158px);
+    line-height: .88;
+    letter-spacing: -.075em;
+  }
+  .svc-price-number small { font-size: .42em; letter-spacing: 0; }
+  .svc-price-caption { max-width: 28em; font-size: 18px; line-height: 1.45; color: #c6c4bd; margin: 0 0 28px; }
+  .svc-price-details h3 { margin: 2px 0 24px; font-size: clamp(26px, 2.8vw, 40px); font-weight: 400; letter-spacing: -.03em; }
+  .svc-price-details ul { list-style: none; padding: 0; margin: 0 0 28px; border-top: 1px solid #676661; }
+  .svc-price-details li { padding: 14px 0; border-bottom: 1px solid #676661; font-size: 17px; }
+  .svc-price-details p { color: #bbb9b3; max-width: 40em; line-height: 1.5; margin: 0 0 16px; }
+  .svc-button-light { margin-top: 12px; background: var(--bg); border-color: var(--bg); color: var(--ink); }
+  .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .license-callout {
+    margin-top: clamp(44px, 5vw, 72px);
+    padding-top: 28px;
+    border-top: 1px solid rgba(243,242,238,.22);
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; align-items: start;
+  }
+  .license-callout h3 {
+    grid-column: 1 / 5; margin: 0;
+    font-size: clamp(24px, 2.4vw, 36px); line-height: 1.1; font-weight: 400; letter-spacing: -.03em;
+  }
+  .license-callout p {
+    grid-column: 5 / 11; margin: 0;
+    font-size: 17px; line-height: 1.5; color: #c6c4bd;
+  }
+  .svc-related {
+    display: flex; flex-wrap: wrap; gap: 12px 28px;
+    margin-top: 32px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(243,242,238,.16);
+  }
+  .svc-related a {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; color: #c6c4bd;
+    border-bottom: 1px solid rgba(243,242,238,.3);
+    padding-bottom: 4px;
+    transition: color .2s, border-color .2s;
+  }
+  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ---------- 08 Частые вопросы ---------- */
+  .svc-faq-list { border-top: 1px solid var(--ink); }
+  .svc-faq-list details { border-bottom: 1px solid var(--line); }
+  .svc-faq-list summary {
+    list-style: none; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+    padding: 27px 0;
+    font-size: clamp(22px, 2.6vw, 40px); line-height: 1.12; letter-spacing: -.04em;
+    transition: color .2s;
+  }
+  .svc-faq-list summary:hover { color: var(--accent); }
+  .svc-faq-list summary::-webkit-details-marker { display: none; }
+  .svc-faq-list summary span { color: var(--accent); flex: none; transition: transform .2s; }
+  .svc-faq-list details[open] summary span { transform: rotate(45deg); }
+  .svc-faq-list details p { margin: 0 0 30px; max-width: 46em; font-size: 18px; line-height: 1.5; color: var(--muted); }
+
+  /* ---------- 09 Финал: контакты, форма и подвал ---------- */
   .final { --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55); background: var(--ink); color: var(--bg); overflow: hidden; }
   .final .cm { color: var(--accent); }
   .contact { padding: clamp(64px, 9vw, 128px) var(--gutter) 0; scroll-margin-top: var(--header-h); }
-  .contact-head { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; align-items: end; padding-bottom: clamp(32px, 4vw, 56px); }
+  .contact-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; align-items: end; padding-bottom: clamp(32px, 4vw, 56px); }
   .contact-head .sec-label { grid-column: 1 / 13; color: var(--cdim); margin-bottom: 20px; }
   .big-mail {
     grid-column: 1 / 10;
@@ -721,10 +448,10 @@
   .big-mail:hover { color: var(--accent); }
   .contact-head .side { grid-column: 10 / 13; justify-self: end; text-align: right; display: flex; flex-direction: column; gap: 6px; font-size: clamp(17px, 1.4vw, 21px); }
   .contact-head .side a:hover { color: var(--accent); }
-  .contact-body { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; border-top: 1px solid var(--bg); }
+  .contact-body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; border-top: 1px solid var(--bg); }
   .form-intro { grid-column: 1 / 5; padding: 28px 40px 0 0; }
-  .form-intro h2 { margin: 0; font-weight: var(--tw); font-size: clamp(28px, 2.8vw, 48px); line-height: 1.02; letter-spacing: var(--tls); }
-  .form-intro p { margin: 16px 0 0; color: var(--cdim); max-width: 22em; }
+  .form-intro h2 { margin: 0; font-weight: var(--tw); font-size: clamp(28px, 2.8vw, 48px); line-height: 1.04; letter-spacing: var(--tls); }
+  .form-intro p { margin: 16px 0 0; color: var(--cdim); max-width: 24em; line-height: 1.5; }
   .form { grid-column: 5 / 13; padding: 12px 0 0; }
   .field { display: block; border-bottom: 1px solid var(--cline); padding: 14px 0 6px; }
   .field .mono { display: block; color: var(--cdim); }
@@ -737,9 +464,7 @@
   .field:focus-within { border-bottom-color: var(--accent); }
   .field input::placeholder, .field textarea::placeholder { color: rgba(243,242,238,.3); }
   .form-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
-  .agree { display: flex; gap: 12px; align-items: flex-start; margin-top: 24px; font-size: 14px; color: var(--cdim); cursor: pointer; }
-  .agree { line-height: 20px; }
-  /* свой чекбокс: 18px по высоте строки текста, в стиле полей формы */
+  .agree { display: flex; gap: 12px; align-items: flex-start; margin-top: 24px; font-size: 14px; line-height: 20px; color: var(--cdim); cursor: pointer; }
   .agree input {
     appearance: none; -webkit-appearance: none;
     flex: none; width: 18px; height: 18px; margin: 1px 0 0;
@@ -759,15 +484,11 @@
   .form.sent .form-done { display: block; }
   .form.sent .form-fields { display: none; }
 
-  /* Подвал — обычный блок, продолжает тёмный блок с формой */
   .footer {
     --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55);
     background: var(--ink); color: var(--bg);
     padding: clamp(48px, 6vw, 88px) var(--gutter) 0;
   }
-  /* Логотип в подвале: линии прорисовываются, когда подвал открылся */
-  /* Логотип — узел на разделительной линии: линии идут от краёв страницы к концам ромба */
-  /* линии по бокам не касаются логотипа: отступ 20px — как у разделителей между фактами и колонками сетки */
   .footer-seal { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 20px; align-items: center; padding: clamp(28px, 3.5vw, 48px) 0; }
   .footer-seal .ln { height: 1px; background: var(--cline); transform-origin: left center; transition: transform 1s cubic-bezier(.65,0,.35,1); }
   .footer-seal .ln:last-child { transform-origin: right center; }
@@ -782,248 +503,71 @@
   .footer-logo g { transition: opacity .8s 1.7s; }
   .footer.js-draw:not(.drawn) .footer-logo path { stroke-dashoffset: 1; }
   .footer.js-draw:not(.drawn) .footer-logo g { opacity: 0; }
-  .footer-top { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 20px; padding-top: 32px; border-top: 1px solid var(--cline); }
+  .footer-top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; padding-top: 32px; border-top: 1px solid var(--cline); }
   .footer-col { grid-column: span 3; display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
   .footer-col .mono { color: var(--cdim); margin-bottom: 6px; }
   .footer-col a:hover { color: var(--accent); }
   .footer-legal { display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding: 0 0 24px; color: var(--cdim); font-size: 13px; }
   .footer-legal a:hover { color: var(--bg); }
-  .to-top { display: inline-flex; align-items: center; gap: 8px; }
-  .to-top .ico { transform: rotate(-90deg); }
-  a.to-top:hover > .ico { transform: rotate(-90deg) translateX(4px); }
+
+  /* ---------- Адаптив ---------- */
   @media (max-width: 960px) {
+    .svc-section-head { grid-template-columns: 1fr; gap: 0; }
+    .svc-section-head > .mono { margin-bottom: 14px; }
+    .svc-section h2, .svc-price h2 { grid-column: 1; }
+    .svc-section-lead { grid-column: 1; margin-top: 20px; max-width: 38em; }
+    .svc-practice-list article { grid-template-columns: 1fr 1fr; }
+    .svc-practice-list article > .mono { grid-column: 1 / -1; }
+    .svc-price-grid { grid-template-columns: 1fr; }
+    .license-callout h3 { grid-column: 1 / 13; margin-bottom: 14px; }
+    .license-callout p { grid-column: 1 / 13; }
     .big-mail { grid-column: 1 / 13; }
     .contact-head .side { grid-column: 1 / 13; justify-self: start; text-align: left; margin-top: 24px; }
     .form-intro { grid-column: 1 / 13; padding-right: 0; }
     .form { grid-column: 1 / 13; padding-top: 20px; }
     .footer-col { grid-column: span 6; margin-bottom: 28px; }
   }
-  @media (max-width: 560px) {
+  @media (max-width: 680px) {
+    .svc-hero h1 { font-size: clamp(40px, 11.5vw, 72px); }
+    .svc-hero h1 br { display: none; }
+    .svc-hero-bottom, .svc-split, .svc-services, .svc-steps, .svc-practice-list article, .why-facts { grid-template-columns: 1fr; }
+    .svc-choice, .svc-service, .svc-steps article { min-height: auto; padding: 20px 0 30px; }
+    .svc-choice + .svc-choice, .svc-service + .svc-service, .svc-steps article + article {
+      border-left: 0; border-top: 1px solid var(--line); padding: 20px 0 30px;
+    }
+    .why-fact + .why-fact::before { display: none; }
+    .why-fact { padding: 16px 0 22px; }
+    .svc-practice-list article > .mono { grid-column: auto; }
+    .svc-price-number { white-space: normal; }
     .contact { padding-top: 56px; }
     .big-mail { font-size: 9.4vw; }
     .form-grid { grid-template-columns: 1fr; }
-    .form-actions .btn-lg { width: 100%; justify-content: center; }
+    .form-actions .btn-lg, .svc-button { width: 100%; justify-content: center; }
     .field input, .field textarea { font-size: 18px; }
     .footer { padding-top: 40px; }
     .footer-logo { width: 180px; }
     .footer-legal { flex-direction: column; }
   }
-  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  /* ---------- Появление контента снизу вверх (класс .rv ставит скрипт) ---------- */
-  .rv { opacity: 0; transform: translate3d(0, 28px, 0); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--rd, 0s); }
-  .rv.in { opacity: 1; transform: none; }
-  @media (prefers-reduced-motion: reduce) { .rv { opacity: 1; transform: none; transition: none; } }
-
-
-
-/* Портфолио: редакционная сетка в той же типографике, что и главная */
-.portfolio-main { overflow: hidden; }
-.port-hero { padding: clamp(28px,5vw,76px) var(--gutter) clamp(62px,7vw,104px); min-height: min(720px,calc(100svh - var(--header-h))); display:flex; flex-direction:column; justify-content:space-between; }
-.port-hero-top { display:flex; justify-content:space-between; align-items:start; gap:24px; color:var(--muted); }
-.port-hero-top .mono { max-width:30ch; }
-.port-hero-title { margin: clamp(56px,11vw,150px) 0 0; font-size:clamp(68px,14.4vw,250px); line-height:.79; font-weight:400; letter-spacing:-.085em; }
-.port-hero-title span { display:block; }
-.port-hero-title span:last-child { margin-left:clamp(0px,16vw,270px); color:var(--accent); }
-.port-hero-bottom { display:grid; grid-template-columns:repeat(12,1fr); gap:20px; align-items:end; margin-top:clamp(48px,7vw,100px); padding-top:20px; border-top:1px solid var(--ink); }
-.port-hero-bottom .mono { grid-column:1/4; color:var(--muted); }
-.port-hero-bottom p { grid-column:4/9; margin:0; max-width:540px; font-size:clamp(19px,2vw,28px); line-height:1.3; letter-spacing:-.025em; }
-.port-hero-bottom a { grid-column:10/13; justify-self:end; font-size:16px; border-bottom:1px solid currentColor; padding-bottom:6px; }
-.port-hero-bottom a:hover { color:var(--accent); }
-.port-list { padding:0 var(--gutter) clamp(100px,10vw,170px); }
-.list-head { display:flex; justify-content:space-between; align-items:end; gap:24px; padding:24px 0; border-top:1px solid var(--ink); }
-.list-head h2 { margin:0; font-size:clamp(35px,5vw,72px); line-height:1; font-weight:400; letter-spacing:-.055em; }
-.list-head .mono { color:var(--muted); }
-.filters { display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:17px 0 30px; }
-.filters .mono { margin-right:clamp(8px,3vw,44px); color:var(--muted); }
-.filter { display:inline-flex; align-items:center; gap:10px; border:1px solid var(--line); border-radius:100px; padding:10px 16px; background:transparent; font-size:14px; line-height:1; transition:background .2s,color .2s,border-color .2s; }
-.filter:hover { border-color:var(--ink); }
-.filter[aria-pressed="true"] { background:var(--ink); border-color:var(--ink); color:var(--bg); }
-.filter-count { color:var(--muted); font:11px var(--mono); }
-.filter[aria-pressed="true"] .filter-count { color:inherit; opacity:.65; }
-.project-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(55px,7vw,112px) 20px; }
-.project-card { min-width:0; border-top:1px solid var(--ink); }
-.project-card[hidden] { display:none; }
-.card-top { display:flex; justify-content:space-between; gap:12px; padding:16px 0; color:var(--muted); }
-.card-image { position:relative; display:block; aspect-ratio:1.55; background:#D8D8D4; overflow:hidden; }
-.card-image img { display:block; width:100%; height:100%; object-fit:cover; object-position:center top; transition:transform .6s cubic-bezier(.2,.7,.1,1),filter .6s; }
-.card-image:hover img { transform:scale(1.035); filter:brightness(.78); }
-.image-open { position:absolute; right:16px; bottom:16px; display:inline-flex; gap:12px; background:var(--bg); color:var(--ink); border-radius:100px; padding:11px 15px; opacity:0; transform:translateY(8px); transition:opacity .25s,transform .25s; }
-.card-image:hover .image-open,.card-image:focus-visible .image-open { opacity:1; transform:none; }
-.card-info { display:grid; grid-template-columns:minmax(0,1.2fr) minmax(160px,.8fr); gap:16px; padding:21px 0 28px; }
-.card-tag { color:var(--accent); }
-.card-info h2 { font-size:clamp(32px,4.2vw,62px); font-weight:400; letter-spacing:-.055em; line-height:.95; margin:18px 0 12px; }
-.card-kind { margin:0; color:var(--muted); max-width:29ch; font-size:16px; }
-.card-feature { border-left:1px solid var(--line); padding-left:20px; align-self:end; }
-.card-feature .mono { color:var(--muted); }
-.card-feature p { margin:12px 0 0; font-size:16px; line-height:1.35; }
-.card-actions { display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px 24px; border-top:1px solid var(--line); padding:16px 0 0; font-size:14px; }
-.card-actions a { display:inline-flex; gap:8px; align-items:center; border-bottom:1px solid transparent; padding-bottom:4px; }
-.card-actions a:hover { border-color:currentColor; color:var(--accent); }
-.port-contact { padding:clamp(70px,9vw,130px) var(--gutter) clamp(80px,10vw,150px); color:var(--bg); background:var(--ink); }
-.contact-layout { display:grid; grid-template-columns:repeat(12,1fr); gap:20px; }
-.contact-kicker { grid-column:1/4; color:#aaa9a4; }
-.contact-copy { grid-column:4/12; }
-.contact-copy h2 { margin:0; font-size:clamp(46px,7.6vw,126px); line-height:.92; letter-spacing:-.065em; font-weight:400; }
-.contact-copy h2 em { color:var(--accent); font-style:normal; }
-.contact-copy p { margin:34px 0 0; max-width:550px; font-size:clamp(18px,2vw,25px); line-height:1.35; color:#c6c4bd; }
-.contact-selected { color:var(--bg); }
-.contact-actions { display:flex; flex-wrap:wrap; gap:16px 28px; align-items:center; margin-top:45px; }
-.contact-actions .contact-email { display:inline-flex; gap:16px; align-items:center; border:1px solid #8b8982; border-radius:100px; padding:18px 24px; color:var(--bg); }
-.contact-actions .contact-email:hover { background:var(--bg); color:var(--ink); }
-.contact-actions .contact-phone { border-bottom:1px solid #8b8982; padding-bottom:5px; }
-.crm-slot:not(:empty) { margin-top:40px; }
-.port-contact + .footer { margin-top:0; }
-@media(max-width:900px) { .port-hero-bottom .mono{grid-column:1/3}.port-hero-bottom p{grid-column:3/11}.port-hero-bottom a{grid-column:3/11;justify-self:start}.contact-kicker{grid-column:1/13}.contact-copy{grid-column:1/13} }
-@media(max-width:720px) { .port-hero{min-height:auto}.port-hero-title{font-size:clamp(61px,14vw,112px);margin-top:90px}.port-hero-title span:last-child{margin-left:0}.port-hero-bottom{grid-template-columns:1fr;gap:20px}.port-hero-bottom .mono,.port-hero-bottom p,.port-hero-bottom a{grid-column:1}.list-head{align-items:start}.filters{gap:7px}.filters .mono{width:100%;margin-bottom:8px}.project-grid{grid-template-columns:1fr;gap:64px}.card-info{grid-template-columns:1fr}.card-feature{border-left:0;border-top:1px solid var(--line);padding:15px 0 0}.contact-layout{display:block}.contact-copy h2{margin-top:34px} }
-@media(max-width:500px) { .port-hero-top .mono:not(:first-child){display:none}.port-hero-title{font-size:16vw}.port-hero-bottom p{font-size:21px}.filter{font-size:13px;padding:9px 12px}.list-head h2{font-size:42px}.card-image{aspect-ratio:1.2}.card-actions{flex-direction:column;gap:8px}.contact-actions{align-items:start;flex-direction:column}.contact-actions .contact-email{width:100%;justify-content:space-between} }
-@media(prefers-reduced-motion:reduce) { .card-image img,.image-open{transition:none} }
-
-/* Одинаковые диагональные стрелки и цельный заголовок портфолио */
-.port-hero-title { color:var(--ink); font-size:clamp(52px,12vw,184px); white-space:nowrap; letter-spacing:-.075em; }
-.port-hero-bottom a { display:inline-flex; align-items:center; gap:8px; }
-@media(max-width:720px) { .port-hero-title { font-size:clamp(52px,12vw,86px); } }
-@media(max-width:500px) { .port-hero-title { font-size:12vw; } }
-
-/* Скриншоты работ показываются целиком, без обрезки */
-.card-image { aspect-ratio:auto; overflow:visible; }
-.card-image img { width:100%; height:auto; object-fit:contain; transform:none; }
-.card-image:hover img { transform:none; filter:brightness(.9); }
-@media(max-width:500px) { .card-image { aspect-ratio:auto; } }
-
-/* Вступление в типографике блока «Как мы работаем» на главной */
-.port-hero-phrase { margin:clamp(80px,9vw,150px) 0 clamp(70px,8vw,130px); max-width:17em; font-size:clamp(44px,5vw,92px); font-weight:var(--tw); line-height:1.04; letter-spacing:var(--tls); }
-.port-hero-phrase .dim { color:var(--muted); }
-.port-hero-phrase .port-accent { color:var(--accent); }
-@media(max-width:720px) { .port-hero-phrase { font-size:clamp(38px,7vw,56px); margin:70px 0 90px; } }
-
-/* Компактный первый экран без нижней строки */
-.port-hero { min-height:auto; justify-content:flex-start; }
-.port-hero-phrase { margin-bottom:clamp(70px,8vw,130px); }
-/* Действия в соседних карточках стоят на одной линии */
-.project-card { display:flex; flex-direction:column; }
-.card-actions { margin-top:auto; }
-
-/* Первый экран: вдвое меньше воздуха вокруг вступления */
-.port-hero { padding-bottom:clamp(31px,3.5vw,52px); }
-.port-hero-phrase { margin-top:clamp(40px,4.5vw,75px); margin-bottom:clamp(35px,4vw,65px); }
-@media(max-width:720px) { .port-hero-phrase { margin:35px 0 45px; } }
-/* Кнопки в стиле главной: Onest, круглая форма и центрированная стрелка */
-.card-actions { align-items:center; }
-.card-actions a { min-height:44px; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:0 17px; border:1px solid var(--ink); border-radius:100px; font-family:var(--font); font-size:15px; line-height:1; text-transform:none; }
-.card-actions .site-link { background:transparent; color:var(--ink); }
-.card-actions .project-link { background:var(--ink); color:var(--bg); }
-.card-actions .site-link:hover { background:var(--ink); color:var(--bg); border-color:var(--ink); }
-.card-actions .project-link:hover { background:var(--accent); border-color:var(--accent); color:#fff; }
-.image-open { background:var(--ink); color:var(--bg); font-family:var(--font); font-size:15px; line-height:1; text-transform:none; align-items:center; padding:13px 18px; }
-.image-open .ico,.card-actions .ico { display:block; flex:none; width:18px; height:18px; stroke-width:1.5; }
-.card-image:hover .image-open { color:var(--bg); }
-
-.cta-short { display:none; }
-@media(max-width:720px) {
-  .filters { display:flex; flex-wrap:nowrap; gap:8px; overflow-x:auto; overflow-y:hidden; padding:14px var(--gutter) 26px 0; margin-right:calc(var(--gutter) * -1); -webkit-overflow-scrolling:touch; scrollbar-width:none; scroll-snap-type:x proximity; }
-  .filters::-webkit-scrollbar { display:none; }
-  .filters > .mono { display:none; }
-  .filter { flex:none; white-space:nowrap; scroll-snap-align:start; }
-}
-@media(max-width:600px) {
-  .card-actions { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:8px; align-items:stretch; }
-  .card-actions a { min-height:44px; width:100%; padding:0 9px; font-size:13px; gap:6px; white-space:nowrap; }
-  .card-actions .ico { width:16px; height:16px; }
-  .cta-long { display:none; }
-  .cta-short { display:inline; }
-}
-.port-hero { padding-top:clamp(20px,2vw,32px); padding-bottom:clamp(20px,2vw,32px); }
-.port-hero-phrase { margin:clamp(18px,2.2vw,32px) 0 0; max-width:none; text-wrap:normal; }
-.port-hero-phrase span { display:block; }
-
-/* Страница услуги: типографический минимализм, общая палитра и сетка сайта */
-.svc-main { overflow:hidden; }
-.svc-main .mono, .svc-kicker { font-family:var(--mono); font-size:12px; letter-spacing:.03em; text-transform:uppercase; }
-.svc-main .cm { color:var(--accent); }
-.svc-hero { padding:clamp(20px,2vw,32px) var(--gutter) clamp(48px,6vw,80px); }
-.svc-kicker { color:var(--muted); }
-.svc-hero h1 { margin:clamp(18px,2.2vw,32px) 0 clamp(32px,4vw,56px); max-width:1500px; font-size:clamp(48px,6.6vw,124px); line-height:.98; letter-spacing:var(--tls); font-weight:var(--tw); }
-.svc-hero h1 span { color:var(--ink); }
-.svc-hero-bottom { border-top:1px solid var(--ink); padding-top:23px; display:grid; grid-template-columns:minmax(0,1.45fr) minmax(250px,.55fr); gap:clamp(30px,6vw,110px); align-items:start; }
-.svc-lead { margin:0; max-width:34em; font-size:clamp(18px,1.8vw,26px); line-height:1.4; letter-spacing:-.01em; }
-.svc-hero-action p { margin:4px 0 28px; max-width:31em; font-size:17px; line-height:1.5; }
-.svc-button { display:inline-flex; align-items:center; justify-content:space-between; gap:14px; min-height:56px; padding:0 20px; background:var(--accent); color:#fff; border:1px solid var(--accent); border-radius:100px; font-size:16px; line-height:1.2; white-space:nowrap; transition:background .2s,color .2s; }
-.svc-button:hover { background:var(--ink); border-color:var(--ink); }
-.svc-button span, .svc-text-link span { font-size:20px; line-height:1; }
-.svc-section { padding:clamp(64px,9vw,128px) var(--gutter); border-top:1px solid var(--line); scroll-margin-top:var(--header-h); }
-.svc-section-head { display:grid; grid-template-columns:repeat(12,1fr); column-gap:20px; align-items:end; margin-bottom:clamp(40px,5vw,72px); }
-.svc-section-head>.mono { grid-column:1/-1; color:var(--muted); margin-bottom:20px; }
-.svc-section h2, .svc-price h2 { grid-column:1/10; margin:0; font-size:clamp(40px,5.4vw,104px); line-height:.98; font-weight:var(--tw); letter-spacing:var(--tls); }
-.svc-split { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-.svc-choice { min-height:300px; padding:18px clamp(20px,3vw,50px) 24px 0; display:flex; flex-direction:column; }
-.svc-choice+ .svc-choice { border-left:1px solid var(--line); padding-left:clamp(20px,3vw,50px); }
-.svc-choice-top { display:flex; justify-content:space-between; gap:12px; color:var(--muted); }
-.svc-choice h3 { margin:clamp(24px,2.5vw,40px) 0 18px; font-size:clamp(35px,3.7vw,64px); line-height:1; font-weight:400; letter-spacing:-.055em; }
-.svc-choice p { max-width:33em; margin:0 0 24px; font-size:18px; line-height:1.5; }
-.svc-choice-note { margin-top:auto; color:var(--accent); }
-.svc-editorial { margin:clamp(40px,5vw,72px) 0 0; max-width:24em; font-size:clamp(32px,4vw,68px); line-height:1.09; letter-spacing:-.055em; }
-.svc-editorial span { color:var(--muted); }
-.svc-services, .svc-steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--ink); }
-.svc-service, .svc-steps article { min-height:300px; padding:18px clamp(16px,2.5vw,42px) 24px 0; display:flex; flex-direction:column; }
-.svc-service+ .svc-service, .svc-steps article+article { border-left:1px solid var(--line); padding-left:clamp(16px,2.5vw,42px); }
-.svc-service>.mono, .svc-steps .mono { color:var(--accent); }
-.svc-service h3, .svc-steps h3 { margin:clamp(24px,2.5vw,40px) 0 18px; font-size:clamp(31px,3.3vw,56px); line-height:1.05; font-weight:400; letter-spacing:-.05em; }
-.svc-service p, .svc-steps p { margin:0 0 35px; max-width:24em; font-size:17px; line-height:1.5; }
-.svc-service a { margin-top:auto; display:flex; justify-content:space-between; gap:12px; border-top:1px solid var(--ink); padding-top:15px; font-size:15px; }
-.svc-service a:hover, .svc-text-link:hover { color:var(--accent); }
-.svc-section-intro { margin:-36px 0 48px auto; max-width:42em; font-size:18px; }
-.svc-practice-list { border-top:1px solid var(--ink); }
-.svc-practice-list article { display:grid; grid-template-columns:minmax(170px,1fr) minmax(0,1.5fr) minmax(0,1.5fr); gap:24px; padding:27px 0 35px; border-bottom:1px solid var(--line); }
-.svc-practice-list .mono { color:var(--accent); padding-top:8px; }
-.svc-practice-list h3 { margin:0; max-width:17em; font-size:clamp(27px,3vw,49px); line-height:1.08; font-weight:400; letter-spacing:-.045em; }
-.svc-practice-list p { margin:4px 0 0; max-width:34em; font-size:17px; line-height:1.5; }
-.svc-text-link { margin-top:32px; display:inline-flex; align-items:center; gap:24px; border-bottom:1px solid currentColor; padding-bottom:6px; font-size:18px; }
-.svc-price { background:var(--ink); color:var(--bg); padding:clamp(64px,9vw,128px) var(--gutter); scroll-margin-top:var(--header-h); }
-.svc-price .svc-section-head>.mono { color:#a8a7a2; }
-.svc-price-grid { display:grid; grid-template-columns:1.25fr 1fr; gap:clamp(50px,8vw,150px); border-top:1px solid #676661; padding-top:28px; }
-.svc-price-grid>.mono, .svc-price-grid .mono { color:#a8a7a2; }
-.svc-price-number { margin:clamp(45px,6vw,100px) 0 15px; white-space:nowrap; font-size:clamp(70px,10vw,170px); line-height:.85; letter-spacing:-.085em; }
-.svc-price-number small { font-size:.4em; letter-spacing:0; }
-.svc-price-grid>div>p:last-child { max-width:24em; font-size:18px; }
-.svc-price-details h3 { margin:2px 0 24px; font-size:clamp(27px,3vw,42px); font-weight:400; }
-.svc-price-details ul { list-style:none; padding:0; margin:0 0 30px; border-top:1px solid #676661; }
-.svc-price-details li { padding:14px 0; border-bottom:1px solid #676661; font-size:17px; }
-.svc-price-details p { color:#bbb9b3; max-width:38em; line-height:1.5; }
-.svc-button-light { margin-top:24px; background:var(--bg); border-color:var(--bg); color:var(--ink); }
-.svc-button-light:hover { background:var(--accent); border-color:var(--accent); color:white; }
-.svc-steps { border-bottom:1px solid var(--line); }
-.svc-steps article { min-height:260px; }
-.svc-faq-list { border-top:1px solid var(--ink); }
-.svc-faq-list details { border-bottom:1px solid var(--line); }
-.svc-faq-list summary { list-style:none; cursor:pointer; display:flex; justify-content:space-between; gap:20px; padding:27px 0; font-size:clamp(23px,2.8vw,42px); line-height:1.12; letter-spacing:-.04em; }
-.svc-faq-list summary::-webkit-details-marker { display:none; }
-.svc-faq-list summary span { color:var(--accent); transition:transform .2s; }
-.svc-faq-list details[open] summary span { transform:rotate(45deg); }
-.svc-faq-list details p { margin:0 0 30px; max-width:46em; font-size:18px; line-height:1.5; }
-@media(max-width:850px) { .svc-section-head { grid-template-columns:1fr; gap:0; } .svc-section-head>.mono { margin-bottom:14px; } .svc-section h2, .svc-price h2 { grid-column:1; } .svc-practice-list article { grid-template-columns:1fr 1fr; } .svc-practice-list article>.mono { grid-column:1/-1; } .svc-price-grid { grid-template-columns:1fr; } }
-@media(max-width:650px) { .svc-hero h1 { font-size:clamp(48px,12vw,76px); line-height:.98; } .svc-hero h1 br { display:none; } .svc-hero-bottom,.svc-split,.svc-services,.svc-steps,.svc-practice-list article { grid-template-columns:1fr; } .svc-choice,.svc-service,.svc-steps article { min-height:auto; padding:20px 0 34px; } .svc-choice+.svc-choice,.svc-service+.svc-service,.svc-steps article+article { border-left:0; border-top:1px solid var(--line); padding:20px 0 34px; } .svc-choice h3,.svc-service h3,.svc-steps h3 { margin:32px 0 15px; } .svc-choice p,.svc-service p,.svc-steps p { margin-bottom:25px; } .svc-service a { margin-top:18px; } .svc-practice-list article>.mono { grid-column:auto; } .svc-section-intro { margin:-22px 0 30px; } .svc-price-number { white-space:normal; } }
 </style>
 </head>
 <body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M8.5 4.5L16 12l-7.5 7.5"/></symbol>
-  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H11l-4.5 4v-4h-1A1.5 1.5 0 0 1 4 14.5v-9A1.5 1.5 0 0 1 5.5 4z"/><path d="M8 8.5h8M8 11.5h5"/></symbol>
 </svg>
-
 
 <header class="header">
   <a class="logo" href="../../prototype/home.html" aria-label="Дизайн+Код — на главную">
     <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="7" aria-hidden="true">
-  <path d="M595 57H297L10 211l287 154h155"/>
-  <path d="M140 137v142"/>
-  <path d="M706 3L515 412"/>
-  <path d="M725 57l305 154-305 154"/>
-  <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
-    <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
-    <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
-  </g>
-</svg>
+      <path d="M595 57H297L10 211l287 154h155"/>
+      <path d="M140 137v142"/>
+      <path d="M706 3L515 412"/>
+      <path d="M725 57l305 154-305 154"/>
+      <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+        <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
+        <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+      </g>
+    </svg>
   </a>
 
   <nav class="nav" aria-label="Основное меню">
@@ -1033,7 +577,7 @@
       </button>
       <div class="submenu" id="sm-services">
         <div class="sub-group mono">Сайты</div>
-        <a href="../../services/bitrix/"><span class="mono">01</span>Разработка на 1С-Битрикс</a>
+        <a href="../../services/bitrix/" aria-current="page"><span class="mono">01</span>Разработка на 1С-Битрикс</a>
         <a href="../../services/online-stores/"><span class="mono">02</span>Интернет-магазины</a>
         <a href="../../services/corporate-sites/"><span class="mono">03</span>Корпоративные сайты</a>
         <a href="../../services/support/"><span class="mono">04</span>Поддержка</a>
@@ -1083,11 +627,12 @@
     </button>
   </div>
 </header>
+
 <div class="mobile-menu" id="mobile-menu">
-  <details>
+  <details open>
     <summary>Услуги <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
     <div>
-      <a href="../../services/bitrix/">Разработка на 1С-Битрикс</a>
+      <a href="../../services/bitrix/" aria-current="page">Разработка на 1С-Битрикс</a>
       <a href="../../services/online-stores/">Интернет-магазины</a>
       <a href="../../services/corporate-sites/">Корпоративные сайты</a>
       <a href="../../services/support/">Поддержка</a>
@@ -1122,108 +667,237 @@
   <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
 </div>
 
-
 <main class="svc-main">
+  <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Разработка на 1С-Битрикс</div>
-    <h1 id="svc-title">Разработка сайтов<br> <span>на 1С-Битрикс</span></h1>
+    <h1 id="svc-title">Разработка сайтов<br><span>на 1С-Битрикс</span></h1>
     <div class="svc-hero-bottom">
-      <p class="svc-lead">Создаём сайты под задачи бизнеса: от небольшого представительства до сложных систем с каталогами, личными кабинетами и интеграциями.</p>
+      <div class="svc-hero-copy">
+        <p class="svc-lead">Нужен небольшой сайт компании? Сделаем. Интернет-магазин со своими правилами, несколькими языками и интеграциями? Тоже знакомая история.</p>
+        <p class="svc-sublead">Мы разрабатываем сайты на 1С-Битрикс — от простых решений до систем, в которых бизнес-процессов больше, чем пунктов в хорошем ТЗ. И да, нам действительно интересно в них разбираться.</p>
+      </div>
       <div class="svc-hero-action">
-        <p>Сначала разберёмся, что должен делать сайт. Затем предложим готовое решение или индивидуальную разработку.</p>
-        <a class="svc-button" href="#form">Оценить разработку сайта <span aria-hidden="true">↗</span></a>
+        <p>Сначала выясним, что должен делать сайт. Потом выберем, как это реализовать: на готовом решении или индивидуально. Не наоборот.</p>
+        <div class="svc-hero-price">Простой сайт — <strong>от 70 000 ₽</strong>. Лицензия «Старт» и готовый шаблон уже включены.</div>
+        <a class="svc-button" href="#form">Оценить разработку сайта <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </section>
 
-  <section class="svc-section svc-approach" aria-labelledby="approach-title">
+  <!-- 02 · Подход -->
+  <section class="svc-section" aria-labelledby="approach-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 02 · Подход</span>
-      <h2 id="approach-title">Готовое решение или<br>индивидуальная разработка?</h2>
+      <h2 id="approach-title">Готовый шаблон или<br>индивидуальная разработка?</h2>
+      <p class="svc-section-lead">Шаблоны мы любим. Особенно когда они экономят клиенту деньги, а нам — время. Но есть одно «но»: шаблон должен подходить бизнесу, а не бизнес — подстраиваться под шаблон.</p>
     </div>
     <div class="svc-split">
       <article class="svc-choice">
-        <div class="svc-choice-top mono"><span>01 / 02</span><span>Быстрее к запуску</span></div>
-        <h3>Готовое решение</h3>
-        <p>Подойдёт, когда нужные функции уже есть и проект не требует значительных переделок. Подберём решение, установим и адаптируем под вашу задачу.</p>
-        <span class="svc-choice-note mono">Если функции покрывают требования</span>
+        <div class="svc-choice-top mono"><span class="num">01 / 02</span><span>Готовое решение</span></div>
+        <h3>Когда готовое решение — удачная идея</h3>
+        <p>Нужные функции уже есть? Отлично. Подберём решение из Маркетплейса 1С-Битрикс или наших собственных разработок, настроим и адаптируем под задачу. Незачем писать заново то, что уже хорошо работает.</p>
+        <span class="svc-choice-note mono">Если функции покрывают задачу без переделок</span>
       </article>
       <article class="svc-choice">
-        <div class="svc-choice-top mono"><span>02 / 02</span><span>Под ваши процессы</span></div>
-        <h3>Индивидуальная разработка</h3>
-        <p>Нужна для особых правил заказов, нетиповых каталогов, личных кабинетов и сложных интеграций. Возможности и стоимость определим после оценки требований.</p>
-        <span class="svc-choice-note mono">Если готового решения недостаточно</span>
+        <div class="svc-choice-top mono"><span class="num">02 / 02</span><span>Своя разработка</span></div>
+        <h3>Когда лучше сделать по-своему</h3>
+        <p>Особые правила заказов, нетипичный каталог, личный кабинет, расчёты или сложные интеграции — здесь шаблон может начать сопротивляться. Тогда разрабатываем нужные механизмы и собственные модули.</p>
+        <span class="svc-choice-note mono">Если нужны особые бизнес-процессы и интеграции</span>
       </article>
     </div>
-    <p class="svc-editorial">Не подстраиваем бизнес под шаблон — <span>сравним варианты до начала работ и объясним выбор</span></p>
+    <p class="svc-editorial">Бывало, отговаривали от красивого готового решения. <span>Не потому, что любим усложнять, а потому, что переделывать его потом — сомнительный способ сэкономить. Объясним варианты и поможем выбрать без технического квеста.</span></p>
   </section>
 
+  <!-- 03 · Какие сайты мы делаем -->
   <section class="svc-section" aria-labelledby="formats-title">
     <div class="svc-section-head">
-      <span class="mono"><span class="cm">//</span> 03 · Что разрабатываем</span>
-      <h2 id="formats-title">Сайт под вашу задачу</h2>
+      <span class="mono"><span class="cm">//</span> 03 · Направления</span>
+      <h2 id="formats-title">Какие сайты мы делаем</h2>
     </div>
     <div class="svc-services">
-      <article class="svc-service"><span class="mono">01 / Сайты</span><h3>Корпоративные</h3><p>Услуги, продукция, проекты, документы и B2B-каталоги. При необходимости — кабинет для клиентов и партнёров.</p><a href="../../services/corporate-sites/">Подробнее о корпоративных сайтах <span aria-hidden="true">↗</span></a></article>
-      <article class="svc-service"><span class="mono">02 / Торговля</span><h3>Интернет-магазины</h3><p>Каталог, корзина, оплата, доставка и обмен данными с другими системами. Особые правила продаж обсудим отдельно.</p><a href="../../services/online-stores/">Подробнее об интернет-магазинах <span aria-hidden="true">↗</span></a></article>
-      <article class="svc-service"><span class="mono">03 / Системы</span><h3>Нестандартные проекты</h3><p>Калькуляторы, конфигураторы, сервисы подбора, внутренние инструменты и многосайтовые системы.</p><a href="#form">Обсудить свою задачу <span aria-hidden="true">↗</span></a></article>
+      <article class="svc-service">
+        <span class="mono">01 / Сайты</span>
+        <h3>Корпоративные сайты</h3>
+        <p>Сайт небольшой компании, производственного предприятия или B2B-бизнеса. С услугами, продукцией, каталогами, документацией и — когда нужно — кабинетами для клиентов и партнёров.</p>
+        <a href="../../services/corporate-sites/">Разработка корпоративных сайтов <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="svc-service">
+        <span class="mono">02 / Торговля</span>
+        <h3>Интернет-магазины</h3>
+        <p>От маленького магазина до торговой системы с несколькими брендами и языками. Каталоги, корзина, оплата, доставка, особые условия продаж и обмен данными с другими системами.</p>
+        <a href="../../services/online-stores/">Разработка интернет-магазинов <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
+      <article class="svc-service">
+        <span class="mono">03 / Системы</span>
+        <h3>Нестандартные веб-проекты</h3>
+        <p>Калькуляторы, конфигураторы, сервисы подбора, внутренние инструменты и многосайтовые системы. Если задачу трудно объяснить одним словом, ничего страшного. Расскажите, как это должно работать, — разберёмся вместе.</p>
+        <a href="#form">Обсудить нестандартную задачу <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </article>
     </div>
   </section>
 
-  <section class="svc-section svc-practice" aria-labelledby="practice-title">
+  <!-- 04 · Практика студии -->
+  <section class="svc-section" aria-labelledby="practice-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 04 · Практика студии</span>
-      <h2 id="practice-title">Сложное — в деталях</h2>
+      <h2 id="practice-title">А сложное умеете?<br>Вот три примера</h2>
+      <p class="svc-section-lead">О сложных проектах можно долго рассказывать общими словами. Но нам больше нравятся примеры.</p>
     </div>
-    <p class="svc-section-intro">Три примера задач, с которыми работала студия. Имена клиентов здесь не приводим.</p>
     <div class="svc-practice-list">
-      <article><span class="mono">01 / Доставка</span><h3>Больше десяти перевозчиков — один понятный выбор</h3><p>Для мультибрендовой системы разработали модуль, который учитывал условия и исключения перевозчиков и показывал подходящую службу со сроком доставки при оформлении заказа.</p></article>
-      <article><span class="mono">02 / Корзина</span><h3>Сопутствующие товары по возрастной группе</h3><p>В магазине детских товаров корзина подсказывала подходящие товары по предполагаемому возрасту ребёнка на основе уже выбранных позиций — без перезагрузки страницы.</p></article>
-      <article><span class="mono">03 / Подбор</span><h3>Расчёт по обновляемым правилам</h3><p>Система подбирала предложения по заданным заказчиком весовым коэффициентам. Когда таблица правил менялась, расчёт учитывал новые данные.</p></article>
+      <article>
+        <span class="mono">01 / Доставка</span>
+        <h3>Доставка, у которой нашлось больше десяти мнений</h3>
+        <p>Для крупной мультибрендовой системы с сайтами на нескольких языках, страницами для торговых точек и сотрудников, связанными с Битрикс24, мы разработали собственный модуль доставки. Он собирал условия более десяти перевозчиков, учитывал их исключения и подбирал покупателю подходящую транспортную компанию со сроком доставки прямо при оформлении заказа. Потому что человеку нужна посылка, а не знакомство с регламентами перевозчиков.</p>
+      </article>
+      <article>
+        <span class="mono">02 / Корзина</span>
+        <h3>Корзина, которая подсказывает по делу</h3>
+        <p>В магазине детских товаров корзина предлагала сопутствующие товары с учётом предполагаемой возрастной группы ребёнка, которую система определяла по уже выбранным товарам. И всё это — сразу, без перезагрузки страницы.</p>
+      </article>
+      <article>
+        <span class="mono">03 / Подбор</span>
+        <h3>Подбор предложений по таблице, которая постоянно меняется</h3>
+        <p>В другом проекте посетитель вводил данные, а система подбирала предложения по заданным заказчиком весовым коэффициентам. Таблицу с правилами можно было обновлять — и расчёт учитывал изменения. Не каждый необычный запрос нужно превращать в ручную работу.</p>
+      </article>
     </div>
-    <a class="svc-text-link" href="../../portfolio/">Смотреть портфолио <span aria-hidden="true">↗</span></a>
+    <p class="svc-practice-note">Имена заказчиков здесь не приводим. Важно другое: мы не просто «можем сделать нестандартно» — такие задачи у нас уже были.</p>
+    <a class="svc-text-link" href="../../portfolio/">Смотреть портфолио <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
   </section>
 
+  <!-- 05 · Почему с нами остаются надолго -->
+  <section class="svc-section" aria-labelledby="why-title">
+    <div class="svc-section-head">
+      <span class="mono"><span class="cm">//</span> 05 · Опыт и подход</span>
+      <h2 id="why-title">Почему с нами<br>остаются надолго</h2>
+      <p class="svc-section-lead">«Дизайн+Код» разрабатывает сайты с 2013 года. За плечами — больше 130 созданных сайтов, более десяти лет в статусе партнёра 1С-Битрикс и регулярная сертификация специалистов. Но есть вещь, которую в сертификате не напишешь: с нами удобно иметь дело.</p>
+    </div>
+    <div class="why-facts">
+      <div class="why-fact">
+        <span class="mono">01 / год основания</span>
+        <span class="why-fact-val">2013</span>
+        <span class="why-fact-cap">Разрабатываем сайты на 1С-Битрикс</span>
+      </div>
+      <div class="why-fact">
+        <span class="mono">02 / проекты</span>
+        <span class="why-fact-val">130+</span>
+        <span class="why-fact-cap">Созданных сайтов и интернет-магазинов</span>
+      </div>
+      <div class="why-fact">
+        <span class="mono">03 / партнёрство</span>
+        <span class="why-fact-val">10+</span>
+        <span class="why-fact-cap">Лет в статусе партнёра 1С-Битрикс и сертификация команды</span>
+      </div>
+    </div>
+    <div class="svc-steps">
+      <article>
+        <span class="mono">01 / Личный контакт</span>
+        <h3>Вам не придётся каждый раз рассказывать всё сначала</h3>
+        <p>В большинстве случаев с клиентом общается Оксана Климова, генеральный директор студии. Не сегодня один менеджер, завтра второй, а через месяц «напомните, пожалуйста, о каком сайте речь».</p>
+      </article>
+      <article>
+        <span class="mono">02 / История проекта</span>
+        <h3>Мы помним, что уже обсуждали</h3>
+        <p>Храним историю задач, договорённости и сведения о проекте и связанных сервисах. Иногда клиенту проще спросить у нас, где искать информацию о собственном домене. Удивительно? Для нас — обычный рабочий день.</p>
+      </article>
+      <article>
+        <span class="mono">03 / Развитие</span>
+        <h3>Не исчезаем после запуска</h3>
+        <p>Сайт запустили, жизнь продолжается: появляются новые товары, задачи и идеи. По отдельной договорённости помогаем с поддержкой и развитием. С некоторыми компаниями мы работаем больше десяти лет — и давно разговариваем без вводной презентации на сорок слайдов.</p>
+      </article>
+    </div>
+    <a class="svc-text-link" href="../../about/">О студии <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+  </section>
+
+  <!-- 06 · Стоимость -->
   <section class="svc-price" aria-labelledby="price-title">
     <div class="svc-section-head">
-      <span class="mono"><span class="cm">//</span> 05 · Стоимость</span>
-      <h2 id="price-title">Понятный старт<br>Дальше — по задаче</h2>
+      <span class="mono"><span class="cm">//</span> 06 · Стоимость</span>
+      <h2 id="price-title">Сколько стоит сайт<br>на 1С-Битрикс?</h2>
     </div>
     <div class="svc-price-grid">
-      <div><span class="mono">Простой сайт на готовом шаблоне</span><p class="svc-price-number">от 70 000 <small>₽</small></p><p>Небольшой сайт компании, не интернет-магазин.</p></div>
-      <div class="svc-price-details"><h3>Что входит</h3><ul><li>Лицензия 1С-Битрикс «Старт»</li><li>Готовый шаблон стоимостью до 15 000 ₽</li><li>Развёртывание и базовая настройка</li><li>Установка шаблона, адаптация логотипа и цветов</li></ul><p>Наполнение, отдельное тестирование, поддержка, интеграции и специальные функции оцениваются отдельно. Для других проектов подготовим смету.</p><a class="svc-button svc-button-light" href="#form">Оценить разработку сайта <span aria-hidden="true">↗</span></a></div>
+      <div>
+        <span class="mono">Простой сайт — уже с лицензией и шаблоном</span>
+        <p class="svc-price-number">от 70 000 <small>₽</small></p>
+        <p class="svc-price-caption">Это небольшой сайт компании на готовом решении, не интернет-магазин. Для него предусмотрели понятный стартовый вариант.</p>
+      </div>
+      <div class="svc-price-details">
+        <h3>Что входит в цену</h3>
+        <ul>
+          <li>Лицензия 1С-Битрикс «Старт»</li>
+          <li>Готовый шаблон стоимостью до 15 000 ₽</li>
+          <li>Развёртывание и базовая настройка платформы, установка шаблона</li>
+          <li>Небольшая адаптация внешнего вида: логотип и цвета</li>
+        </ul>
+        <p>Если нужно заполнить страницы материалами, сделать уникальный дизайн, добавить интеграции или собственные функции — включим это в отдельную оценку. Отдельный этап тестирования и последующая техподдержка тоже не входят в стартовый вариант. Лучше спокойно обсудить объём заранее, чем удивлять вас счётом в процессе.</p>
+        <p>Для интернет-магазинов и сложных систем стоимость рассчитываем по задаче. Одна хитрая форма порой интереснее и трудоёмче десяти обычных страниц.</p>
+        <a class="svc-button svc-button-light" href="#form">Оценить разработку сайта <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+    <div class="license-callout">
+      <h3>А лицензия — это не техподдержка?</h3>
+      <p>Верно. Лицензия даёт право пользоваться продуктом по условиям производителя, но не включает работу нашей команды. И бесплатный модуль оплаты не настраивается силой мысли: на его подключение тоже может понадобиться время разработчика. Заранее объясним, за что вы платите.</p>
+    </div>
+    <div class="svc-related">
+      <a href="../../licenses/bitrix/">Лицензии 1С-Битрикс <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="../../prices/">Стоимость работ <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
+  <!-- 07 · Как всё начинается -->
   <section class="svc-section" aria-labelledby="steps-title">
     <div class="svc-section-head">
-      <span class="mono"><span class="cm">//</span> 06 · Порядок работы</span>
+      <span class="mono"><span class="cm">//</span> 07 · Порядок работы</span>
       <h2 id="steps-title">Как всё начинается</h2>
     </div>
     <div class="svc-steps">
-      <article><span class="mono">01</span><h3>Расскажите о задаче</h3><p>Можно прийти с готовым ТЗ или описать идею своими словами. Важно понять, что сайт должен делать для вас и клиентов.</p></article>
-      <article><span class="mono">02</span><h3>Уточним детали</h3><p>Разберём требования, ограничения, нужные функции и интеграции. Проверим, подходит ли готовое решение.</p></article>
-      <article><span class="mono">03</span><h3>Предложим решение</h3><p>Обсудим подход, объём, стоимость и порядок дальнейшей работы до начала разработки.</p></article>
+      <article>
+        <span class="mono">01</span>
+        <h3>Вы рассказываете, что нужно</h3>
+        <p>Хоть обычными словами: «Хочу, чтобы клиент выбирал товар, а менеджер сразу видел заказ». Готовое ТЗ тоже с радостью посмотрим.</p>
+      </article>
+      <article>
+        <span class="mono">02</span>
+        <h3>Мы задаём вопросы</h3>
+        <p>Иногда много. Не из любопытства — просто это дешевле, чем потом переделывать.</p>
+      </article>
+      <article>
+        <span class="mono">03</span>
+        <h3>Предлагаем решение и оценку</h3>
+        <p>Обсуждаем функциональность, стоимость и порядок работы. Дальше — разработка по согласованным требованиям.</p>
+      </article>
     </div>
-    <a class="svc-text-link" href="../../process/">Подробнее о процессе <span aria-hidden="true">↗</span></a>
+    <a class="svc-text-link" href="../../process/">Как мы работаем <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
   </section>
 
+  <!-- 08 · Частые вопросы -->
   <section class="svc-section svc-faq" aria-labelledby="faq-title">
     <div class="svc-section-head">
-      <span class="mono"><span class="cm">//</span> 07 · Частые вопросы</span>
-      <h2 id="faq-title">Коротко о главном</h2>
+      <span class="mono"><span class="cm">//</span> 08 · Частые вопросы</span>
+      <h2 id="faq-title">Частые вопросы</h2>
     </div>
     <div class="svc-faq-list">
-      <details><summary>Что выбрать: готовый шаблон или индивидуальную разработку?<span aria-hidden="true">+</span></summary><p>Если шаблон подходит под задачи без серьёзных изменений, используем его. Если нет — предложим индивидуальную разработку после оценки требований.</p></details>
-      <details><summary>Сколько стоит разработка сайта на 1С-Битрикс?<span aria-hidden="true">+</span></summary><p>Небольшой сайт на готовом шаблоне — от 70 000 ₽. Другие проекты и функции рассчитываем по смете.</p></details>
-      <details><summary>Лицензия 1С-Битрикс входит в стоимость?<span aria-hidden="true">+</span></summary><p>Редакция «Старт» включена в стартовую стоимость простого сайта. Для других проектов редакцию и её стоимость подбираем отдельно.</p></details>
+      <details>
+        <summary>Что выбрать: готовый шаблон или индивидуальную разработку?<span aria-hidden="true">+</span></summary>
+        <p>Если шаблон подходит под ваши задачи без серьёзных изменений, зачем переплачивать? Если его придётся переделывать слишком сильно, предложим другой путь. Сравним варианты до начала работ.</p>
+      </details>
+      <details>
+        <summary>Сколько стоит разработка сайта на 1С-Битрикс?<span aria-hidden="true">+</span></summary>
+        <p>Небольшой сайт на готовом шаблоне — от 70 000 ₽. В цену входят лицензия «Старт», шаблон до 15 000 ₽, установка, базовая настройка и минимальная адаптация оформления. Наполнение и дополнительные работы оцениваются отдельно.</p>
+      </details>
+      <details>
+        <summary>Лицензия 1С-Битрикс входит в стоимость сайта?<span aria-hidden="true">+</span></summary>
+        <p>В стартовый вариант от 70 000 ₽ — да. Для других проектов редакцию подберём отдельно. Покупка лицензии сама по себе не включает разработку или техническую поддержку нашей студии.</p>
+      </details>
     </div>
   </section>
 </main>
+
+<!-- 09 · Форма и подвал -->
 <div class="final">
-<section class="contact" id="form" aria-labelledby="form-title">
+  <section class="contact" id="form" aria-labelledby="form-title">
     <div class="contact-head">
-      <span class="sec-label mono"><span class="cm">//</span> 08 · обсудим проект</span>
+      <span class="sec-label mono"><span class="cm">//</span> 09 · обсудим проект</span>
       <a class="big-mail" href="mailto:ask@designcodes.ru">ask@designcodes.ru <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <div class="side">
         <a href="tel:+79262901420">+7 (926) 290-14-20</a>
@@ -1233,21 +907,21 @@
     </div>
     <div class="contact-body">
       <div class="form-intro">
-        <h2 id="form-title">Или оставьте заявку</h2>
-        <p>Опишите задачу в двух словах. Перезвоним в рабочее время, зададим вопросы и предложим решение.</p>
+        <h2 id="form-title">Ну что, расскажете, какой сайт задумали?</h2>
+        <p>Можно прийти с готовым ТЗ, а можно с фразой «есть идея, но пока не знаю, как объяснить». С обоими вариантами работаем. Расскажите о задаче — вместе найдём разумное решение.</p>
       </div>
       <!-- МЕСТО ПОД CRM-ФОРМУ БИТРИКС24 (по ТЗ). Код встраивания даёт заказчик, разработчик вставляет его вместо этой формы.
-           Форма ниже — только макет для показа: поля, валидацию и согласия задаёт сама CRM-форма. Кнопки с data-open-form ведут сюда. -->
+           Форма ниже — макет для показа: поля, валидацию и согласия задаёт сама CRM-форма. Кнопки с data-open-form ведут сюда. -->
       <form class="form" id="lead-form" data-b24-slot novalidate>
         <div class="form-fields">
           <div class="form-grid">
             <label class="field"><span class="mono">Имя</span><input name="name" autocomplete="name" placeholder="Как к вам обращаться" required></label>
             <label class="field"><span class="mono">Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" maxlength="18" required></label>
           </div>
-          <label class="field"><span class="mono">Задача</span><textarea name="task" rows="3" placeholder="Новый магазин, доработка, интеграция с 1С…"></textarea></label>
-          <label class="agree"><input type="checkbox" name="agree" required><span>Согласен с <a href="https://designcodes.ru/police/" target="_blank" rel="noopener">политикой конфиденциальности</a> и обработкой персональных данных</span></label>
+          <label class="field"><span class="mono">Задача</span><textarea name="task" rows="3" placeholder="Новый сайт компании, магазин, доработка, интеграция с 1С…"></textarea></label>
+          <label class="agree"><input type="checkbox" name="agree" required><span>Согласен с <a href="../../privacy/">политикой конфиденциальности</a> и обработкой персональных данных</span></label>
           <div class="form-actions">
-            <button class="btn btn-lg" type="submit">Отправить заявку <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <button class="btn btn-lg" type="submit">Оценить разработку сайта <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
             <span class="form-note mono" aria-live="polite"></span>
           </div>
         </div>
@@ -1256,7 +930,7 @@
     </div>
   </section>
 
-<footer class="footer js-draw">
+  <footer class="footer js-draw">
     <div class="footer-top">
       <nav class="footer-col" aria-label="Услуги">
         <span class="mono">Услуги</span>
@@ -1309,23 +983,48 @@
     <div class="footer-legal">
       <span>© 2013–2026 ООО «Дизайнкод» · ИНН 7736666610 · ОГРН 5137746015138</span>
       <span>117393, Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582</span>
-      <a href="https://designcodes.ru/police/" target="_blank" rel="noopener">Политика конфиденциальности</a>
+      <a href="../../privacy/">Политика конфиденциальности</a>
     </div>
   </footer>
 </div>
+
 <script>
-const triggers = document.querySelectorAll('.nav-link[aria-controls]');
-function closeAll(except) { triggers.forEach(t => { if(t===except)return; t.setAttribute('aria-expanded','false'); document.getElementById(t.getAttribute('aria-controls')).classList.remove('open'); }); }
-triggers.forEach(t => t.addEventListener('click', e => { e.stopPropagation(); const open=t.getAttribute('aria-expanded')==='true'; closeAll(t); t.setAttribute('aria-expanded',String(!open)); document.getElementById(t.getAttribute('aria-controls')).classList.toggle('open',!open); }));
-document.addEventListener('click',e=>{if(!e.target.closest('.nav-item'))closeAll();});
-const menuBtn=document.getElementById('menu-toggle'),menu=document.getElementById('mobile-menu');
-function toggleMenu(force){const open=force??menuBtn.getAttribute('aria-expanded')!=='true';menuBtn.setAttribute('aria-expanded',String(open));menuBtn.setAttribute('aria-label',open?'Закрыть меню':'Открыть меню');menu.classList.toggle('open',open);document.body.style.overflow=open?'hidden':'';}
-menuBtn.addEventListener('click',()=>toggleMenu());
-menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){const opened=document.querySelector('.nav-link[aria-expanded="true"]');closeAll();if(opened)opened.focus();toggleMenu(false);}});
-const filters=document.querySelectorAll('.filter'),projects=document.querySelectorAll('.project-card');
-filters.forEach(button=>button.addEventListener('click',()=>{const selected=button.dataset.filter;filters.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));let visible=0;projects.forEach(card=>{card.hidden=selected!=='all'&&card.dataset.industry!==selected;if(!card.hidden)visible++;});}));
-document.querySelectorAll('[data-discuss]').forEach(link=>link.addEventListener('click',()=>{const name=link.dataset.discuss;const task=document.querySelector('#lead-form textarea[name="task"]');task.value='Хочу обсудить проект по примеру «'+name+'».\n\nМоя задача: ';}));
+  const triggers = document.querySelectorAll('.nav-link[aria-controls]');
+  function closeAll(except) {
+    triggers.forEach(t => {
+      if (t === except) return;
+      t.setAttribute('aria-expanded', 'false');
+      document.getElementById(t.getAttribute('aria-controls')).classList.remove('open');
+    });
+  }
+  triggers.forEach(t => t.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = t.getAttribute('aria-expanded') === 'true';
+    closeAll(t);
+    t.setAttribute('aria-expanded', String(!open));
+    document.getElementById(t.getAttribute('aria-controls')).classList.toggle('open', !open);
+  }));
+  document.addEventListener('click', e => { if (!e.target.closest('.nav-item')) closeAll(); });
+
+  const menuBtn = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  function toggleMenu(force) {
+    const open = force ?? menuBtn.getAttribute('aria-expanded') !== 'true';
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    menu.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuBtn.addEventListener('click', () => toggleMenu());
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const opened = document.querySelector('.nav-link[aria-expanded="true"]');
+      closeAll();
+      if (opened) opened.focus();
+      toggleMenu(false);
+    }
+  });
 
   // Подвал: логотип прорисовывается, когда подвал виден больше чем наполовину
   const footer = document.querySelector('.footer');
@@ -1340,20 +1039,18 @@ document.querySelectorAll('[data-discuss]').forEach(link=>link.addEventListener(
   addEventListener('scroll', checkDraw, { passive: true });
   checkDraw();
 
-
   // Маска телефона: +7 (___) ___-__-__
   const phone = document.querySelector('#lead-form input[type="tel"]');
-  // 10 цифр номера без кода страны
   function nationalDigits(v) {
     let d = v.replace(/\D/g, '');
-    if (v.trim().startsWith('+7')) d = d.slice(1);           // уже есть «+7»: первая 7 — код страны
-    else if (/^[78]\d{10}$/.test(d)) d = d.slice(1);          // вставили 8 926… или 7 926…
+    if (v.trim().startsWith('+7')) d = d.slice(1);
+    else if (/^[78]\d{10}$/.test(d)) d = d.slice(1);
     return d;
   }
   let prevNational = '';
   function formatPhone(v) {
     let d = nationalDigits(v);
-    if (!prevNational && /^[78]/.test(d)) d = d.slice(1);     // первой набрали 8 или 7 — это код страны, не номер
+    if (!prevNational && /^[78]/.test(d)) d = d.slice(1);
     d = d.slice(0, 10);
     if (!d) return '';
     let out = '+7 (' + d.slice(0, 3);
@@ -1363,7 +1060,6 @@ document.querySelectorAll('[data-discuss]').forEach(link=>link.addEventListener(
     return out;
   }
   phone.addEventListener('input', e => {
-    // при стирании не мешаем удалять скобки и дефисы
     if (e.inputType && e.inputType.startsWith('delete')) {
       if (!/\d/.test(phone.value.replace(/^\+7/, ''))) phone.value = '+7 (';
       prevNational = nationalDigits(phone.value);
@@ -1390,4 +1086,6 @@ document.querySelectorAll('[data-discuss]').forEach(link=>link.addEventListener(
     form.classList.add('sent');
   });
 </script>
-</body></html>
+</body>
+</html>
+

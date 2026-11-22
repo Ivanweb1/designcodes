@@ -1,0 +1,627 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Согласие на обработку персональных данных — Дизайн+Код</title>
+<meta name="description" content="Текст согласия на обработку персональных данных при обращении через сайт «Дизайн+Код».">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+  /* Страница /personal-data-consent/ (раздел 22 ТЗ).
+     Дизайн-система: типографический минимализм (B), без коммерческого CTA, без CRM-формы и без чекбоксов. */
+  :root {
+    --bg: #F3F2EE;
+    --ink: #111110;
+    --muted: #6B6A66;
+    --line: #D6D4CE;
+    --accent: #F0441C;
+    --font: Onest, "Helvetica Neue", Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    --gutter: clamp(16px, 3vw, 40px);
+    --header-h: 72px;
+    --tw: 400;
+    --tls: -0.03em;
+    interpolate-size: allow-keywords;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .cm { color: var(--accent); }
+
+  /* ---------- Шапка (логотип по центру) ---------- */
+  .header {
+    position: sticky; top: 0; z-index: 20;
+    height: var(--header-h);
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+    padding: 0 var(--gutter);
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .header .nav { grid-column: 1; grid-row: 1; display: flex; gap: 4px; }
+  .header .logo { grid-column: 2; grid-row: 1; display: block; flex: none; }
+  .header .header-right { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: 24px; }
+  .logo-svg { display: block; height: 46px; width: auto; }
+  .nav-item { position: relative; }
+  .nav-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 40px; padding: 0 12px;
+    font-size: 15px; font-weight: 400;
+    border-radius: 999px;
+  }
+  .nav-link::before { content: "/"; color: var(--accent); width: 0; overflow: hidden; display: inline-block; transition: width .2s; }
+  .nav-link:hover::before, .nav-link[aria-expanded="true"]::before { width: .6em; }
+  .nav-link:hover, .nav-link[aria-expanded="true"] { background: rgba(17,17,16,.06); }
+  .caret { width: 9px; height: 9px; transition: transform .2s; }
+  .nav-link[aria-expanded="true"] .caret { transform: rotate(180deg); }
+
+  .submenu {
+    position: absolute; top: calc(100% + 14px); left: 0;
+    min-width: 300px;
+    padding: 10px 0;
+    background: var(--bg);
+    border: 1px solid var(--ink);
+    display: none;
+  }
+  .submenu.open { display: block; }
+  .submenu a {
+    display: grid; grid-template-columns: 34px 1fr; align-items: baseline;
+    padding: 9px 20px;
+    font-size: 15px;
+  }
+  .submenu a:hover, .submenu a[aria-current="page"] { background: var(--ink); color: var(--bg); }
+  .submenu a .mono { color: var(--muted); }
+  .submenu a:hover .mono, .submenu a[aria-current="page"] .mono { color: var(--accent); }
+  .submenu .sub-group { padding: 12px 20px 4px; color: var(--muted); }
+
+  .phone { font-family: var(--mono); font-size: 14px; white-space: nowrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 44px; padding: 0 20px;
+    background: var(--ink); color: var(--bg);
+    font-size: 15px; font-weight: 400;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background .2s, color .2s;
+  }
+  .btn:hover { background: var(--accent); color: #fff; }
+
+  .icon-btn {
+    display: none;
+    width: 44px; height: 44px;
+    align-items: center; justify-content: center;
+    border: 1px solid var(--ink); border-radius: 999px;
+  }
+  .icon-btn svg { width: 18px; height: 18px; }
+
+  .ico { width: 1em; height: 1em; vertical-align: -0.14em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; overflow: visible; transition: transform .25s ease; }
+  a:hover > .ico, button:hover > .ico { transform: translateX(4px); }
+
+  /* ---------- Мобильное меню ---------- */
+  .mobile-menu {
+    position: fixed; inset: var(--header-h) 0 0 0; z-index: 19;
+    background: var(--bg);
+    overflow-y: auto;
+    padding: 8px var(--gutter) 32px;
+    display: none;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu details { border-bottom: 1px solid var(--line); }
+  .mobile-menu summary, .mobile-menu > a:not(.btn):not(.phone) {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 0;
+    font-size: 24px; font-weight: 400; letter-spacing: -0.02em;
+    list-style: none; cursor: pointer;
+  }
+  .mobile-menu > a:not(.btn):not(.phone) { border-bottom: 1px solid var(--line); }
+  .mobile-menu summary::-webkit-details-marker { display: none; }
+  .mobile-menu details[open] summary .caret { transform: rotate(180deg); }
+  .mobile-menu details a { display: block; padding: 8px 0 8px 16px; font-size: 17px; }
+  .mobile-menu details > div { padding-bottom: 16px; }
+  .mobile-menu .btn { margin-top: 28px; width: 100%; justify-content: center; height: 56px; }
+  .mobile-menu .phone { display: block; margin-top: 20px; text-align: center; }
+
+  @media (max-width: 1180px) { .header .phone { display: none; } }
+  @media (max-width: 1080px) {
+    .header .nav, .header .header-right .btn, .header .phone { display: none; }
+    .header .header-right { display: contents; }
+    .header .icon-btn { display: inline-flex; }
+    .header a.icon-btn { grid-column: 1; grid-row: 1; justify-self: start; }
+    .header #menu-toggle { grid-column: 3; grid-row: 1; justify-self: end; }
+  }
+  @media (max-width: 560px) {
+    :root { --header-h: 64px; }
+    .logo-svg { height: 40px; }
+  }
+
+  /* ---------- Заголовок юридического документа ---------- */
+  .doc-main { overflow: clip; }
+  .doc-hero {
+    padding: clamp(24px, 3vw, 40px) var(--gutter) clamp(40px, 5vw, 64px);
+  }
+  .doc-kicker { color: var(--muted); }
+  .doc-hero h1 {
+    margin: clamp(18px, 2.2vw, 32px) 0 clamp(28px, 3.6vw, 48px);
+    max-width: 1400px;
+    font-size: clamp(38px, 5.4vw, 96px);
+    line-height: 1;
+    letter-spacing: var(--tls);
+    font-weight: var(--tw);
+    color: var(--ink);
+  }
+  .doc-meta-bar {
+    border-top: 1px solid var(--ink);
+    padding-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px 32px;
+  }
+  .doc-meta-item .mono { display: block; color: var(--muted); margin-bottom: 6px; }
+  .doc-meta-item p { margin: 0; font-size: 15px; line-height: 1.45; }
+
+  /* ---------- Тело документа ---------- */
+  .doc-body {
+    padding: clamp(44px, 6vw, 88px) var(--gutter) clamp(72px, 9vw, 128px);
+    border-top: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: clamp(20px, 3vw, 48px);
+    align-items: start;
+  }
+  .doc-toc {
+    grid-column: 1 / 5;
+    position: sticky;
+    top: calc(var(--header-h) + 28px);
+  }
+  .doc-toc > .mono { display: block; color: var(--muted); margin-bottom: 16px; }
+  .doc-toc ol {
+    margin: 0; padding: 0; list-style: none;
+    border-top: 1px solid var(--ink);
+  }
+  .doc-toc li { border-bottom: 1px solid var(--line); }
+  .doc-toc a {
+    display: grid; grid-template-columns: 32px 1fr; gap: 8px; align-items: baseline;
+    padding: 12px 0;
+    font-size: 15px; line-height: 1.35; color: var(--muted);
+    transition: color .2s;
+  }
+  .doc-toc a .mono { color: var(--accent); }
+  .doc-toc a:hover { color: var(--ink); }
+  .doc-toc-links {
+    margin-top: 24px;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  }
+  .doc-toc-links a {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 14px; color: var(--ink);
+    border-bottom: 1px solid var(--line); padding-bottom: 3px;
+    transition: color .2s, border-color .2s;
+  }
+  .doc-toc-links a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .doc-content {
+    grid-column: 5 / 13;
+    max-width: 72ch;
+  }
+  .doc-section {
+    padding: 0 0 clamp(36px, 4.5vw, 56px);
+    margin-bottom: clamp(36px, 4.5vw, 56px);
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: calc(var(--header-h) + 24px);
+  }
+  .doc-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+  .doc-section > .mono { display: block; color: var(--accent); margin-bottom: 10px; }
+  .doc-section h2 {
+    margin: 0 0 18px;
+    font-size: clamp(24px, 2.4vw, 36px);
+    line-height: 1.12; letter-spacing: -0.03em; font-weight: 400;
+  }
+  .doc-section p { margin: 0 0 14px; font-size: 16px; line-height: 1.65; color: var(--ink); }
+  .doc-section p:last-child { margin-bottom: 0; }
+
+  .operator-card {
+    margin: 18px 0 0;
+    border-top: 1px solid var(--ink);
+  }
+  .operator-row {
+    display: grid; grid-template-columns: 180px 1fr; gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 15px; line-height: 1.45;
+  }
+  .operator-row dt { color: var(--muted); }
+  .operator-row dd { margin: 0; }
+  .operator-row a { border-bottom: 1px solid var(--line); padding-bottom: 1px; }
+  .operator-row a:hover { color: var(--accent); border-color: var(--accent); }
+
+  .legal-slot {
+    padding: 22px 24px;
+    border: 1px dashed var(--muted);
+    background: rgba(17,17,16,.025);
+  }
+  .legal-slot .mono { display: block; color: var(--muted); margin-bottom: 8px; }
+  .legal-slot p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--muted); }
+
+  .doc-inline-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
+  }
+  .doc-inline-link:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ---------- Подвал (без коммерческой формы) ---------- */
+  .footer {
+    --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55);
+    background: var(--ink); color: var(--bg);
+    padding: clamp(48px, 6vw, 88px) var(--gutter) 0;
+  }
+  .footer-seal { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 20px; align-items: center; padding: clamp(28px, 3.5vw, 48px) 0; }
+  .footer-seal .ln { height: 1px; background: var(--cline); transform-origin: left center; transition: transform 1s cubic-bezier(.65,0,.35,1); }
+  .footer-seal .ln:last-child { transform-origin: right center; }
+  .footer.js-draw:not(.drawn) .footer-seal .ln { transform: scaleX(0); }
+  .footer-logo { display: block; width: clamp(200px, 20vw, 290px); color: var(--bg); transition: color .3s; }
+  .footer-logo:hover { color: var(--accent); }
+  .footer-logo svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .footer-logo path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1.2s cubic-bezier(.65,0,.35,1) .7s; }
+  .footer-logo path:nth-child(2) { transition-delay: .95s; }
+  .footer-logo path:nth-child(3) { transition-delay: 1.15s; }
+  .footer-logo path:nth-child(4) { transition-delay: .7s; }
+  .footer-logo g { transition: opacity .8s 1.7s; }
+  .footer.js-draw:not(.drawn) .footer-logo path { stroke-dashoffset: 1; }
+  .footer.js-draw:not(.drawn) .footer-logo g { opacity: 0; }
+  .footer-top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; padding-top: 32px; border-top: 1px solid var(--cline); }
+  .footer-col { grid-column: span 3; display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+  .footer-col .mono { color: var(--cdim); margin-bottom: 6px; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-legal { display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding: 0 0 24px; color: var(--cdim); font-size: 13px; }
+  .footer-legal a:hover { color: var(--bg); }
+
+  /* ---------- Адаптив ---------- */
+  @media (max-width: 960px) {
+    .doc-meta-bar { grid-template-columns: 1fr; }
+    .doc-body { grid-template-columns: 1fr; row-gap: 40px; }
+    .doc-toc { grid-column: 1; position: static; }
+    .doc-content { grid-column: 1; max-width: none; }
+    .footer-col { grid-column: span 6; margin-bottom: 28px; }
+  }
+  @media (max-width: 680px) {
+    .doc-hero h1 { font-size: clamp(32px, 9.5vw, 54px); }
+    .operator-row { grid-template-columns: 1fr; gap: 4px; }
+    .footer { padding-top: 40px; }
+    .footer-logo { width: 180px; }
+    .footer-legal { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M8.5 4.5L16 12l-7.5 7.5"/></symbol>
+</svg>
+
+<header class="header">
+  <a class="logo" href="../prototype/home.html" aria-label="Дизайн+Код — на главную">
+    <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="7" aria-hidden="true">
+      <path d="M595 57H297L10 211l287 154h155"/>
+      <path d="M140 137v142"/>
+      <path d="M706 3L515 412"/>
+      <path d="M725 57l305 154-305 154"/>
+      <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+        <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
+        <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+      </g>
+    </svg>
+  </a>
+
+  <nav class="nav" aria-label="Основное меню">
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-services">Услуги
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-services">
+        <div class="sub-group mono">Сайты</div>
+        <a href="../services/bitrix/"><span class="mono">01</span>Разработка на 1С-Битрикс</a>
+        <a href="../services/online-stores/"><span class="mono">02</span>Интернет-магазины</a>
+        <a href="../services/corporate-sites/"><span class="mono">03</span>Корпоративные сайты</a>
+        <a href="../services/support/"><span class="mono">04</span>Поддержка</a>
+        <div class="sub-group mono">Интеграции</div>
+        <a href="../services/integrations-1c/"><span class="mono">05</span>Сайт и 1С</a>
+        <a href="../services/messenger-bots/"><span class="mono">06</span>Мессенджеры и чат-боты</a>
+        <div class="sub-group mono">Ещё</div>
+        <a href="../bitrix24/"><span class="mono">07</span>Битрикс24</a>
+        <a href="../solutions/"><span class="mono">08</span>Готовые решения</a>
+        <a href="../prices/"><span class="mono">09</span>Стоимость работ</a>
+      </div>
+    </div>
+    <div class="nav-item"><a class="nav-link" href="../portfolio/">Портфолио</a></div>
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-licenses">Лицензии
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-licenses">
+        <a href="../licenses/"><span class="mono">01</span>Обзор</a>
+        <a href="../licenses/bitrix/"><span class="mono">02</span>Покупка 1С-Битрикс</a>
+        <a href="../licenses/bitrix-renewal/"><span class="mono">03</span>Продление 1С-Битрикс</a>
+        <a href="../licenses/bitrix24/"><span class="mono">04</span>Тарифы Битрикс24</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-about">О компании
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-about">
+        <a href="../about/"><span class="mono">01</span>О студии</a>
+        <a href="../process/"><span class="mono">02</span>Как мы работаем</a>
+        <a href="../letters/"><span class="mono">03</span>Благодарственные письма</a>
+        <a href="../company-documents/"><span class="mono">04</span>Документы и реквизиты</a>
+        <a href="../contacts/"><span class="mono">05</span>Контакты</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="header-right">
+    <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
+    <a class="btn" href="../contacts/#form">Контакты</a>
+    <a class="icon-btn" href="tel:+79262901420" aria-label="Позвонить">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="icon-btn" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Открыть меню">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18M3 16h18" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <details>
+    <summary>Услуги <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="../services/bitrix/">Разработка на 1С-Битрикс</a>
+      <a href="../services/online-stores/">Интернет-магазины</a>
+      <a href="../services/corporate-sites/">Корпоративные сайты</a>
+      <a href="../services/support/">Поддержка</a>
+      <a href="../services/integrations-1c/">Сайт и 1С</a>
+      <a href="../services/messenger-bots/">Мессенджеры и чат-боты</a>
+      <a href="../bitrix24/">Битрикс24</a>
+      <a href="../solutions/">Готовые решения</a>
+      <a href="../prices/">Стоимость работ</a>
+    </div>
+  </details>
+  <a href="../portfolio/">Портфолио</a>
+  <details>
+    <summary>Лицензии <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="../licenses/">Обзор</a>
+      <a href="../licenses/bitrix/">Покупка 1С-Битрикс</a>
+      <a href="../licenses/bitrix-renewal/">Продление 1С-Битрикс</a>
+      <a href="../licenses/bitrix24/">Тарифы Битрикс24</a>
+    </div>
+  </details>
+  <details>
+    <summary>О компании <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="../about/">О студии</a>
+      <a href="../process/">Как мы работаем</a>
+      <a href="../letters/">Благодарственные письма</a>
+      <a href="../company-documents/">Документы и реквизиты</a>
+      <a href="../contacts/">Контакты</a>
+    </div>
+  </details>
+  <a class="btn" href="../contacts/#form">Контакты</a>
+  <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
+</div>
+
+<main class="doc-main">
+  <!-- 01 · Заголовок и реквизиты документа -->
+  <section class="doc-hero" aria-labelledby="doc-title">
+    <div class="doc-kicker mono"><span class="cm">//</span> 01 · Правовой документ</div>
+    <h1 id="doc-title">Согласие на обработку персональных данных</h1>
+    <div class="doc-meta-bar">
+      <div class="doc-meta-item">
+        <span class="mono">Оператор</span>
+        <p>ООО «ДИЗАЙНКОД» (ИНН 7736666610, ОГРН 5137746015138)</p>
+      </div>
+      <div class="doc-meta-item">
+        <span class="mono">Дата редакции</span>
+        <!-- СЛОТ ПОД ДАТУ УТВЕРЖДЁННОЙ РЕДАКЦИИ -->
+        <p>Указывается при публикации утверждённой редакции</p>
+      </div>
+      <div class="doc-meta-item">
+        <span class="mono">Основной документ</span>
+        <p><a class="doc-inline-link" href="../privacy/">Политика обработки ПД <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · Содержание согласия (без чекбоксов и без CRM-формы) -->
+  <div class="doc-body">
+    <aside class="doc-toc" aria-label="Разделы документа">
+      <span class="mono"><span class="cm">//</span> 02 · Разделы</span>
+      <ol>
+        <li><a href="#consent-text"><span class="mono">01</span>Текст согласия</a></li>
+        <li><a href="#operator"><span class="mono">02</span>Сведения об операторе</a></li>
+        <li><a href="#withdrawal"><span class="mono">03</span>Отзыв согласия и политика</a></li>
+      </ol>
+      <div class="doc-toc-links">
+        <a href="../privacy/">Политика обработки ПД <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a href="../contacts/">Контакты оператора <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </aside>
+
+    <article class="doc-content">
+      <section class="doc-section" id="consent-text">
+        <span class="mono">Раздел 01</span>
+        <h2>Текст согласия при обращении через сайт</h2>
+        <div class="legal-slot">
+          <span class="mono">Слот под юридически утверждённый текст согласия</span>
+          <p>Здесь размещается утверждённый текст согласия посетителя сайта designcodes.ru на обработку персональных данных оператором ООО «ДИЗАЙНКОД», включая состав данных, цели обработки, перечень действий с персональными данными и срок действия согласия.</p>
+        </div>
+      </section>
+
+      <section class="doc-section" id="operator">
+        <span class="mono">Раздел 02</span>
+        <h2>Сведения об операторе персональных данных</h2>
+        <dl class="operator-card">
+          <div class="operator-row">
+            <dt class="mono">Оператор</dt>
+            <dd>Общество с ограниченной ответственностью «ДИЗАЙНКОД»</dd>
+          </div>
+          <div class="operator-row">
+            <dt class="mono">ИНН / ОГРН</dt>
+            <dd>7736666610 / 5137746015138</dd>
+          </div>
+          <div class="operator-row">
+            <dt class="mono">Адрес</dt>
+            <dd>117393, Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582</dd>
+          </div>
+          <div class="operator-row">
+            <dt class="mono">Электронная почта</dt>
+            <dd><a href="mailto:ask@designcodes.ru">ask@designcodes.ru</a></dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="doc-section" id="withdrawal">
+        <span class="mono">Раздел 03</span>
+        <h2>Отзыв согласия и порядок обработки</h2>
+        <div class="legal-slot">
+          <span class="mono">Слот под утверждённый порядок отзыва согласия</span>
+          <p>Здесь размещается утверждённый порядок отзыва согласия субъектом персональных данных и сроки прекращения обработки.</p>
+        </div>
+        <p style="margin-top: 20px;">Подробные условия обработки и защиты персональных данных приведены в документе <a class="doc-inline-link" href="../privacy/">Политика обработки персональных данных <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>.</p>
+      </section>
+    </article>
+  </div>
+</main>
+
+<footer class="footer js-draw">
+  <div class="footer-top">
+    <nav class="footer-col" aria-label="Услуги">
+      <span class="mono">Услуги</span>
+      <a href="../services/bitrix/">Разработка на 1С-Битрикс</a>
+      <a href="../services/corporate-sites/">Корпоративные сайты</a>
+      <a href="../services/online-stores/">Интернет-магазины</a>
+      <a href="../services/integrations-1c/">Интеграция с 1С</a>
+      <a href="../services/support/">Поддержка</a>
+      <a href="../services/messenger-bots/">Чат-боты и мессенджеры</a>
+      <a href="../bitrix24/">Битрикс24</a>
+      <a href="../prices/">Стоимость работ</a>
+    </nav>
+    <nav class="footer-col" aria-label="Компания">
+      <span class="mono">Компания</span>
+      <a href="../about/">О студии</a>
+      <a href="../portfolio/">Портфолио</a>
+      <a href="../process/">Как мы работаем</a>
+      <a href="../letters/">Благодарственные письма</a>
+      <a href="../company-documents/">Документы и реквизиты</a>
+    </nav>
+    <nav class="footer-col" aria-label="Лицензии">
+      <span class="mono">Лицензии</span>
+      <a href="../licenses/bitrix/">Покупка 1С-Битрикс</a>
+      <a href="../licenses/bitrix-renewal/">Продление 1С-Битрикс</a>
+      <a href="../licenses/bitrix24/">Тарифы Битрикс24</a>
+    </nav>
+    <div class="footer-col">
+      <span class="mono">Связь</span>
+      <a href="tel:+79262901420">+7 (926) 290-14-20</a>
+      <a href="mailto:ask@designcodes.ru">ask@designcodes.ru</a>
+      <a href="https://t.me/klimova_oxana" target="_blank" rel="noopener">Telegram</a>
+    </div>
+  </div>
+  <div class="footer-seal">
+    <span class="ln" aria-hidden="true"></span>
+    <a class="footer-logo" href="../prototype/home.html" aria-label="Дизайн+Код — на главную">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="5" aria-hidden="true">
+        <path pathLength="1" d="M595 57H297L10 211l287 154h155"/>
+        <path pathLength="1" d="M140 137v142"/>
+        <path pathLength="1" d="M706 3L515 412"/>
+        <path pathLength="1" d="M725 57l305 154-305 154"/>
+        <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+          <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
+          <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+        </g>
+      </svg>
+    </a>
+    <span class="ln" aria-hidden="true"></span>
+  </div>
+  <div class="footer-legal">
+    <span>© 2013–2026 ООО «Дизайнкод» · ИНН 7736666610 · ОГРН 5137746015138</span>
+    <span>117393, Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582</span>
+    <a href="../privacy/">Политика обработки персональных данных</a>
+  </div>
+</footer>
+
+<script>
+  const triggers = document.querySelectorAll('.nav-link[aria-controls]');
+  function closeAll(except) {
+    triggers.forEach(t => {
+      if (t === except) return;
+      t.setAttribute('aria-expanded', 'false');
+      document.getElementById(t.getAttribute('aria-controls')).classList.remove('open');
+    });
+  }
+  triggers.forEach(t => t.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = t.getAttribute('aria-expanded') === 'true';
+    closeAll(t);
+    t.setAttribute('aria-expanded', String(!open));
+    document.getElementById(t.getAttribute('aria-controls')).classList.toggle('open', !open);
+  }));
+  document.addEventListener('click', e => { if (!e.target.closest('.nav-item')) closeAll(); });
+
+  const menuBtn = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  function toggleMenu(force) {
+    const open = force ?? menuBtn.getAttribute('aria-expanded') !== 'true';
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    menu.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuBtn.addEventListener('click', () => toggleMenu());
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const opened = document.querySelector('.nav-link[aria-expanded="true"]');
+      closeAll();
+      if (opened) opened.focus();
+      toggleMenu(false);
+    }
+  });
+
+  const footer = document.querySelector('.footer');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) footer.classList.add('drawn');
+  function checkDraw() {
+    const r = footer.getBoundingClientRect();
+    if ((innerHeight - r.top) / Math.min(r.height, innerHeight) > 0.6) {
+      footer.classList.add('drawn');
+      removeEventListener('scroll', checkDraw);
+    }
+  }
+  addEventListener('scroll', checkDraw, { passive: true });
+  checkDraw();
+</script>
+</body>
+</html>

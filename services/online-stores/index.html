@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Разработка интернет-магазинов на 1С-Битрикс — Дизайн+Код</title>
+<meta name="description" content="Интернет-магазины на 1С-Битрикс: разработка, интеграции с маркетплейсами, службы доставки, обмен с ERP и 1С. Стоимость от 200 000 ₽.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
+<style>
+  /* Страница услуги /services/online-stores/
+     Утверждённая дизайн-система (17.11.2026): типографический минимализм,
+     акцент «Сигнальный красный», шрифт Onest, заголовки Regular, моно JetBrains Mono. */
+  :root {
+    --bg: #F3F2EE;
+    --ink: #111110;
+    --muted: #6B6A66;
+    --line: #D6D4CE;
+    --accent: #F0441C;
+    --font: Onest, "Helvetica Neue", Arial, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    --gutter: clamp(16px, 3vw, 40px);
+    --header-h: 72px;
+    --tw: 400;
+    --tls: -0.03em;
+    interpolate-size: allow-keywords;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    font-size: 17px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+
+  .mono {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  .cm { color: var(--accent); }
+
+  /* ---------- Шапка (логотип по центру) ---------- */
+  .header {
+    position: sticky; top: 0; z-index: 20;
+    height: var(--header-h);
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+    padding: 0 var(--gutter);
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  .header .nav { grid-column: 1; grid-row: 1; display: flex; gap: 4px; }
+  .header .logo { grid-column: 2; grid-row: 1; display: block; flex: none; }
+  .header .header-right { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: 24px; }
+  .logo-svg { display: block; height: 46px; width: auto; }
+  .nav-item { position: relative; }
+  .nav-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    height: 40px; padding: 0 12px;
+    font-size: 15px; font-weight: 400;
+    border-radius: 999px;
+  }
+  .nav-link::before { content: "/"; color: var(--accent); width: 0; overflow: hidden; display: inline-block; transition: width .2s; }
+  .nav-link:hover::before, .nav-link[aria-expanded="true"]::before { width: .6em; }
+  .nav-link:hover, .nav-link[aria-expanded="true"] { background: rgba(17,17,16,.06); }
+  .caret { width: 9px; height: 9px; transition: transform .2s; }
+  .nav-link[aria-expanded="true"] .caret { transform: rotate(180deg); }
+
+  .submenu {
+    position: absolute; top: calc(100% + 14px); left: 0;
+    min-width: 300px;
+    padding: 10px 0;
+    background: var(--bg);
+    border: 1px solid var(--ink);
+    display: none;
+  }
+  .submenu.open { display: block; }
+  .submenu a {
+    display: grid; grid-template-columns: 34px 1fr; align-items: baseline;
+    padding: 9px 20px;
+    font-size: 15px;
+  }
+  .submenu a:hover, .submenu a[aria-current="page"] { background: var(--ink); color: var(--bg); }
+  .submenu a .mono { color: var(--muted); }
+  .submenu a:hover .mono, .submenu a[aria-current="page"] .mono { color: var(--accent); }
+  .submenu .sub-group { padding: 12px 20px 4px; color: var(--muted); }
+
+  .phone { font-family: var(--mono); font-size: 14px; white-space: nowrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    height: 44px; padding: 0 20px;
+    background: var(--ink); color: var(--bg);
+    font-size: 15px; font-weight: 400;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background .2s, color .2s;
+  }
+  .btn:hover { background: var(--accent); color: #fff; }
+  .btn-lg { height: 56px; padding: 0 28px; font-size: 17px; background: var(--accent); color: #fff; }
+  .btn-lg:hover { background: var(--ink); }
+
+  .icon-btn {
+    display: none;
+    width: 44px; height: 44px;
+    align-items: center; justify-content: center;
+    border: 1px solid var(--ink); border-radius: 999px;
+  }
+  .icon-btn svg { width: 18px; height: 18px; }
+
+  .ico { width: 1em; height: 1em; vertical-align: -0.14em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; overflow: visible; transition: transform .25s ease; }
+  a:hover > .ico, button:hover > .ico { transform: translateX(4px); }
+  .ico-down { transform: rotate(90deg); }
+  a:hover > .ico-down, button:hover > .ico-down { transform: rotate(90deg) translateX(4px); }
+  .ico-left { transform: rotate(180deg); }
+  a:hover > .ico-left, button:hover > .ico-left { transform: rotate(180deg) translateX(4px); }
+
+  /* ---------- Мобильное меню ---------- */
+  .mobile-menu {
+    position: fixed; inset: var(--header-h) 0 0 0; z-index: 19;
+    background: var(--bg);
+    overflow-y: auto;
+    padding: 8px var(--gutter) 32px;
+    display: none;
+  }
+  .mobile-menu.open { display: block; }
+  .mobile-menu details { border-bottom: 1px solid var(--line); }
+  .mobile-menu summary, .mobile-menu > a:not(.btn):not(.phone) {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 18px 0;
+    font-size: 24px; font-weight: 400; letter-spacing: -0.02em;
+    list-style: none; cursor: pointer;
+  }
+  .mobile-menu > a:not(.btn):not(.phone) { border-bottom: 1px solid var(--line); }
+  .mobile-menu summary::-webkit-details-marker { display: none; }
+  .mobile-menu details[open] summary .caret { transform: rotate(180deg); }
+  .mobile-menu details a { display: block; padding: 8px 0 8px 16px; font-size: 17px; }
+  .mobile-menu details a[aria-current="page"] { color: var(--accent); }
+  .mobile-menu details > div { padding-bottom: 16px; }
+  .mobile-menu .btn { margin-top: 28px; width: 100%; justify-content: center; height: 56px; }
+  .mobile-menu .phone { display: block; margin-top: 20px; text-align: center; }
+
+  @media (max-width: 1180px) {
+    .header .phone { display: none; }
+  }
+  @media (max-width: 1080px) {
+    .header .nav, .header .header-right .btn, .header .phone { display: none; }
+    .header .header-right { display: contents; }
+    .header .icon-btn { display: inline-flex; }
+    .header a.icon-btn { grid-column: 1; grid-row: 1; justify-self: start; }
+    .header #menu-toggle { grid-column: 3; grid-row: 1; justify-self: end; }
+  }
+  @media (max-width: 560px) {
+    :root { --header-h: 64px; }
+    .logo-svg { height: 40px; }
+  }
+
+  /* ---------- Страница услуги ---------- */
+  .svc-main { overflow: hidden; }
+  .svc-main .mono, .svc-kicker { font-family: var(--mono); font-size: 12px; letter-spacing: .03em; text-transform: uppercase; }
+  .svc-hero { padding: clamp(20px, 2vw, 32px) var(--gutter) clamp(48px, 6vw, 80px); }
+  .svc-kicker { color: var(--muted); }
+  .svc-hero h1 {
+    margin: clamp(18px, 2.2vw, 32px) 0 clamp(32px, 4vw, 56px);
+    max-width: 1500px;
+    font-size: clamp(44px, 6.2vw, 118px);
+    line-height: .98;
+    letter-spacing: var(--tls);
+    font-weight: var(--tw);
+  }
+  .svc-hero h1 span { color: var(--ink); }
+  .svc-hero-bottom {
+    border-top: 1px solid var(--ink);
+    padding-top: 23px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.45fr) minmax(260px, .55fr);
+    gap: clamp(30px, 6vw, 110px);
+    align-items: start;
+  }
+  .svc-lead {
+    margin: 0;
+    max-width: 34em;
+    font-size: clamp(18px, 1.8vw, 26px);
+    line-height: 1.4;
+    letter-spacing: -.01em;
+  }
+  .svc-hero-action p { margin: 4px 0 28px; max-width: 31em; font-size: 17px; line-height: 1.5; color: var(--muted); }
+  .svc-button {
+    display: inline-flex; align-items: center; justify-content: space-between; gap: 14px;
+    min-height: 56px; padding: 0 22px;
+    background: var(--accent); color: #fff;
+    border: 1px solid var(--accent); border-radius: 100px;
+    font-size: 16px; line-height: 1.2; white-space: nowrap;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .svc-button:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .svc-button span, .svc-text-link span { font-size: 20px; line-height: 1; }
+  .svc-button-outline {
+    background: transparent; color: var(--ink); border-color: var(--ink);
+  }
+  .svc-button-outline:hover { background: var(--ink); color: var(--bg); }
+
+  .svc-section {
+    padding: clamp(64px, 9vw, 128px) var(--gutter);
+    border-top: 1px solid var(--line);
+    scroll-margin-top: var(--header-h);
+  }
+  .svc-section-head {
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; align-items: end;
+    margin-bottom: clamp(40px, 5vw, 72px);
+  }
+  .svc-section-head > .mono { grid-column: 1 / -1; color: var(--muted); margin-bottom: 20px; }
+  .svc-section h2, .svc-price h2 {
+    grid-column: 1 / 9; margin: 0;
+    font-size: clamp(38px, 5.2vw, 100px); line-height: .98;
+    font-weight: var(--tw); letter-spacing: var(--tls);
+  }
+  .svc-section-lead {
+    grid-column: 9 / 13; margin: 0;
+    font-size: 17px; line-height: 1.45; color: var(--muted);
+  }
+
+  /* ---------- 02 Основа магазина: модульная сетка 3x2 ---------- */
+  .base-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+  .base-item {
+    display: flex; flex-direction: column;
+    padding: 20px clamp(16px, 2.5vw, 38px) 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .base-item:nth-child(n+4) { border-bottom: 0; }
+  .base-item:nth-child(3n+2),
+  .base-item:nth-child(3n+3) {
+    border-left: 1px solid var(--line);
+    padding-left: clamp(16px, 2.5vw, 38px);
+  }
+  .base-item > .mono { color: var(--accent); }
+  .base-item h3 {
+    margin: clamp(20px, 2.2vw, 34px) 0 12px;
+    font-size: clamp(24px, 2.3vw, 38px);
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -0.04em;
+  }
+  .base-item p {
+    margin: 0;
+    max-width: 26em;
+    font-size: 16px;
+    line-height: 1.48;
+    color: var(--muted);
+  }
+
+  /* ---------- 03 Интеграции и индивидуальная функциональность: 4 карточки 2x2 ---------- */
+  .cap-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+  .cap-card {
+    display: flex; flex-direction: column;
+    min-height: 300px;
+    padding: 22px clamp(20px, 3vw, 48px) 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .cap-card:nth-child(n+3) { border-bottom: 0; }
+  .cap-card:nth-child(even) {
+    border-left: 1px solid var(--line);
+    padding-left: clamp(20px, 3vw, 48px);
+  }
+  .cap-top { display: flex; justify-content: space-between; gap: 12px; color: var(--muted); }
+  .cap-top .cap-num { color: var(--accent); }
+  .cap-card h3 {
+    margin: clamp(22px, 2.4vw, 38px) 0 16px;
+    font-size: clamp(30px, 3.2vw, 54px);
+    line-height: 1.03;
+    font-weight: 400;
+    letter-spacing: -0.045em;
+  }
+  .cap-card p {
+    margin: 0 0 24px;
+    max-width: 34em;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+  .cap-foot {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+    font-size: 15px;
+    color: var(--muted);
+  }
+  .cap-foot a {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--ink);
+    transition: color .2s;
+  }
+  .cap-foot a:hover { color: var(--accent); }
+
+  .cap-cta {
+    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; align-items: center;
+    padding-top: clamp(32px, 4vw, 52px);
+  }
+  .cap-cta-text {
+    grid-column: 1 / 8;
+    margin: 0;
+    font-size: clamp(24px, 2.8vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+  }
+  .cap-cta-text span { color: var(--muted); }
+  .cap-cta-action {
+    grid-column: 8 / 13;
+    justify-self: end;
+  }
+  .cap-disclaimer {
+    margin: 28px 0 0;
+    max-width: 56em;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  /* ---------- 04 Стоимость (тёмный блок) ---------- */
+  .svc-price {
+    background: var(--ink); color: var(--bg);
+    padding: clamp(64px, 9vw, 128px) var(--gutter);
+    scroll-margin-top: var(--header-h);
+  }
+  .svc-price .svc-section-head > .mono { color: #a8a7a2; }
+  .svc-price-grid {
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: clamp(48px, 8vw, 140px);
+    border-top: 1px solid #676661;
+    padding-top: 28px;
+  }
+  .svc-price-grid .mono { color: #a8a7a2; }
+  .svc-price-number {
+    margin: clamp(40px, 5vw, 88px) 0 18px;
+    white-space: nowrap;
+    font-size: clamp(62px, 9.2vw, 156px);
+    line-height: .88;
+    letter-spacing: -0.075em;
+  }
+  .svc-price-number small { font-size: .42em; letter-spacing: 0; }
+  .svc-price-caption { max-width: 28em; font-size: 18px; line-height: 1.45; color: #c6c4bd; margin: 0; }
+  .svc-price-details h3 { margin: 2px 0 24px; font-size: clamp(26px, 2.8vw, 40px); font-weight: 400; letter-spacing: -0.03em; }
+  .svc-price-details ul { list-style: none; padding: 0; margin: 0 0 28px; border-top: 1px solid #676661; }
+  .svc-price-details li { padding: 14px 0; border-bottom: 1px solid #676661; font-size: 17px; }
+  .svc-price-details p { color: #bbb9b3; max-width: 40em; line-height: 1.5; margin: 0 0 16px; }
+  .svc-button-light { margin-top: 12px; background: var(--bg); border-color: var(--bg); color: var(--ink); }
+  .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  .svc-related {
+    display: flex; flex-wrap: wrap; gap: 12px 28px;
+    margin-top: clamp(40px, 5vw, 64px);
+    padding-top: 24px;
+    border-top: 1px solid rgba(243,242,238,.18);
+  }
+  .svc-related a {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; color: #c6c4bd;
+    border-bottom: 1px solid rgba(243,242,238,.3);
+    padding-bottom: 4px;
+    transition: color .2s, border-color .2s;
+  }
+  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ---------- 05 Частые вопросы ---------- */
+  .svc-faq-list { border-top: 1px solid var(--ink); }
+  .svc-faq-list details { border-bottom: 1px solid var(--line); }
+  .svc-faq-list summary {
+    list-style: none; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+    padding: 27px 0;
+    font-size: clamp(22px, 2.6vw, 40px); line-height: 1.12; letter-spacing: -.04em;
+    transition: color .2s;
+  }
+  .svc-faq-list summary:hover { color: var(--accent); }
+  .svc-faq-list summary::-webkit-details-marker { display: none; }
+  .svc-faq-list summary span { color: var(--accent); flex: none; transition: transform .2s; }
+  .svc-faq-list details[open] summary span { transform: rotate(45deg); }
+  .svc-faq-list details p { margin: 0 0 30px; max-width: 46em; font-size: 18px; line-height: 1.5; color: var(--muted); }
+
+  /* ---------- 06 Финал: контакты, форма и подвал ---------- */
+  .final { --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55); background: var(--ink); color: var(--bg); overflow: hidden; }
+  .final .cm { color: var(--accent); }
+  .contact { padding: clamp(64px, 9vw, 128px) var(--gutter) 0; scroll-margin-top: var(--header-h); }
+  .contact-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; align-items: end; padding-bottom: clamp(32px, 4vw, 56px); }
+  .contact-head .sec-label { grid-column: 1 / 13; color: var(--cdim); margin-bottom: 20px; }
+  .big-mail {
+    grid-column: 1 / 10;
+    display: inline-flex; align-items: center; gap: .25em; justify-self: start;
+    font-size: clamp(36px, 6.4vw, 120px); line-height: 1; letter-spacing: -0.04em;
+    transition: color .2s;
+  }
+  .big-mail .ico { width: .6em; height: .6em; stroke-width: 1.2; }
+  .big-mail:hover { color: var(--accent); }
+  .contact-head .side { grid-column: 10 / 13; justify-self: end; text-align: right; display: flex; flex-direction: column; gap: 6px; font-size: clamp(17px, 1.4vw, 21px); }
+  .contact-head .side a:hover { color: var(--accent); }
+  .contact-body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; border-top: 1px solid var(--bg); }
+  .form-intro { grid-column: 1 / 5; padding: 28px 40px 0 0; }
+  .form-intro h2 { margin: 0; font-weight: var(--tw); font-size: clamp(28px, 2.8vw, 48px); line-height: 1.02; letter-spacing: var(--tls); }
+  .form-intro p { margin: 16px 0 0; color: var(--cdim); max-width: 22em; }
+  .form { grid-column: 5 / 13; padding: 12px 0 0; }
+  .field { display: block; border-bottom: 1px solid var(--cline); padding: 14px 0 6px; }
+  .field .mono { display: block; color: var(--cdim); }
+  .field input, .field textarea {
+    width: 100%; margin-top: 4px; padding: 6px 0 8px;
+    background: none; border: 0; outline: none; color: var(--bg);
+    font: inherit; font-size: clamp(18px, 1.6vw, 24px); letter-spacing: -0.01em;
+  }
+  .field textarea { resize: vertical; min-height: 84px; }
+  .field:focus-within { border-bottom-color: var(--accent); }
+  .field input::placeholder, .field textarea::placeholder { color: rgba(243,242,238,.3); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; }
+  .agree { display: flex; gap: 12px; align-items: flex-start; margin-top: 24px; font-size: 14px; line-height: 20px; color: var(--cdim); cursor: pointer; }
+  .agree input {
+    appearance: none; -webkit-appearance: none;
+    flex: none; width: 18px; height: 18px; margin: 1px 0 0;
+    border: 1px solid var(--cdim); border-radius: 4px; background: none;
+    display: grid; place-items: center; cursor: pointer;
+    transition: background .2s, border-color .2s;
+  }
+  .agree input::after { content: ""; width: 5px; height: 9px; margin-top: -2px; border: solid #fff; border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); opacity: 0; }
+  .agree input:checked { background: var(--accent); border-color: var(--accent); }
+  .agree input:checked::after { opacity: 1; }
+  .agree:hover input { border-color: var(--bg); }
+  .agree a { text-decoration: underline; text-underline-offset: 3px; }
+  .form-actions { display: flex; align-items: center; gap: 20px; margin-top: 28px; flex-wrap: wrap; }
+  .form-actions .btn-lg:hover { background: var(--bg); color: var(--ink); }
+  .form-note { color: var(--cdim); }
+  .form-done { display: none; margin: 28px 0 0; font-size: clamp(22px, 2vw, 30px); letter-spacing: -0.02em; }
+  .form.sent .form-done { display: block; }
+  .form.sent .form-fields { display: none; }
+
+  .footer {
+    --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55);
+    background: var(--ink); color: var(--bg);
+    padding: clamp(48px, 6vw, 88px) var(--gutter) 0;
+  }
+  .footer-seal { display: grid; grid-template-columns: 1fr auto 1fr; column-gap: 20px; align-items: center; padding: clamp(28px, 3.5vw, 48px) 0; }
+  .footer-seal .ln { height: 1px; background: var(--cline); transform-origin: left center; transition: transform 1s cubic-bezier(.65,0,.35,1); }
+  .footer-seal .ln:last-child { transform-origin: right center; }
+  .footer.js-draw:not(.drawn) .footer-seal .ln { transform: scaleX(0); }
+  .footer-logo { display: block; width: clamp(200px, 20vw, 290px); color: var(--bg); transition: color .3s; }
+  .footer-logo:hover { color: var(--accent); }
+  .footer-logo svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .footer-logo path { stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1.2s cubic-bezier(.65,0,.35,1) .7s; }
+  .footer-logo path:nth-child(2) { transition-delay: .95s; }
+  .footer-logo path:nth-child(3) { transition-delay: 1.15s; }
+  .footer-logo path:nth-child(4) { transition-delay: .7s; }
+  .footer-logo g { transition: opacity .8s 1.7s; }
+  .footer.js-draw:not(.drawn) .footer-logo path { stroke-dashoffset: 1; }
+  .footer.js-draw:not(.drawn) .footer-logo g { opacity: 0; }
+  .footer-top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; padding-top: 32px; border-top: 1px solid var(--cline); }
+  .footer-col { grid-column: span 3; display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+  .footer-col .mono { color: var(--cdim); margin-bottom: 6px; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-legal { display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding: 0 0 24px; color: var(--cdim); font-size: 13px; }
+  .footer-legal a:hover { color: var(--bg); }
+
+  /* ---------- Адаптив ---------- */
+  @media (max-width: 960px) {
+    .svc-section-head { grid-template-columns: 1fr; gap: 0; }
+    .svc-section-head > .mono { margin-bottom: 14px; }
+    .svc-section h2, .svc-price h2 { grid-column: 1; }
+    .svc-section-lead { grid-column: 1; margin-top: 20px; max-width: 38em; }
+    .base-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .base-item:nth-child(3n+2), .base-item:nth-child(3n+3) { border-left: 0; padding-left: 0; }
+    .base-item:nth-child(even) { border-left: 1px solid var(--line); padding-left: clamp(16px, 2.5vw, 32px); }
+    .base-item:nth-child(n+4) { border-bottom: 1px solid var(--line); }
+    .base-item:nth-child(n+5) { border-bottom: 0; }
+    .svc-price-grid { grid-template-columns: 1fr; }
+    .cap-cta-text { grid-column: 1 / 13; }
+    .cap-cta-action { grid-column: 1 / 13; justify-self: start; margin-top: 24px; }
+    .big-mail { grid-column: 1 / 13; }
+    .contact-head .side { grid-column: 1 / 13; justify-self: start; text-align: left; margin-top: 24px; }
+    .form-intro { grid-column: 1 / 13; padding-right: 0; }
+    .form { grid-column: 1 / 13; padding-top: 20px; }
+    .footer-col { grid-column: span 6; margin-bottom: 28px; }
+  }
+  @media (max-width: 680px) {
+    .svc-hero h1 { font-size: clamp(38px, 11vw, 68px); }
+    .svc-hero-bottom, .base-grid, .cap-grid { grid-template-columns: 1fr; }
+    .base-item, .base-item:nth-child(even),
+    .cap-card, .cap-card:nth-child(even) {
+      min-height: auto;
+      border-left: 0;
+      padding: 20px 0 26px;
+      border-bottom: 1px solid var(--line);
+    }
+    .base-item:last-child, .cap-card:last-child { border-bottom: 0; }
+    .svc-price-number { white-space: normal; }
+    .contact { padding-top: 56px; }
+    .big-mail { font-size: 9.4vw; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-actions .btn-lg, .svc-button { width: 100%; justify-content: center; }
+    .field input, .field textarea { font-size: 18px; }
+    .footer { padding-top: 40px; }
+    .footer-logo { width: 180px; }
+    .footer-legal { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M8.5 4.5L16 12l-7.5 7.5"/></symbol>
+</svg>
+
+<header class="header">
+  <a class="logo" href="../../prototype/home.html" aria-label="Дизайн+Код — на главную">
+    <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="7" aria-hidden="true">
+      <path d="M595 57H297L10 211l287 154h155"/>
+      <path d="M140 137v142"/>
+      <path d="M706 3L515 412"/>
+      <path d="M725 57l305 154-305 154"/>
+      <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+        <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
+        <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+      </g>
+    </svg>
+  </a>
+
+  <nav class="nav" aria-label="Основное меню">
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-services">Услуги
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-services">
+        <div class="sub-group mono">Сайты</div>
+        <a href="../../services/bitrix/"><span class="mono">01</span>Разработка на 1С-Битрикс</a>
+        <a href="../../services/online-stores/" aria-current="page"><span class="mono">02</span>Интернет-магазины</a>
+        <a href="../../services/corporate-sites/"><span class="mono">03</span>Корпоративные сайты</a>
+        <a href="../../services/support/"><span class="mono">04</span>Поддержка</a>
+        <div class="sub-group mono">Интеграции</div>
+        <a href="../../services/integrations-1c/"><span class="mono">05</span>Сайт и 1С</a>
+        <a href="../../services/messenger-bots/"><span class="mono">06</span>Мессенджеры и чат-боты</a>
+        <div class="sub-group mono">Ещё</div>
+        <a href="../../bitrix24/"><span class="mono">07</span>Битрикс24</a>
+        <a href="../../solutions/"><span class="mono">08</span>Готовые решения</a>
+        <a href="../../prices/"><span class="mono">09</span>Стоимость работ</a>
+      </div>
+    </div>
+    <div class="nav-item"><a class="nav-link" href="../../portfolio/">Портфолио</a></div>
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-licenses">Лицензии
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-licenses">
+        <a href="../../licenses/"><span class="mono">01</span>Обзор</a>
+        <a href="../../licenses/bitrix/"><span class="mono">02</span>Покупка 1С-Битрикс</a>
+        <a href="../../licenses/bitrix-renewal/"><span class="mono">03</span>Продление 1С-Битрикс</a>
+        <a href="../../licenses/bitrix24/"><span class="mono">04</span>Тарифы Битрикс24</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-link" aria-expanded="false" aria-controls="sm-about">О компании
+        <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <div class="submenu" id="sm-about">
+        <a href="../../about/"><span class="mono">01</span>О студии</a>
+        <a href="../../process/"><span class="mono">02</span>Как мы работаем</a>
+        <a href="../../letters/"><span class="mono">03</span>Благодарственные письма</a>
+        <a href="../../company-documents/"><span class="mono">04</span>Документы и реквизиты</a>
+        <a href="../../contacts/"><span class="mono">05</span>Контакты</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="header-right">
+    <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
+    <a class="btn" href="#form" data-open-form>Обсудить проект</a>
+    <a class="icon-btn" href="tel:+79262901420" aria-label="Позвонить">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="icon-btn" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Открыть меню">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h18M3 16h18" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <details open>
+    <summary>Услуги <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="../../services/bitrix/">Разработка на 1С-Битрикс</a>
+      <a href="../../services/online-stores/" aria-current="page">Интернет-магазины</a>
+      <a href="../../services/corporate-sites/">Корпоративные сайты</a>
+      <a href="../../services/support/">Поддержка</a>
+      <a href="../../services/integrations-1c/">Сайт и 1С</a>
+      <a href="../../services/messenger-bots/">Мессенджеры и чат-боты</a>
+      <a href="../../bitrix24/">Битрикс24</a>
+      <a href="../../solutions/">Готовые решения</a>
+      <a href="../../prices/">Стоимость работ</a>
+    </div>
+  </details>
+  <a href="../../portfolio/">Портфолио</a>
+  <details>
+    <summary>Лицензии <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="../../licenses/">Обзор</a>
+      <a href="../../licenses/bitrix/">Покупка 1С-Битрикс</a>
+      <a href="../../licenses/bitrix-renewal/">Продление 1С-Битрикс</a>
+      <a href="../../licenses/bitrix24/">Тарифы Битрикс24</a>
+    </div>
+  </details>
+  <details>
+    <summary>О компании <svg class="caret" viewBox="0 0 10 10" aria-hidden="true"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+    <div>
+      <a href="../../about/">О студии</a>
+      <a href="../../process/">Как мы работаем</a>
+      <a href="../../letters/">Благодарственные письма</a>
+      <a href="../../company-documents/">Документы и реквизиты</a>
+      <a href="../../contacts/">Контакты</a>
+    </div>
+  </details>
+  <a class="btn" href="#form" data-open-form>Обсудить проект</a>
+  <a class="phone" href="tel:+79262901420">+7 (926) 290-14-20</a>
+</div>
+
+<main class="svc-main">
+  <!-- 01 · Первый экран -->
+  <section class="svc-hero" aria-labelledby="svc-title">
+    <div class="svc-kicker mono"><span class="cm">//</span> 01 · Интернет-магазины</div>
+    <h1 id="svc-title">Разработка интернет-магазинов<br><span>на 1С-Битрикс</span></h1>
+    <div class="svc-hero-bottom">
+      <p class="svc-lead">Разрабатываем интернет-магазины на 1С-Битрикс: от удобного каталога и оформления заказа до сложной логики продаж, доставок и обмена с другими системами.</p>
+      <div class="svc-hero-action">
+        <p>Базовые работы — от 200 000 ₽. Архитектуру каталога, интеграции и нестандартные сценарии оцениваем под задачу.</p>
+        <a class="svc-button" href="#form" data-discuss="Оценка разработки интернет-магазина">Оценить интернет-магазин <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · Основа магазина -->
+  <section class="svc-section" aria-labelledby="base-title">
+    <div class="svc-section-head">
+      <span class="mono"><span class="cm">//</span> 02 · Основа магазина</span>
+      <h2 id="base-title">Торговая база<br>без лишних барьеров</h2>
+      <p class="svc-section-lead">Собираем ключевой путь покупателя так, чтобы каталог легко обслуживался, а оформление заказа не теряло конверсию.</p>
+    </div>
+    <div class="base-grid">
+      <article class="base-item">
+        <span class="mono">01 / Каталог</span>
+        <h3>Структура каталога</h3>
+        <p>Разделы, торговые предложения, модификации по цвету, размеру или комплектации и понятная навигация по ассортименту.</p>
+      </article>
+      <article class="base-item">
+        <span class="mono">02 / Поиск</span>
+        <h3>Умные фильтры</h3>
+        <p>Подбор товаров по характеристикам, цене и наличию с учётом структуры вашего ассортимента и скорости отклика.</p>
+      </article>
+      <article class="base-item">
+        <span class="mono">03 / Выбор</span>
+        <h3>Карточка товара</h3>
+        <p>Характеристики, фото, наличие, сроки доставки и сопутствующие позиции — вся нужная информация для решения о покупке.</p>
+      </article>
+      <article class="base-item">
+        <span class="mono">04 / Покупка</span>
+        <h3>Корзина</h3>
+        <p>Пересчёт количества, промокоды, комплекты и подсказки без перезагрузки страницы и лишних переходов.</p>
+      </article>
+      <article class="base-item">
+        <span class="mono">05 / Заказ</span>
+        <h3>Оформление заказа</h3>
+        <p>Прозрачные шаги выбора доставки, адреса, типа плательщика (физлицо или юрлицо) и подтверждения заказа.</p>
+      </article>
+      <article class="base-item">
+        <span class="mono">06 / Расчёт</span>
+        <h3>Оплата и документы</h3>
+        <p>Подключение интернет-эквайринга, безналичной оплаты по счёту и фискализации по выбранным платёжным сервисам.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- 03 · Интеграции и индивидуальная функциональность -->
+  <section class="svc-section" aria-labelledby="cap-title">
+    <div class="svc-section-head">
+      <span class="mono"><span class="cm">//</span> 03 · Интеграции и индивидуальная функциональность</span>
+      <h2 id="cap-title">Сложные сценарии<br>и обмен данными</h2>
+      <p class="svc-section-lead">Если типовых модулей недостаточно, проектируем интеграции и бизнес-логику под ваши процессы продаж и учёта.</p>
+    </div>
+    <div class="cap-grid">
+      <article class="cap-card">
+        <div class="cap-top mono"><span class="cap-num">01 / 04</span><span>Каналы продаж</span></div>
+        <h3>Маркетплейсы</h3>
+        <p>Синхронизация товаров, цен, остатков и заказов с торговыми площадками. Подключаем подходящие готовые приложения или разрабатываем интеграцию под конкретный процесс.</p>
+        <div class="cap-foot">
+          <span class="mono">Товары · Цены · Остатки · Заказы</span>
+        </div>
+      </article>
+      <article class="cap-card">
+        <div class="cap-top mono"><span class="cap-num">02 / 04</span><span>Логистика</span></div>
+        <h3>Доставка и логистика</h3>
+        <p>Объединение нескольких служб доставки, разработка собственных модулей и правил выбора перевозчика по адресу, габаритам, составу товаров и условиям заказа.</p>
+        <div class="cap-foot">
+          <span class="mono">Службы · Габариты · Тарифы</span>
+        </div>
+      </article>
+      <article class="cap-card">
+        <div class="cap-top mono"><span class="cap-num">03 / 04</span><span>Учёт и CRM</span></div>
+        <h3>ERP, 1С и CRM</h3>
+        <p>Настройка обмена заказами, ценами, остатками и статусами через доступные механизмы платформы и API после технической проверки ваших систем.</p>
+        <div class="cap-foot">
+          <span class="mono">1С · ERP · Битрикс24</span>
+          <a href="../../services/integrations-1c/">Об интеграции с 1С <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+      <article class="cap-card">
+        <div class="cap-top mono"><span class="cap-num">04 / 04</span><span>Опт и B2B</span></div>
+        <h3>Сложные продажи и B2B</h3>
+        <p>Персональные цены и скидки, несколько складов и резервы, комплекты, оптовые личные кабинеты и нетиповые сценарии оформления заказа.</p>
+        <div class="cap-foot">
+          <span class="mono">Прайсы · Склады · Кабинеты</span>
+        </div>
+      </article>
+    </div>
+    <div class="cap-cta">
+      <p class="cap-cta-text">Есть нестандартная задача? <span>Обсудим решение и проверим технические ограничения до старта.</span></p>
+      <div class="cap-cta-action">
+        <a class="svc-button svc-button-outline" href="#form" data-discuss="Нестандартная задача для интернет-магазина">Обсудить решение <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+    <p class="cap-disclaimer">Перечисленные направления описывают возможные сценарии реализации. Совместимость с конкретными версиями 1С, ERP и внешними сервисами проверяем на этапе оценки требований.</p>
+  </section>
+
+  <!-- 04 · Стоимость -->
+  <section class="svc-price" aria-labelledby="price-title">
+    <div class="svc-section-head">
+      <span class="mono"><span class="cm">//</span> 04 · Стоимость</span>
+      <h2 id="price-title">Ориентир на старт<br>и смета по задаче</h2>
+    </div>
+    <div class="svc-price-grid">
+      <div>
+        <span class="mono">Разработка интернет-магазина</span>
+        <p class="svc-price-number">от 200 000 <small>₽</small></p>
+        <p class="svc-price-caption">Базовые работы по запуску интернет-магазина на 1С-Битрикс. Точную стоимость и сроки фиксируем после оценки требований.</p>
+      </div>
+      <div class="svc-price-details">
+        <h3>Как формируется бюджет</h3>
+        <ul>
+          <li>Каталог, фильтры, карточка, корзина и оформление заказа</li>
+          <li>Выбор подхода: готовое решение или индивидуальная разработка</li>
+          <li>Интеграции с 1С, ERP, маркетплейсами и службами доставки — по задаче</li>
+          <li>Лицензия 1С-Битрикс и сторонние сервисы оплачиваются отдельно</li>
+        </ul>
+        <p>До начала работ согласуем состав функциональности, проверим внешние системы и подготовим прозрачную смету без скрытых этапов.</p>
+        <a class="svc-button svc-button-light" href="#form" data-discuss="Оценка интернет-магазина на 1С-Битрикс">Оценить интернет-магазин <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+    <div class="svc-related">
+      <a href="../../services/integrations-1c/">Интеграция с 1С <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="../../services/messenger-bots/">Чат-боты и мессенджеры <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="../../portfolio/">Портфолио магазинов <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a href="../../licenses/bitrix/">Лицензии 1С-Битрикс <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </section>
+
+  <!-- 05 · Частые вопросы -->
+  <section class="svc-section svc-faq" aria-labelledby="faq-title">
+    <div class="svc-section-head">
+      <span class="mono"><span class="cm">//</span> 05 · Частые вопросы</span>
+      <h2 id="faq-title">Коротко о главном</h2>
+    </div>
+    <div class="svc-faq-list">
+      <details>
+        <summary>Можно ли подключить маркетплейсы и ERP?<span aria-hidden="true">+</span></summary>
+        <p>Да, через подходящие готовые приложения либо индивидуальную интеграцию после технической проверки ваших систем и доступных API.</p>
+      </details>
+      <details>
+        <summary>Можно ли настроить особые условия доставки и оптовые цены?<span aria-hidden="true">+</span></summary>
+        <p>Да. Объединение служб доставки, собственные правила расчёта, персональные цены, скидки и оптовые кабинеты реализуем как отдельно оцениваемую функциональность.</p>
+      </details>
+      <details>
+        <summary>От чего зависит стоимость?<span aria-hidden="true">+</span></summary>
+        <p>От структуры каталога, логики оформления заказа и интеграций. Базовые работы — от 200 000 ₽; лицензии, внешние сервисы и дополнительные модули оцениваются отдельно.</p>
+      </details>
+    </div>
+  </section>
+</main>
+
+<div class="final">
+  <section class="contact" id="form" aria-labelledby="form-title">
+    <div class="contact-head">
+      <span class="sec-label mono"><span class="cm">//</span> 06 · обсудим проект</span>
+      <a class="big-mail" href="mailto:ask@designcodes.ru">ask@designcodes.ru <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <div class="side">
+        <a href="tel:+79262901420">+7 (926) 290-14-20</a>
+        <a href="https://t.me/klimova_oxana" target="_blank" rel="noopener">Telegram @klimova_oxana</a>
+        <span class="mono" style="color:var(--cdim)">Москва, ул. Академика Пилюгина, 14</span>
+      </div>
+    </div>
+    <div class="contact-body">
+      <div class="form-intro">
+        <h2 id="form-title">Или оставьте заявку</h2>
+        <p>Опишите задачу в двух словах: какой ассортимент, какие нужны интеграции и доставки. Перезвоним в рабочее время и предложим решение.</p>
+      </div>
+      <!-- МЕСТО ПОД CRM-ФОРМУ БИТРИКС24 (по ТЗ). Код встраивания даёт заказчик, разработчик вставляет его вместо этой формы.
+           Форма ниже — макет для показа: поля, валидацию и согласия задаёт сама CRM-форма. Кнопки с data-open-form ведут сюда. -->
+      <form class="form" id="lead-form" data-b24-slot novalidate>
+        <div class="form-fields">
+          <div class="form-grid">
+            <label class="field"><span class="mono">Имя</span><input name="name" autocomplete="name" placeholder="Как к вам обращаться" required></label>
+            <label class="field"><span class="mono">Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" maxlength="18" required></label>
+          </div>
+          <label class="field"><span class="mono">Задача</span><textarea name="task" rows="3" placeholder="Новый интернет-магазин, интеграция с 1С, маркетплейсы, оптовый кабинет…"></textarea></label>
+          <label class="agree"><input type="checkbox" name="agree" required><span>Согласен с <a href="../../privacy/">политикой конфиденциальности</a> и обработкой персональных данных</span></label>
+          <div class="form-actions">
+            <button class="btn btn-lg" type="submit">Отправить заявку <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <span class="form-note mono" aria-live="polite"></span>
+          </div>
+        </div>
+        <p class="form-done" role="status">Спасибо! Заявка принята, скоро свяжемся.</p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer js-draw">
+    <div class="footer-top">
+      <nav class="footer-col" aria-label="Услуги">
+        <span class="mono">Услуги</span>
+        <a href="../../services/bitrix/">Разработка на 1С-Битрикс</a>
+        <a href="../../services/corporate-sites/">Корпоративные сайты</a>
+        <a href="../../services/online-stores/">Интернет-магазины</a>
+        <a href="../../services/integrations-1c/">Интеграция с 1С</a>
+        <a href="../../services/support/">Поддержка</a>
+        <a href="../../services/messenger-bots/">Чат-боты и мессенджеры</a>
+        <a href="../../bitrix24/">Битрикс24</a>
+        <a href="../../prices/">Стоимость работ</a>
+      </nav>
+      <nav class="footer-col" aria-label="Компания">
+        <span class="mono">Компания</span>
+        <a href="../../about/">О студии</a>
+        <a href="../../portfolio/">Портфолио</a>
+        <a href="../../process/">Как мы работаем</a>
+        <a href="../../letters/">Благодарственные письма</a>
+        <a href="../../company-documents/">Документы и реквизиты</a>
+      </nav>
+      <nav class="footer-col" aria-label="Лицензии">
+        <span class="mono">Лицензии</span>
+        <a href="../../licenses/bitrix/">Покупка 1С-Битрикс</a>
+        <a href="../../licenses/bitrix-renewal/">Продление 1С-Битрикс</a>
+        <a href="../../licenses/bitrix24/">Тарифы Битрикс24</a>
+      </nav>
+      <div class="footer-col">
+        <span class="mono">Связь</span>
+        <a href="tel:+79262901420">+7 (926) 290-14-20</a>
+        <a href="mailto:ask@designcodes.ru">ask@designcodes.ru</a>
+        <a href="https://t.me/klimova_oxana" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </div>
+    <div class="footer-seal">
+      <span class="ln" aria-hidden="true"></span>
+      <a class="footer-logo" href="../../prototype/home.html" aria-label="Дизайн+Код — на главную">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="5" aria-hidden="true">
+          <path pathLength="1" d="M595 57H297L10 211l287 154h155"/>
+          <path pathLength="1" d="M140 137v142"/>
+          <path pathLength="1" d="M706 3L515 412"/>
+          <path pathLength="1" d="M725 57l305 154-305 154"/>
+          <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
+            <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
+            <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
+          </g>
+        </svg>
+      </a>
+      <span class="ln" aria-hidden="true"></span>
+    </div>
+    <div class="footer-legal">
+      <span>© 2013–2026 ООО «Дизайнкод» · ИНН 7736666610 · ОГРН 5137746015138</span>
+      <span>117393, Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582</span>
+      <a href="../../privacy/">Политика конфиденциальности</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Подменю: открытие по клику/касанию и с клавиатуры, Esc и клик вне закрывают
+  const triggers = document.querySelectorAll('.nav-link[aria-controls]');
+  function closeAll(except) {
+    triggers.forEach(t => {
+      if (t === except) return;
+      t.setAttribute('aria-expanded', 'false');
+      document.getElementById(t.getAttribute('aria-controls')).classList.remove('open');
+    });
+  }
+  triggers.forEach(t => t.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = t.getAttribute('aria-expanded') === 'true';
+    closeAll(t);
+    t.setAttribute('aria-expanded', String(!open));
+    document.getElementById(t.getAttribute('aria-controls')).classList.toggle('open', !open);
+  }));
+  document.addEventListener('click', e => { if (!e.target.closest('.nav-item')) closeAll(); });
+
+  // Мобильное меню
+  const menuBtn = document.getElementById('menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  function toggleMenu(force) {
+    const open = force ?? menuBtn.getAttribute('aria-expanded') !== 'true';
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    menu.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuBtn.addEventListener('click', () => toggleMenu());
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const opened = document.querySelector('.nav-link[aria-expanded="true"]');
+      closeAll();
+      if (opened) opened.focus();
+      toggleMenu(false);
+    }
+  });
+
+  // Предзаполнение поля задачи по контексту кнопки
+  document.querySelectorAll('[data-discuss]').forEach(link => {
+    link.addEventListener('click', () => {
+      const topic = link.dataset.discuss;
+      const task = document.querySelector('#lead-form textarea[name="task"]');
+      if (task && !task.value.trim()) task.value = topic + '.\n\n';
+    });
+  });
+
+  // Подвал: логотип прорисовывается, когда подвал виден больше чем наполовину
+  const footer = document.querySelector('.footer');
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) footer.classList.add('drawn');
+  function checkDraw() {
+    const r = footer.getBoundingClientRect();
+    if ((innerHeight - r.top) / Math.min(r.height, innerHeight) > 0.6) {
+      footer.classList.add('drawn');
+      removeEventListener('scroll', checkDraw);
+    }
+  }
+  addEventListener('scroll', checkDraw, { passive: true });
+  checkDraw();
+
+  // Маска телефона: +7 (___) ___-__-__
+  const phone = document.querySelector('#lead-form input[type="tel"]');
+  function nationalDigits(v) {
+    let d = v.replace(/\D/g, '');
+    if (v.trim().startsWith('+7')) d = d.slice(1);
+    else if (/^[78]\d{10}$/.test(d)) d = d.slice(1);
+    return d;
+  }
+  let prevNational = '';
+  function formatPhone(v) {
+    let d = nationalDigits(v);
+    if (!prevNational && /^[78]/.test(d)) d = d.slice(1);
+    d = d.slice(0, 10);
+    if (!d) return '';
+    let out = '+7 (' + d.slice(0, 3);
+    if (d.length >= 3) out += ') ' + d.slice(3, 6);
+    if (d.length >= 6) out += '-' + d.slice(6, 8);
+    if (d.length >= 8) out += '-' + d.slice(8, 10);
+    return out;
+  }
+  phone.addEventListener('input', e => {
+    if (e.inputType && e.inputType.startsWith('delete')) {
+      if (!/\d/.test(phone.value.replace(/^\+7/, ''))) phone.value = '+7 (';
+      prevNational = nationalDigits(phone.value);
+      return;
+    }
+    phone.value = formatPhone(phone.value) || '+7 (';
+    prevNational = nationalDigits(phone.value);
+  });
+  phone.addEventListener('focus', () => { if (!phone.value) phone.value = '+7 ('; });
+  phone.addEventListener('blur', () => { if (phone.value.replace(/\D/g, '').length <= 1) phone.value = ''; });
+
+  // Форма заявки: проверка полей. ЗАГЛУШКА — отправки пока нет
+  const form = document.getElementById('lead-form');
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const note = form.querySelector('.form-note');
+    const bad = [...form.querySelectorAll('[required]')].find(f =>
+      f.type === 'checkbox' ? !f.checked : f.type === 'tel' ? f.value.replace(/\D/g, '').length !== 11 : !f.value.trim());
+    if (bad) {
+      note.textContent = bad.type === 'checkbox' ? 'Нужно согласие на обработку данных' : bad.type === 'tel' ? 'Введите телефон полностью' : 'Заполните имя';
+      bad.focus();
+      return;
+    }
+    form.classList.add('sent');
+  });
+</script>
+</body>
+</html>
