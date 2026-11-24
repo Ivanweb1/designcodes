@@ -314,28 +314,27 @@
   .cap-foot a:hover { color: var(--accent); }
 
   .cap-cta {
-    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; align-items: center;
-    padding-top: clamp(32px, 4vw, 52px);
+    margin-top: clamp(32px, 4vw, 48px);
+    padding: clamp(24px, 3vw, 38px) clamp(20px, 3vw, 40px);
+    border: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center; gap: 24px 40px; flex-wrap: wrap;
   }
+  .cap-cta-copy { flex: 1 1 380px; min-width: 0; }
   .cap-cta-text {
-    grid-column: 1 / 8;
-    margin: 0;
-    font-size: clamp(24px, 2.8vw, 44px);
-    line-height: 1.1;
-    letter-spacing: -0.035em;
+    margin: 0; max-width: 28em;
+    font-size: clamp(22px, 2.2vw, 32px);
+    line-height: 1.18;
+    letter-spacing: -0.03em;
   }
   .cap-cta-text span { color: var(--muted); }
-  .cap-cta-action {
-    grid-column: 8 / 13;
-    justify-self: end;
-  }
   .cap-disclaimer {
-    margin: 28px 0 0;
-    max-width: 56em;
+    margin: 12px 0 0;
+    max-width: 46em;
     font-size: 14px;
     line-height: 1.45;
     color: var(--muted);
   }
+  .cap-cta-action { flex: none; }
 
   /* ---------- 04 Стоимость (тёмный блок) ---------- */
   .svc-price {
@@ -734,12 +733,14 @@
       </article>
     </div>
     <div class="cap-cta">
-      <p class="cap-cta-text">Есть нестандартная задача? <span>Обсудим решение и проверим технические ограничения до старта.</span></p>
+      <div class="cap-cta-copy">
+        <p class="cap-cta-text">Есть нестандартная задача? <span>Обсудим решение и&nbsp;проверим технические ограничения до&nbsp;старта.</span></p>
+        <p class="cap-disclaimer">Перечисленные направления описывают возможные сценарии реализации. Совместимость с конкретными версиями 1С, ERP и внешними сервисами проверяем на этапе оценки требований.</p>
+      </div>
       <div class="cap-cta-action">
         <a class="svc-button svc-button-outline" href="#form" data-discuss="Нестандартная задача для интернет-магазина">Обсудить решение <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
-    <p class="cap-disclaimer">Перечисленные направления описывают возможные сценарии реализации. Совместимость с конкретными версиями 1С, ERP и внешними сервисами проверяем на этапе оценки требований.</p>
   </section>
 
   <!-- 04 · Стоимость -->
