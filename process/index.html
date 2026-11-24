@@ -293,23 +293,25 @@
   }
   .b24-note a:hover { color: var(--accent); border-color: var(--accent); }
 
-  .svc-button-light { margin-top: 32px; background: var(--bg); border-color: var(--bg); color: var(--ink); }
+  .rules-foot { display: flex; justify-content: center; margin-top: clamp(32px, 4vw, 48px); }
+  .svc-button-light { background: var(--bg); border-color: var(--bg); color: var(--ink); }
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   .svc-related {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
-    margin-top: clamp(36px, 4vw, 56px);
-    padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: clamp(28px, 3.5vw, 40px);
     border-top: 1px solid rgba(243,242,238,.18);
   }
   .svc-related a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: #c6c4bd;
-    border-bottom: 1px solid rgba(243,242,238,.3);
-    padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    font-size: 15px; color: var(--bg);
+    border: 1px solid rgba(243,242,238,.35); border-radius: 100px;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-related a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
+  .stage-row { scroll-margin-top: var(--header-h); }
 
   /* ---------- 04 Финал: контакты, форма и подвал ---------- */
   .final { --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55); background: var(--ink); color: var(--bg); overflow: hidden; }
@@ -415,6 +417,9 @@
     .svc-hero h1 { font-size: clamp(38px, 11vw, 68px); }
     .svc-hero h1 br { display: none; }
     .svc-hero-bottom { grid-template-columns: 1fr; }
+    .svc-related { flex-direction: column; gap: 0; padding-top: 0; margin-top: 28px; }
+    .svc-related a { width: 100%; justify-content: space-between; min-height: 52px; padding: 0; border: 0; border-bottom: 1px solid rgba(243,242,238,.18); border-radius: 0; }
+    .svc-related a:hover { background: none; color: var(--accent); border-color: var(--accent); }
     .contact { padding-top: 56px; }
     .big-mail { font-size: 9.4vw; }
     .form-grid { grid-template-columns: 1fr; }
@@ -547,7 +552,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Как мы работаем</div>
-    <h1 id="svc-title">Как мы работаем<br><span>над сайтом</span></h1>
+    <h1 id="svc-title">Как мы работаем <br><span>над&nbsp;сайтом</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Показываем, что происходит на каждом этапе, когда клиент согласовывает решения и как принимается результат.</p>
       <div class="svc-hero-action">
@@ -561,12 +566,12 @@
   <section class="svc-section" aria-labelledby="stages-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 02 · Шесть этапов</span>
-      <h2 id="stages-title">От задачи<br><span class="dim">до сопровождения</span></h2>
+      <h2 id="stages-title">От&nbsp;задачи<br><span class="dim">до&nbsp;сопровождения</span></h2>
       <p class="svc-section-lead">На каждом этапе понятно, что делает студия и какой конкретный результат получает заказчик для согласования.</p>
     </div>
 
     <ol class="stage-list">
-      <li class="stage-row">
+      <li class="stage-row" id="step-1">
         <span class="stage-num mono">01</span>
         <h3 class="stage-title">Задача</h3>
         <div class="stage-col">
@@ -578,7 +583,7 @@
           <p>Согласованный подход, границы работ, предварительная оценка и понимание состава этапов.</p>
         </div>
       </li>
-      <li class="stage-row">
+      <li class="stage-row" id="step-2">
         <span class="stage-num mono">02</span>
         <h3 class="stage-title">Проектирование</h3>
         <div class="stage-col">
@@ -590,7 +595,7 @@
           <p>Утверждённая карта страниц, прототипы ключевых экранов и техническое задание.</p>
         </div>
       </li>
-      <li class="stage-row">
+      <li class="stage-row" id="step-3">
         <span class="stage-num mono">03</span>
         <h3 class="stage-title">Дизайн</h3>
         <div class="stage-col">
@@ -602,7 +607,7 @@
           <p>Согласованные макеты ключевых страниц для десктопа и мобильных устройств.</p>
         </div>
       </li>
-      <li class="stage-row">
+      <li class="stage-row" id="step-4">
         <span class="stage-num mono">04</span>
         <h3 class="stage-title">Разработка</h3>
         <div class="stage-col">
@@ -614,7 +619,7 @@
           <p>Работающая версия сайта на тестовой площадке для проверки сценариев.</p>
         </div>
       </li>
-      <li class="stage-row">
+      <li class="stage-row" id="step-5">
         <span class="stage-num mono">05</span>
         <h3 class="stage-title">Тестирование и запуск</h3>
         <div class="stage-col">
@@ -626,7 +631,7 @@
           <p>Запущенный сайт, доступы к административной панели и передача материалов по проекту.</p>
         </div>
       </li>
-      <li class="stage-row">
+      <li class="stage-row" id="step-6">
         <span class="stage-num mono">06</span>
         <h3 class="stage-title">Сопровождение</h3>
         <div class="stage-col">
@@ -645,7 +650,7 @@
   <section class="svc-price" aria-labelledby="rules-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 03 · Согласование и приёмка</span>
-      <h2 id="rules-title">Прозрачные правила<br><span class="dim">на каждом шаге</span></h2>
+      <h2 id="rules-title">Прозрачные правила<br><span class="dim">на&nbsp;каждом шаге</span></h2>
     </div>
     <div class="rules-grid">
       <div class="rule-col">
@@ -675,12 +680,13 @@
       <a href="../bitrix24/">Внедрение Битрикс24 <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
 
-    <a class="svc-button svc-button-light" href="#form" data-discuss="Обсудить проект">Обсудить проект <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="rules-foot">
+      <a class="svc-button svc-button-light" href="#form" data-discuss="Обсудить проект">Обсудить проект <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
 
     <div class="svc-related">
       <a href="../services/bitrix/">Разработка сайтов на 1С-Битрикс <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <a href="../portfolio/">Портфолио <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <a href="../bitrix24/">Внедрение Битрикс24 <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 </main>
