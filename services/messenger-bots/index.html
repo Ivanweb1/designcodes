@@ -378,19 +378,19 @@
   .svc-button-ghost:hover { background: var(--bg); border-color: var(--bg); color: var(--ink); }
 
   .svc-related {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
-    margin-top: clamp(36px, 4vw, 56px);
-    padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: clamp(28px, 3.5vw, 40px);
     border-top: 1px solid rgba(243,242,238,.18);
   }
   .svc-related a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: #c6c4bd;
-    border-bottom: 1px solid rgba(243,242,238,.3);
-    padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    font-size: 15px; color: var(--bg);
+    border: 1px solid rgba(243,242,238,.35); border-radius: 100px;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-related a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
 
   /* ---------- 05 Частые вопросы ---------- */
   .svc-faq-list { border-top: 1px solid var(--ink); }
@@ -515,6 +515,9 @@
       border-bottom: 1px solid var(--line);
     }
     .cap-card:last-child, .svc-steps article:last-child { border-bottom: 0; }
+    .svc-related { flex-direction: column; gap: 0; padding-top: 0; margin-top: 28px; }
+    .svc-related a { width: 100%; justify-content: space-between; min-height: 52px; padding: 0; border: 0; border-bottom: 1px solid rgba(243,242,238,.18); border-radius: 0; }
+    .svc-related a:hover { background: none; color: var(--accent); border-color: var(--accent); }
     .contact { padding-top: 56px; }
     .big-mail { font-size: 9.4vw; }
     .form-grid { grid-template-columns: 1fr; }
@@ -648,7 +651,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Мессенджеры и чат-боты</div>
-    <h1 id="svc-title">Чат-боты и интеграция Telegram и MAX<br><span>с сайтом и Битрикс24</span></h1>
+    <h1 id="svc-title">Чат-боты и&nbsp;интеграция Telegram и&nbsp;MAX <br><span>с&nbsp;сайтом и&nbsp;Битрикс24</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Передаём события с сайта и из Битрикс24 в Telegram и MAX. Разрабатываем чат-ботов для сотрудников, заказчика и его клиентов: от уведомлений до диалоговых сценариев.</p>
       <div class="svc-hero-action">
@@ -697,7 +700,7 @@
   <section class="svc-section" aria-labelledby="flow-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 03 · Схема и порядок работы</span>
-      <h2 id="flow-title">Как связаны системы<br><span class="dim">и как мы работаем</span></h2>
+      <h2 id="flow-title">Как связаны системы<br><span class="dim">и&nbsp;как мы работаем</span></h2>
     </div>
 
     <div class="flow-schema" aria-label="Схема обмена между сайтом или Битрикс24 и мессенджерами Telegram или MAX">
@@ -751,7 +754,7 @@
   <section class="svc-price" aria-labelledby="limits-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 04 · Возможности, ограничения и стоимость</span>
-      <h2 id="limits-title">Что важно учесть<br><span class="dim">до старта интеграции</span></h2>
+      <h2 id="limits-title">Что важно учесть<br><span class="dim">до&nbsp;старта интеграции</span></h2>
     </div>
     <div class="limits-grid">
       <div class="limits-col">
@@ -788,7 +791,6 @@
       <a href="../../bitrix24/">Внедрение Битрикс24 <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <a href="../../services/online-stores/">Интернет-магазины <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <a href="../../services/corporate-sites/">Корпоративные сайты <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <a href="../../prices/">Стоимость работ <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
