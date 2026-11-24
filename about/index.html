@@ -249,16 +249,11 @@
   .partner-slot {
     margin-top: 28px;
     padding: 20px 24px;
-    border: 1px dashed var(--muted);
+    border: 1px solid var(--line);
     display: flex; justify-content: space-between; align-items: center; gap: 16px 28px; flex-wrap: wrap;
   }
   .partner-slot p { margin: 0; font-size: 15px; color: var(--muted); max-width: 52em; }
   .partner-slot strong { color: var(--ink); font-weight: 500; }
-  .slot-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
-    color: var(--muted); white-space: nowrap;
-  }
 
   /* ---------- 03 Чем занимаемся ---------- */
   .dir-list {
@@ -768,10 +763,10 @@
       </div>
     </div>
 
-    <!-- Слот под проверенную ссылку на официальный профиль партнёра 1С-Битрикс -->
+    <!-- ЗАГЛУШКА URL: подставить прямую ссылку на профиль студии на 1c-bitrix.ru/partners/ -->
     <div class="partner-slot">
       <p><strong>Официальный профиль партнёра 1С-Битрикс.</strong> Статус сертифицированного партнёра и действующие компетенции можно проверить в реестре 1С-Битрикс.</p>
-      <span class="slot-tag mono">Слот под ссылку на профиль партнёра 1С-Битрикс</span>
+      <a class="btn" href="https://www.1c-bitrix.ru/partners/" target="_blank" rel="noopener">Профиль партнёра <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
