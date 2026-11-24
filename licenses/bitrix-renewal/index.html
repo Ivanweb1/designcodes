@@ -286,23 +286,24 @@
   }
   .vendor-link:hover { color: var(--accent); border-color: var(--accent); }
 
-  .svc-button-light { margin-top: 32px; background: var(--bg); border-color: var(--bg); color: var(--ink); }
+  .rules-foot { display: flex; justify-content: center; margin-top: clamp(32px, 4vw, 48px); }
+  .svc-button-light { background: var(--bg); border-color: var(--bg); color: var(--ink); }
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   .svc-related {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
-    margin-top: clamp(36px, 4vw, 56px);
-    padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: clamp(28px, 3.5vw, 40px);
     border-top: 1px solid rgba(243,242,238,.18);
   }
   .svc-related a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: #c6c4bd;
-    border-bottom: 1px solid rgba(243,242,238,.3);
-    padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    font-size: 15px; color: var(--bg);
+    border: 1px solid rgba(243,242,238,.35); border-radius: 100px;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-related a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
 
   /* ---------- 04 Частые вопросы ---------- */
   .svc-faq-list { border-top: 1px solid var(--ink); }
@@ -422,6 +423,9 @@
       border-bottom: 1px solid var(--line);
     }
     .svc-service:last-child { border-bottom: 0; }
+    .svc-related { flex-direction: column; gap: 0; padding-top: 0; margin-top: 28px; }
+    .svc-related a { width: 100%; justify-content: space-between; min-height: 52px; padding: 0; border: 0; border-bottom: 1px solid rgba(243,242,238,.18); border-radius: 0; }
+    .svc-related a:hover { background: none; color: var(--accent); border-color: var(--accent); }
     .contact { padding-top: 56px; }
     .big-mail { font-size: 9.4vw; }
     .form-grid { grid-template-columns: 1fr; }
@@ -554,7 +558,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Продление лицензии CMS</div>
-    <h1 id="svc-title">Продление лицензии 1С-Битрикс:<br><span>Управление сайтом</span></h1>
+    <h1 id="svc-title">Продление лицензии 1С&#8209;Битрикс: <br><span>Управление сайтом</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Поможем проверить текущую редакцию и подобрать способ продления по официальным условиям производителя.</p>
       <div class="svc-hero-action">
@@ -568,7 +572,7 @@
   <section class="svc-section" aria-labelledby="prep-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 02 · Что подготовить</span>
-      <h2 id="prep-title">Три сведения<br><span class="dim">для расчёта продления</span></h2>
+      <h2 id="prep-title">Три сведения<br><span class="dim">для&nbsp;расчёта продления</span></h2>
       <p class="svc-section-lead">Условия и стоимость продления зависят от вашей текущей редакции и даты окончания активности обновлений.</p>
     </div>
     <div class="svc-services">
@@ -594,7 +598,7 @@
   <section class="svc-price" aria-labelledby="rules-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 03 · Важное отличие и условия</span>
-      <h2 id="rules-title">Продление прав<br><span class="dim">и обновление сайта</span></h2>
+      <h2 id="rules-title">Продление прав<br><span class="dim">и&nbsp;обновление сайта</span></h2>
     </div>
     <div class="rules-grid">
       <div class="rule-col">
@@ -611,7 +615,9 @@
       </div>
     </div>
 
-    <a class="svc-button svc-button-light" href="#form" data-discuss="Запрос на продление лицензии 1С-Битрикс">Помочь с продлением <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="rules-foot">
+      <a class="svc-button svc-button-light" href="#form" data-discuss="Запрос на продление лицензии 1С-Битрикс">Помочь с продлением <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
 
     <div class="svc-related">
       <a href="../../licenses/bitrix/">Покупка лицензии 1С-Битрикс <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
