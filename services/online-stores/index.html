@@ -368,19 +368,19 @@
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   .svc-related {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
-    margin-top: clamp(40px, 5vw, 64px);
-    padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: clamp(28px, 3.5vw, 40px);
     border-top: 1px solid rgba(243,242,238,.18);
   }
   .svc-related a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: #c6c4bd;
-    border-bottom: 1px solid rgba(243,242,238,.3);
-    padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    font-size: 15px; color: var(--bg);
+    border: 1px solid rgba(243,242,238,.35); border-radius: 100px;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-related a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
 
   /* ---------- 05 Частые вопросы ---------- */
   .svc-faq-list { border-top: 1px solid var(--ink); }
@@ -640,7 +640,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Интернет-магазины</div>
-    <h1 id="svc-title">Разработка интернет-магазинов<br><span>на 1С-Битрикс</span></h1>
+    <h1 id="svc-title">Разработка интернет&#8209;магазинов <br><span>на&nbsp;1С&#8209;Битрикс</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Разрабатываем интернет-магазины на 1С-Битрикс: от удобного каталога и оформления заказа до сложной логики продаж, доставок и обмена с другими системами.</p>
       <div class="svc-hero-action">
@@ -654,7 +654,7 @@
   <section class="svc-section" aria-labelledby="base-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 02 · Основа магазина</span>
-      <h2 id="base-title">Торговая база<br>без лишних барьеров</h2>
+      <h2 id="base-title">Торговая база<br>без&nbsp;лишних барьеров</h2>
       <p class="svc-section-lead">Собираем ключевой путь покупателя так, чтобы каталог легко обслуживался, а оформление заказа не теряло конверсию.</p>
     </div>
     <div class="base-grid">
@@ -695,7 +695,7 @@
   <section class="svc-section" aria-labelledby="cap-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 03 · Интеграции и индивидуальная функциональность</span>
-      <h2 id="cap-title">Сложные сценарии<br>и обмен данными</h2>
+      <h2 id="cap-title">Сложные сценарии<br>и&nbsp;обмен данными</h2>
       <p class="svc-section-lead">Если типовых модулей недостаточно, проектируем интеграции и бизнес-логику под ваши процессы продаж и учёта.</p>
     </div>
     <div class="cap-grid">
@@ -746,7 +746,7 @@
   <section class="svc-price" aria-labelledby="price-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 04 · Стоимость</span>
-      <h2 id="price-title">Ориентир на старт<br>и смета по задаче</h2>
+      <h2 id="price-title">Ориентир на&nbsp;старт<br>и&nbsp;смета по&nbsp;задаче</h2>
     </div>
     <div class="svc-price-grid">
       <div>
