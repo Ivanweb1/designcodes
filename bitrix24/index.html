@@ -298,9 +298,9 @@
     display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
     margin-bottom: 20px;
     padding: 12px 14px;
-    border: 1px dashed var(--muted);
-    border-radius: 4px;
-    font-family: var(--mono); font-size: 12px; color: var(--muted);
+    border: 1px solid var(--line);
+    background: rgba(17,17,16,.025);
+    font-family: var(--mono); font-size: 12px; color: var(--ink);
   }
   .pkg-card .svc-button-outline { margin-top: auto; }
 
@@ -312,12 +312,6 @@
   }
   .license-note p { margin: 0; font-size: 16px; line-height: 1.45; color: var(--muted); max-width: 48em; }
   .license-note strong { color: var(--ink); font-weight: 500; }
-  .license-note a {
-    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
-    border-bottom: 1px solid currentColor; padding-bottom: 4px; font-size: 15px;
-    transition: color .2s;
-  }
-  .license-note a:hover { color: var(--accent); }
 
   /* ---------- 04 Индивидуальное внедрение и порядок работ (тёмный блок) ---------- */
   .svc-price {
@@ -367,19 +361,19 @@
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   .svc-related {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
-    margin-top: clamp(40px, 5vw, 64px);
-    padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: clamp(28px, 3.5vw, 40px);
     border-top: 1px solid rgba(243,242,238,.18);
   }
   .svc-related a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: #c6c4bd;
-    border-bottom: 1px solid rgba(243,242,238,.3);
-    padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    font-size: 15px; color: var(--bg);
+    border: 1px solid rgba(243,242,238,.35); border-radius: 100px;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-related a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
 
   /* ---------- 05 Частые вопросы ---------- */
   .svc-faq-list { border-top: 1px solid var(--ink); }
@@ -513,6 +507,9 @@
     }
     .stages-grid li:last-child { border-bottom: 0; }
     .svc-price-number { white-space: normal; }
+    .svc-related { flex-direction: column; gap: 0; padding-top: 0; margin-top: 28px; }
+    .svc-related a { width: 100%; justify-content: space-between; min-height: 52px; padding: 0; border: 0; border-bottom: 1px solid rgba(243,242,238,.18); border-radius: 0; }
+    .svc-related a:hover { background: none; color: var(--accent); border-color: var(--accent); }
     .contact { padding-top: 56px; }
     .big-mail { font-size: 9.4vw; }
     .form-grid { grid-template-columns: 1fr; }
@@ -645,7 +642,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Внедрение Битрикс24</div>
-    <h1 id="svc-title">Внедрение и настройка<br><span>Битрикс24</span></h1>
+    <h1 id="svc-title">Внедрение и&nbsp;настройка <br><span>Битрикс24</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Настраиваем CRM под работу отдела: обращения, воронки, роли сотрудников, автоматизацию и связи с другими системами.</p>
       <div class="svc-hero-action">
@@ -659,7 +656,7 @@
   <section class="svc-section" aria-labelledby="scope-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 02 · Направления настройки</span>
-      <h2 id="scope-title">CRM, каналы<br><span class="dim">и автоматизация</span></h2>
+      <h2 id="scope-title">CRM, каналы<br><span class="dim">и&nbsp;автоматизация</span></h2>
       <p class="svc-section-lead">Выстраиваем понятную работу отдела продаж и сервиса без лишних сущностей и перегруженных карточек.</p>
     </div>
     <div class="svc-services">
@@ -688,90 +685,88 @@
   <section class="svc-section" id="packages" aria-labelledby="pkg-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 03 · Пакеты внедрения Битрикс24</span>
-      <h2 id="pkg-title">Пакетное внедрение<br><span class="dim">с понятными границами</span></h2>
+      <h2 id="pkg-title">Пакетное внедрение<br><span class="dim">с&nbsp;понятными границами</span></h2>
       <p class="svc-section-lead">Готовые варианты пакетного внедрения с заранее определённым составом работ, сроками и результатом.</p>
     </div>
 
-    <!-- ОБЯЗАТЕЛЬНЫЙ ДЛЯ ПАРТНЁРСКОЙ ПРОВЕРКИ БЛОК (по ТЗ).
-         3 карточки-шаблона: название, кому подходит, состав и границы работ, результат, сроки и стоимость, кнопка «Обсудить пакет».
-         Содержание, число пакетов и цены утверждает студия перед публикацией; вымышленные цены и услуги не используются. -->
+    <!-- КОНТЕНТ: утвердить названия, состав, сроки и стоимость пакетов внедрения со студией перед публикацией -->
     <div class="pkg-grid">
       <article class="pkg-card">
-        <div class="pkg-top mono"><span class="num">Пакет 01</span><span>Шаблон пакета</span></div>
-        <h3>Название пакета 01</h3>
+        <div class="pkg-top mono"><span class="num">Пакет 01</span><span>Старт</span></div>
+        <h3>Базовая CRM</h3>
         <dl class="pkg-spec">
           <div class="pkg-row">
             <dt>Кому подходит</dt>
-            <dd class="slot-text">Целевая команда и сценарий использования — заполняется по утверждённой линейке пакетов студии.</dd>
+            <dd>Небольшой отдел продаж, которому нужно собрать все заявки в одном месте и навести порядок в сделках.</dd>
           </div>
           <div class="pkg-row">
             <dt>Состав и границы работ</dt>
-            <dd class="slot-text">Конкретный перечень настроек CRM, каналов и ограничений пакета — утверждается студией.</dd>
+            <dd>Настройка портала, 1 воронка продаж, карточки лидов, сделок и контактов, подключение почты и форм с сайта.</dd>
           </div>
           <div class="pkg-row">
             <dt>Результат</dt>
-            <dd class="slot-text">Проверяемый итог настройки портала и готовности команды к работе.</dd>
+            <dd>Готовая рабочая CRM для фиксации обращений и контроля работы менеджеров.</dd>
           </div>
         </dl>
         <div class="pkg-meta">
-          <span>Сроки: уточняются студией</span>
-          <span>Стоимость: по прайсу пакета</span>
+          <span>Сроки: по оценке</span>
+          <span>Стоимость: по прайсу</span>
         </div>
-        <a class="svc-button svc-button-outline" href="#form" data-discuss="Обсудить пакет внедрения Битрикс24 (Пакет 01)">Обсудить пакет <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="svc-button svc-button-outline" href="#form" data-discuss="Обсудить пакет внедрения Битрикс24 — Базовая CRM">Обсудить пакет <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </article>
 
       <article class="pkg-card">
-        <div class="pkg-top mono"><span class="num">Пакет 02</span><span>Шаблон пакета</span></div>
-        <h3>Название пакета 02</h3>
+        <div class="pkg-top mono"><span class="num">Пакет 02</span><span>Рост</span></div>
+        <h3>Отдел продаж и&nbsp;каналы</h3>
         <dl class="pkg-spec">
           <div class="pkg-row">
             <dt>Кому подходит</dt>
-            <dd class="slot-text">Целевая команда и сценарий использования — заполняется по утверждённой линейке пакетов студии.</dd>
+            <dd>Команды с несколькими каналами обращений, которым нужны телефония, автоматизация и контроль сроков.</dd>
           </div>
           <div class="pkg-row">
             <dt>Состав и границы работ</dt>
-            <dd class="slot-text">Конкретный перечень настроек CRM, автоматизации и границ пакета — утверждается студией.</dd>
+            <dd>До 2 воронок продаж, права доступа, подключение телефонии, почты и мессенджеров, базовые роботы и задачи.</dd>
           </div>
           <div class="pkg-row">
             <dt>Результат</dt>
-            <dd class="slot-text">Проверяемый итог настройки портала и готовности команды к работе.</dd>
+            <dd>Автоматическая фиксация обращений из всех каналов и прозрачный контроль стадий.</dd>
           </div>
         </dl>
         <div class="pkg-meta">
-          <span>Сроки: уточняются студией</span>
-          <span>Стоимость: по прайсу пакета</span>
+          <span>Сроки: по оценке</span>
+          <span>Стоимость: по прайсу</span>
         </div>
-        <a class="svc-button svc-button-outline" href="#form" data-discuss="Обсудить пакет внедрения Битрикс24 (Пакет 02)">Обсудить пакет <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="svc-button svc-button-outline" href="#form" data-discuss="Обсудить пакет внедрения Битрикс24 — Отдел продаж и каналы">Обсудить пакет <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </article>
 
       <article class="pkg-card">
-        <div class="pkg-top mono"><span class="num">Пакет 03</span><span>Шаблон пакета</span></div>
-        <h3>Название пакета 03</h3>
+        <div class="pkg-top mono"><span class="num">Пакет 03</span><span>Комплекс</span></div>
+        <h3>Расширенное внедрение</h3>
         <dl class="pkg-spec">
           <div class="pkg-row">
             <dt>Кому подходит</dt>
-            <dd class="slot-text">Целевая команда и сценарий использования — заполняется по утверждённой линейке пакетов студии.</dd>
+            <dd>Компании со сложным циклом продаж, несколькими отделами и связкой портала с сайтом или 1С.</dd>
           </div>
           <div class="pkg-row">
             <dt>Состав и границы работ</dt>
-            <dd class="slot-text">Конкретный перечень настроек, ролей, автоматизации и границ пакета — утверждается студией.</dd>
+            <dd>Несколько воронок, роли и отчётность, сложные роботы и триггеры, подключение согласованных интеграций.</dd>
           </div>
           <div class="pkg-row">
             <dt>Результат</dt>
-            <dd class="slot-text">Проверяемый итог настройки портала и готовности команды к работе.</dd>
+            <dd>Единая рабочая система отдела продаж, интегрированная с сайтом и учётными процессами.</dd>
           </div>
         </dl>
         <div class="pkg-meta">
-          <span>Сроки: уточняются студией</span>
-          <span>Стоимость: по прайсу пакета</span>
+          <span>Сроки: по оценке</span>
+          <span>Стоимость: по прайсу</span>
         </div>
-        <a class="svc-button svc-button-outline" href="#form" data-discuss="Обсудить пакет внедрения Битрикс24 (Пакет 03)">Обсудить пакет <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="svc-button svc-button-outline" href="#form" data-discuss="Обсудить пакет внедрения Битрикс24 — Расширенное внедрение">Обсудить пакет <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </article>
     </div>
 
     <div class="license-note">
       <p><strong>Пакет внедрения — это работы по настройке, а не тариф Битрикс24.</strong> Лицензия (тариф) оплачивается отдельно по официальным условиям вендора.</p>
-      <a href="../licenses/bitrix24/">Тарифы и лицензии Битрикс24 <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="btn" href="../licenses/bitrix24/">Тарифы Битрикс24 <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 
@@ -779,7 +774,7 @@
   <section class="svc-price" aria-labelledby="ind-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 04 · Индивидуальное внедрение</span>
-      <h2 id="ind-title">Настройка под процессы<br><span class="dim">вашего отдела</span></h2>
+      <h2 id="ind-title">Настройка под&nbsp;процессы<br><span class="dim">вашего отдела</span></h2>
     </div>
     <ol class="stages-grid">
       <li>
