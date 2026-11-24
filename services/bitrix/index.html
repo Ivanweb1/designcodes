@@ -357,6 +357,10 @@
     transition: background .2s, color .2s, border-color .2s;
   }
   .svc-button-ghost:hover { background: var(--ink); color: var(--bg); }
+  .svc-foot-center {
+    margin-top: clamp(32px, 4vw, 48px);
+    display: flex; justify-content: center;
+  }
   .svc-text-link {
     margin-top: 28px;
     display: inline-flex; align-items: center; gap: 18px;
@@ -869,7 +873,9 @@
         <p>Сайт запустили, жизнь продолжается: появляются новые товары, задачи и идеи. По отдельной договорённости помогаем с поддержкой и развитием. С некоторыми компаниями мы работаем больше десяти лет — и давно разговариваем без вводной презентации на сорок слайдов.</p>
       </article>
     </div>
-    <a class="svc-text-link" href="../../about/">О студии <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="svc-foot-center">
+      <a class="svc-button-ghost" href="../../about/">О студии <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
   </section>
 
   <!-- 06 · Стоимость -->
@@ -930,7 +936,9 @@
         <p>Обсуждаем функциональность, стоимость и порядок работы. Дальше — разработка по согласованным требованиям.</p>
       </article>
     </div>
-    <a class="svc-text-link" href="../../process/">Как мы работаем <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="svc-foot-center">
+      <a class="svc-button-ghost" href="../../process/">Как мы работаем <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
   </section>
 
   <!-- 08 · Частые вопросы -->
