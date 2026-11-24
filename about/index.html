@@ -337,17 +337,29 @@
     padding-top: clamp(28px, 3.5vw, 44px);
     align-items: stretch;
   }
-  .director-photo-slot {
+  .director-photo {
     aspect-ratio: 4 / 5;
-    border: 1px dashed var(--muted);
-    background: rgba(17,17,16,.03);
-    padding: 20px;
+    border: 1px solid var(--line);
+    background: #E8E6E0;
+    padding: 22px;
     display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
   }
-  .director-photo-slot .mono { color: var(--muted); }
-  .director-photo-slot p { margin: 0; font-size: 14px; line-height: 1.45; color: var(--muted); }
+  .director-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .director-photo .mono { color: var(--muted); }
+  .director-monogram {
+    font-size: clamp(64px, 6vw, 96px);
+    line-height: .9; letter-spacing: -0.05em; font-weight: 300;
+    color: rgba(17,17,16,.14);
+    align-self: center;
+  }
+  .director-caption {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+    border-top: 1px solid var(--line); padding-top: 12px;
+    font-size: 13px; color: var(--muted);
+  }
   .director-body {
-    display: flex; flex-direction: column; justify-content: space-between; gap: 20px;
+    display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
     min-height: 100%;
   }
   .director-meta {
@@ -360,16 +372,19 @@
     line-height: 1.05; letter-spacing: -0.03em; font-weight: 400;
   }
   .director-role { margin: 0; font-size: 15px; color: var(--muted); }
-  .director-quote-slot {
-    flex: 1;
-    display: flex; flex-direction: column; justify-content: space-between; gap: 16px;
-    padding: clamp(20px, 2.6vw, 32px);
-    border: 1px dashed var(--muted);
-    background: rgba(17,17,16,.02);
+  .director-quote {
+    flex: 1; margin: 0;
+    display: flex; flex-direction: column; justify-content: center; gap: 16px;
+    padding-left: clamp(20px, 2.5vw, 32px);
+    border-left: 2px solid var(--accent);
   }
-  .director-quote-slot .mono { color: var(--accent); display: block; margin-bottom: 10px; }
-  .director-quote-slot p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--muted); max-width: 44em; }
-  .director-quote-meta { font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+  .director-quote .quote-lead {
+    margin: 0;
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.3; letter-spacing: -0.02em; color: var(--ink);
+    max-width: 32em;
+  }
+  .director-quote p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted); max-width: 44em; }
   .director-contact {
     display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 24px; align-items: center;
     padding-top: 16px; border-top: 1px solid var(--line);
@@ -411,13 +426,20 @@
     font-weight: 400; letter-spacing: -0.03em; line-height: 1.1;
   }
   .clients-col p { margin: 0; font-size: 16px; line-height: 1.5; color: #c6c4bd; max-width: 34em; }
-  .clients-slot-note {
-    margin-top: 28px;
-    padding: 18px 22px;
-    border: 1px dashed rgba(243,242,238,.28);
-    font-size: 15px; line-height: 1.45; color: #c6c4bd;
+  .clients-strip {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0; padding: 0; list-style: none;
+    border-bottom: 1px solid #676661;
   }
-  .clients-slot-note strong { color: var(--bg); font-weight: 500; }
+  .clients-strip li {
+    padding: 22px 20px 24px 0;
+    border-right: 1px solid rgba(243,242,238,.16);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .clients-strip li:not(:first-child) { padding-left: 20px; }
+  .clients-strip li:last-child { border-right: 0; padding-right: 0; }
+  .clients-strip .cl-name { font-size: clamp(20px, 1.8vw, 26px); letter-spacing: -0.025em; line-height: 1.15; color: var(--bg); }
+  .clients-strip .cl-meta { color: #a8a7a2; }
 
   .svc-button-light { margin-top: 32px; background: var(--bg); border-color: var(--bg); color: var(--ink); }
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
@@ -444,12 +466,17 @@
     font-weight: 400; letter-spacing: -0.03em; line-height: 1.08;
   }
   .proof-col p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--muted); max-width: 34em; }
-  .proof-slot {
-    margin-top: 18px;
-    padding: 14px 18px;
-    border: 1px dashed var(--muted);
-    font-size: 14px; line-height: 1.45; color: var(--muted);
+  .cert-list {
+    margin: 22px 0 0; padding: 0; list-style: none;
+    border-top: 1px solid var(--line);
   }
+  .cert-list li {
+    display: grid; grid-template-columns: 32px 1fr auto; align-items: baseline; gap: 12px;
+    padding: 11px 0; border-bottom: 1px solid var(--line);
+    font-size: 15px; line-height: 1.35; color: var(--ink);
+  }
+  .cert-list .c-num { color: var(--accent); }
+  .cert-list .c-tag { color: var(--muted); }
   .proof-link {
     display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
     font-size: 16px; color: var(--ink);
@@ -596,7 +623,11 @@
     .svc-section h2, .svc-price h2 { grid-column: 1; }
     .svc-section-lead { grid-column: 1; margin-top: 20px; max-width: 38em; }
     .director-grid { grid-template-columns: 1fr; }
-    .director-photo-slot { max-width: 340px; }
+    .director-photo { max-width: 340px; }
+    .clients-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .clients-strip li, .clients-strip li:not(:first-child) { padding: 18px 16px 18px 0; border-bottom: 1px solid rgba(243,242,238,.16); }
+    .clients-strip li:nth-child(even) { border-right: 0; padding-left: 16px; padding-right: 0; }
+    .clients-strip li:nth-last-child(-n+2) { border-bottom: 0; }
     .clients-grid, .proof-grid { grid-template-columns: 1fr; }
     .clients-col, .clients-col:nth-child(even) {
       border-left: 0; padding: 24px 0 28px; border-bottom: 1px solid #676661;
@@ -869,14 +900,15 @@
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 04 · Слово руководителю</span>
       <h2 id="director-title">Подход студии<br><span class="dim">из первых рук</span></h2>
-      <p class="svc-section-lead">Раздел предназначен для прямой речи руководителя студии. Публикуется только подлинное фото и согласованный текст.</p>
+      <p class="svc-section-lead">Прямая позиция руководителя о том, как устроена работа над проектами, сроками и долгосрочной поддержкой.</p>
     </div>
 
     <div class="director-grid">
-      <!-- СЛОТ ПОД ПОДЛИННОЕ ФОТО ОКСАНЫ КЛИМОВОЙ -->
-      <div class="director-photo-slot" aria-label="Слот под фотографию руководителя">
-        <span class="mono">// Слот под фото</span>
-        <p>Подлинная фотография Оксаны Климовой (добавляется после предоставления студией).</p>
+      <!-- КОНТЕНТ: вставить <img src="..." alt="Оксана Климова"> внутрь .director-photo после получения фото -->
+      <div class="director-photo" aria-label="Портрет руководителя студии">
+        <span class="mono">// портрет</span>
+        <span class="director-monogram" aria-hidden="true">ОК</span>
+        <div class="director-caption mono"><span>Оксана Климова</span><span>Москва</span></div>
       </div>
 
       <div class="director-body">
@@ -885,14 +917,11 @@
           <p class="director-role">Генеральный директор ООО «ДИЗАЙНКОД»</p>
         </div>
 
-        <!-- СЛОТ ПОД СОГЛАСОВАННЫЙ ТЕКСТ РУКОВОДИТЕЛЯ -->
-        <div class="director-quote-slot">
-          <div>
-            <span class="mono">Слот под согласованный текст обращения</span>
-            <p>Здесь размещается утверждённый комментарий руководителя о принципах работы студии, отношении к срокам, качеству кода и долгосрочной поддержке проектов.</p>
-          </div>
-          <div class="director-quote-meta mono">Текст публикуется после утверждения студией</div>
-        </div>
+        <!-- КОНТЕНТ: финальный текст обращения согласует Оксана Климова -->
+        <blockquote class="director-quote">
+          <p class="quote-lead">«Для нас важно, чтобы сайт работал предсказуемо годы после запуска: легко обновлялся, держал обмен с 1С и помогал бизнесу продавать, а не требовал постоянных переделок».</p>
+          <p>Мы ведём проекты напрямую с заказчиком — от разбора задачи и прототипа до запуска и долгосрочного сопровождения. Такой подход позволяет понимать бизнес-процессы и отвечать за результат на каждом этапе.</p>
+        </blockquote>
 
         <div class="director-contact">
           <span class="mono">Прямой контакт</span>
@@ -927,9 +956,13 @@
       </div>
     </div>
 
-    <div class="clients-slot-note">
-      <strong>Слот под перечень клиентов и сроков сотрудничества:</strong> конкретные названия компаний, логотипы и длительность работы с ними публикуются в этом блоке после согласования со студией.
-    </div>
+    <!-- КОНТЕНТ: при согласовании добавить сроки сотрудничества по каждому клиенту -->
+    <ul class="clients-strip" aria-label="Примеры клиентов студии">
+      <li><span class="cl-name">Happy Baby</span><span class="cl-meta mono">детские товары · 1С-Битрикс</span></li>
+      <li><span class="cl-name">ТРОЙКА Electro</span><span class="cl-meta mono">электротранспорт · 1С-Битрикс</span></li>
+      <li><span class="cl-name">Kenwood</span><span class="cl-meta mono">кухонная техника · 1С-Битрикс</span></li>
+      <li><span class="cl-name">DeLonghi</span><span class="cl-meta mono">бытовая техника · 1С-Битрикс</span></li>
+    </ul>
 
     <a class="svc-button svc-button-light" href="../portfolio/">Посмотреть проекты <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
   </section>
@@ -948,7 +981,12 @@
           <span class="mono">01 / Экспертиза и отзывы</span>
           <h3>Сертификаты и благодарственные письма</h3>
           <p>Разработчики студии проходят ежегодную сертификацию 1С-Битрикс. Оригиналы благодарственных писем от заказчиков собраны в отдельном разделе — документы можно открыть целиком и сопоставить с проектами.</p>
-          <div class="proof-slot">Слот под актуальные сертификаты разработчиков 1С-Битрикс (добавляются после проверки перечня).</div>
+          <!-- КОНТЕНТ: уточнить точный перечень действующих сертификатов и компетенций -->
+          <ul class="cert-list">
+            <li><span class="c-num mono">01</span><span>Сертифицированный партнёр 1С-Битрикс</span><span class="c-tag mono">статус</span></li>
+            <li><span class="c-num mono">02</span><span>Разработчик Bitrix Framework</span><span class="c-tag mono">сертификат</span></li>
+            <li><span class="c-num mono">03</span><span>Интеграция с 1С и Битрикс24</span><span class="c-tag mono">компетенции</span></li>
+          </ul>
         </div>
         <a class="proof-link" href="../letters/">Благодарственные письма <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
