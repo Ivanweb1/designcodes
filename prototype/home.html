@@ -410,6 +410,8 @@
     grid-column: 1 / 7; margin: 0;
     font-weight: var(--tw); font-size: clamp(44px, 6.6vw, 124px); line-height: 0.98; letter-spacing: var(--tls);
   }
+  .works-title a { display: inline-block; transition: color .2s; }
+  .works-title a:hover { color: var(--accent); }
   .works-title sup { font-family: var(--mono); font-weight: 400; font-size: 0.18em; letter-spacing: 0; color: var(--accent); vertical-align: top; margin-left: 6px; }
   .works-lead { grid-column: 8 / 13; margin: 0; font-size: clamp(17px, 1.35vw, 20px); line-height: 1.45; letter-spacing: -0.01em; }
   .works-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 4vw, 64px) 20px; }
@@ -546,6 +548,7 @@
     transition: border-color .2s;
   }
   .note:first-child { border-left: 0; padding-left: 0; }
+  .note-link { display: flex; flex-direction: column; flex: 1; color: inherit; text-decoration: none; }
   .note .num { color: var(--accent); }
   .note h3 {
     margin: clamp(20px, 2.4vw, 40px) 0 0; font-weight: var(--tw); font-size: clamp(20px, 1.6vw, 28px); line-height: 1.05; letter-spacing: -0.03em;
@@ -554,9 +557,10 @@
   .note-body { display: flex; flex-direction: column; flex: 1; }
   .note-body p { margin: 12px 0 0; color: var(--muted); font-size: 15px; line-height: 1.4; }
   .note .tags { display: block; margin-top: auto; padding-top: 22px; font-size: 11px; line-height: 1.5; }
-  .note .tags b { font-weight: 400; color: var(--accent); }
+  .note .tags b { display: inline-block; font-weight: 400; color: var(--accent); transition: transform .2s; }
   .note:hover { border-top-color: var(--accent); }
   .note:hover h3 { color: var(--accent); }
+  .note:hover .tags b { transform: translateX(4px); }
   /* наведение на этап подсвечивает его слово во фразе */
   #process:has(.note[data-n="1"]:hover) .ph[data-n="1"],
   #process:has(.note[data-n="2"]:hover) .ph[data-n="2"],
@@ -654,13 +658,38 @@
   .sheet i:nth-child(3) { width: 85%; } .sheet i:last-child { width: 30%; margin-top: auto; }
   .ievent {
     grid-column: 9 / 13; display: flex; flex-direction: column; gap: 14px; align-self: stretch;
-    padding: 24px; background: var(--ink); color: var(--bg); text-decoration: none; transition: background .25s;
+    padding: 24px; background: var(--ink); color: var(--bg);
   }
-  .ievent:hover { background: var(--accent); }
+  .ievent-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
   .ievent-tag { color: rgba(243,242,238,.6); }
-  .ievent-name { font-weight: var(--tw); font-size: clamp(44px, 5vw, 88px); line-height: .9; letter-spacing: var(--tls); }
+  .ievent-nav { display: inline-flex; align-items: center; gap: 6px; flex: none; }
+  .ievent-btn {
+    width: 32px; height: 32px; border-radius: 999px;
+    border: 1px solid rgba(243,242,238,.28); color: var(--bg);
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background .2s, border-color .2s;
+  }
+  .ievent-btn:hover { background: var(--accent); border-color: var(--accent); }
+  .ievent-btn .ico { width: 14px; height: 14px; }
+  .ievent-btn.prev .ico { transform: rotate(180deg); }
+  .ievent-slides { display: grid; flex: 1; }
+  .ievent-slide {
+    grid-area: 1 / 1; display: flex; flex-direction: column; gap: 14px;
+    text-decoration: none; color: inherit;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transform: translateX(12px);
+    transition: opacity .3s ease, transform .3s ease, visibility .3s;
+  }
+  .ievent-slide.active { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
+  .ievent-name { font-weight: var(--tw); font-size: clamp(44px, 5vw, 88px); line-height: .9; letter-spacing: var(--tls); transition: color .2s; }
+  .ievent-slide:hover .ievent-name { color: var(--accent); }
   .ievent-text { max-width: 22em; font-size: 16px; line-height: 1.4; color: rgba(243,242,238,.8); }
-  .ievent-more { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 24px; }
+  .ievent-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(243,242,238,.16); }
+  .ievent-more { display: inline-flex; align-items: center; gap: 8px; transition: color .2s; }
+  .ievent-more:hover { color: var(--accent); }
+  .ievent-dots { display: inline-flex; gap: 6px; }
+  .ievent-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(243,242,238,.28); transition: background .2s, transform .2s; }
+  .ievent-dot[aria-selected="true"] { background: var(--accent); transform: scale(1.2); }
   @media (max-width: 960px) {
     .letters { grid-column: 1 / 13; }
     .ievent { grid-column: 1 / 13; margin-top: 40px; }
@@ -938,7 +967,7 @@
 <main>
   <section class="hb" aria-labelledby="hero-title">
     <div class="hb-left">
-      <span class="mono"><span class="cm">//</span> с 2013 · золотой партнёр 1С-Битрикс</span>
+      <span class="mono"><span class="cm">//</span> с 2013 · сертифицированный партнёр 1С-Битрикс</span>
       <h1 class="hb-title" id="hero-title">Разработка сайтов на&nbsp;1С&#8209;Битрикс</h1>
       <p class="hb-lead">Создаём корпоративные сайты и интернет-магазины, дорабатываем существующие проекты, интегрируем их с 1С и CRM. Подбираем готовое решение или разрабатываем индивидуально.</p>
       <div class="hb-actions">
@@ -956,14 +985,14 @@
       <a class="hb-row" href="../services/integrations-1c/"><span class="num mono">03</span><span class="name">Интеграция с 1С<span class="desc">Номенклатура, цены, остатки, заказы</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
       <a class="hb-row" href="../services/support/"><span class="num mono">04</span><span class="name">Поддержка сайтов<span class="desc">Обновления, ошибки, доработки</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
       <a class="hb-row" href="../bitrix24/"><span class="num mono">05</span><span class="name">Битрикс24<span class="desc">CRM, воронки, автоматизация</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
-      <a class="hb-row" href="../services/messenger-bots/"><span class="num mono">06</span><span class="name">Чат-боты и мессенджеры<span class="desc">Telegram и MAX для сайта и CRM</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="hb-row" href="../licenses/bitrix-renewal/"><span class="num mono">06</span><span class="name">Продление лицензии Битрикс<span class="desc">Проверка редакции, продление обновлений</span></span><span class="arr"><svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
     </nav>
   </section>
 
   <section class="works" id="works" aria-labelledby="works-title">
     <div class="works-head">
       <span class="works-label mono"><span class="cm">//</span> 02 · портфолио</span>
-      <h2 class="works-title" id="works-title">Работы<sup>130+</sup></h2>
+      <h2 class="works-title" id="works-title"><a href="../portfolio/">Работы<sup>130+</sup></a></h2>
       <p class="works-lead">Больше 130 сайтов с 2013 года: интернет-магазины брендов и дилеров, каталоги, корпоративные сайты. Всё — на 1С-Битрикс.</p>
     </div>
     <div class="wlist">
@@ -988,28 +1017,40 @@
     <!-- 6 этапов по ТЗ: действие студии + результат для заказчика; без неподтверждённых гарантий -->
     <ol class="notes">
       <li class="note" data-n="1">
-        <span class="num mono">01</span><h3>Задача</h3>
-        <div class="note-body"><p>Вы рассказываете, что нужно, хоть обычными словами. Мы задаём вопросы, предлагаем решение и оценку.</p><span class="tags mono"><b>→</b> договор и ТЗ</span></div>
+        <a class="note-link" href="../process/#step-1">
+          <span class="num mono">01</span><h3>Задача</h3>
+          <div class="note-body"><p>Вы рассказываете, что нужно, хоть обычными словами. Мы задаём вопросы, предлагаем решение и оценку.</p><span class="tags mono"><b>→</b> договор и ТЗ</span></div>
+        </a>
       </li>
       <li class="note" data-n="2">
-        <span class="num mono">02</span><h3>Проектирование</h3>
-        <div class="note-body"><p>Продумываем структуру и сценарии и собираем рабочий прототип, а не набор картинок.</p><span class="tags mono"><b>→</b> прототип</span></div>
+        <a class="note-link" href="../process/#step-2">
+          <span class="num mono">02</span><h3>Проектирование</h3>
+          <div class="note-body"><p>Продумываем структуру и сценарии и собираем рабочий прототип, а не набор картинок.</p><span class="tags mono"><b>→</b> прототип</span></div>
+        </a>
       </li>
       <li class="note" data-n="3">
-        <span class="num mono">03</span><h3>Дизайн</h3>
-        <div class="note-body"><p>Оформляем согласованный прототип: типовые страницы, состояния и мобильные версии.</p><span class="tags mono"><b>→</b> утверждённые макеты</span></div>
+        <a class="note-link" href="../process/#step-3">
+          <span class="num mono">03</span><h3>Дизайн</h3>
+          <div class="note-body"><p>Оформляем согласованный прототип: типовые страницы, состояния и мобильные версии.</p><span class="tags mono"><b>→</b> утверждённые макеты</span></div>
+        </a>
       </li>
       <li class="note" data-n="4">
-        <span class="num mono">04</span><h3>Разработка</h3>
-        <div class="note-body"><p>Разрабатываем сайт на 1С-Битрикс, подключаем обмен с 1С и CRM, наполняем материалами.</p><span class="tags mono"><b>→</b> сайт на тестовом сервере</span></div>
+        <a class="note-link" href="../process/#step-4">
+          <span class="num mono">04</span><h3>Разработка</h3>
+          <div class="note-body"><p>Разрабатываем сайт на 1С-Битрикс, подключаем обмен с 1С и CRM, наполняем материалами.</p><span class="tags mono"><b>→</b> сайт на тестовом сервере</span></div>
+        </a>
       </li>
       <li class="note" data-n="5">
-        <span class="num mono">05</span><h3>Тестирование и запуск</h3>
-        <div class="note-body"><p>Проверяем сайт на устройствах и в браузерах, переносим на хостинг, помогаем с доменом.</p><span class="tags mono"><b>→</b> сайт открыт посетителям</span></div>
+        <a class="note-link" href="../process/#step-5">
+          <span class="num mono">05</span><h3>Тестирование и запуск</h3>
+          <div class="note-body"><p>Проверяем сайт на устройствах и в браузерах, переносим на хостинг, помогаем с доменом.</p><span class="tags mono"><b>→</b> сайт открыт посетителям</span></div>
+        </a>
       </li>
       <li class="note" data-n="6">
-        <span class="num mono">06</span><h3>Сопровождение</h3>
-        <div class="note-body"><p>По отдельной договорённости обновляем платформу, исправляем ошибки и развиваем сайт.</p><span class="tags mono"><b>→</b> сайт продолжает работать</span></div>
+        <a class="note-link" href="../process/#step-6">
+          <span class="num mono">06</span><h3>Сопровождение</h3>
+          <div class="note-body"><p>По отдельной договорённости обновляем платформу, исправляем ошибки и развиваем сайт.</p><span class="tags mono"><b>→</b> сайт продолжает работать</span></div>
+        </a>
       </li>
     </ol>
   </section>
@@ -1078,15 +1119,15 @@
       <p>Делаем сайты на 1С-Битрикс с 2013 года. <span class="dim">Знаем платформу изнутри и берёмся за проекты, где сайт связан с 1С, складом и CRM</span></p>
     </div>
     <div class="facts">
-      <!-- факты по ТЗ: с 2013 года · 130+ сайтов · золотой партнёр 1С-Битрикс. Перед публикацией проверить числа и статус -->
+      <!-- факты по ТЗ: с 2013 года · 130+ сайтов · сертифицированный партнёр 1С-Битрикс. Перед публикацией проверить числа и статус -->
       <div class="fact"><span class="fact-num mono">01</span><span class="fact-val">2013</span><span class="fact-cap mono">год основания студии</span></div>
       <div class="fact"><span class="fact-num mono">02</span><span class="fact-val">130+</span><span class="fact-cap mono">созданных сайтов</span></div>
       <!-- ЗАГЛУШКА: ссылку на официальный профиль партнёра на 1c-bitrix.ru/partners/ даст студия -->
-      <a class="fact fact-link" href="https://www.1c-bitrix.ru/partners/" target="_blank" rel="noopener"><span class="fact-num mono">03</span><span class="fact-val">Gold</span><span class="fact-cap mono">золотой партнёр 1С-Битрикс <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+      <a class="fact fact-link" href="https://www.1c-bitrix.ru/partners/" target="_blank" rel="noopener"><span class="fact-num mono">03</span><span class="fact-val">Sert</span><span class="fact-cap mono">сертифицированный партнёр 1С-Битрикс <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
     </div>
   </section>
 
-  <!-- ТЗ: благодарственные письма + анонс I-Event с переходом в /solutions/ -->
+  <!-- ТЗ: благодарственные письма + карусель готовых решений студии с переходом в /solutions/ -->
   <section class="sec" id="trust" aria-labelledby="trust-title">
     <span class="sec-label mono"><span class="cm">//</span> 06 · отзывы и решения</span>
     <h2 class="visually-hidden" id="trust-title">Благодарственные письма и готовые решения</h2>
@@ -1103,12 +1144,33 @@
         </ul>
         <a class="link-arrow" href="../letters/">Все письма</a>
       </div>
-      <a class="ievent" href="../solutions/">
-        <span class="mono ievent-tag">готовое решение студии</span>
-        <span class="ievent-name">I-Event</span>
-        <span class="ievent-text">Сайт мероприятия, конференции или форума на 1С-Битрикс. Можно посмотреть демоверсию и обсудить адаптацию.</span>
-        <span class="ievent-more mono">Готовые решения <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
-      </a>
+      <div class="ievent" data-carousel aria-roledescription="carousel" aria-label="Готовые решения студии">
+        <div class="ievent-head">
+          <span class="mono ievent-tag">готовые решения · <span data-counter>01 / 02</span></span>
+          <div class="ievent-nav">
+            <button class="ievent-btn prev" type="button" data-prev aria-label="Предыдущее решение"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <button class="ievent-btn next" type="button" data-next aria-label="Следующее решение"><svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
+        </div>
+        <div class="ievent-slides">
+          <a class="ievent-slide active" href="../solutions/#i-event">
+            <span class="ievent-name">I-Event</span>
+            <span class="ievent-text">Сайт мероприятия, конференции или форума на 1С-Битрикс. Можно посмотреть демоверсию и обсудить адаптацию.</span>
+          </a>
+          <!-- ЗАГЛУШКА: второе и последующие готовые решения студии (название и описание даст студия) -->
+          <a class="ievent-slide" href="../solutions/">
+            <span class="ievent-name">Решение 02</span>
+            <span class="ievent-text">Готовое решение студии на 1С-Битрикс. Можно посмотреть демоверсию, возможности в Маркетплейсе и обсудить адаптацию.</span>
+          </a>
+        </div>
+        <div class="ievent-foot">
+          <a class="ievent-more mono" href="../solutions/">Все готовые решения <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <div class="ievent-dots" role="tablist" aria-label="Выбор решения">
+            <button class="ievent-dot" type="button" role="tab" aria-selected="true" aria-label="Решение 1"></button>
+            <button class="ievent-dot" type="button" role="tab" aria-selected="false" aria-label="Решение 2"></button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -1316,6 +1378,29 @@
       row.addEventListener('mouseleave', () => { wprev.classList.remove('on'); if (!raf) raf = requestAnimationFrame(loop); });
     });
   }
+
+  // Карусель готовых решений
+  document.querySelectorAll('[data-carousel]').forEach(car => {
+    const slides = [...car.querySelectorAll('.ievent-slide')];
+    const dots = [...car.querySelectorAll('.ievent-dot')];
+    const counter = car.querySelector('[data-counter]');
+    const pad = n => String(n).padStart(2, '0');
+    let idx = 0, touchX = 0;
+    function show(n) {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+      dots.forEach((d, i) => d.setAttribute('aria-selected', String(i === idx)));
+      if (counter) counter.textContent = `${pad(idx + 1)} / ${pad(slides.length)}`;
+    }
+    car.querySelector('[data-prev]')?.addEventListener('click', () => show(idx - 1));
+    car.querySelector('[data-next]')?.addEventListener('click', () => show(idx + 1));
+    dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
+    car.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+    car.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1));
+    }, { passive: true });
+  });
 
   // Мобильное меню
   const menuBtn = document.getElementById('menu-toggle');
