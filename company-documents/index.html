@@ -289,23 +289,24 @@
   }
   .rule-links a:hover { color: var(--accent); border-color: var(--accent); }
 
-  .svc-button-light { margin-top: 32px; background: var(--bg); border-color: var(--bg); color: var(--ink); }
+  .rules-foot { display: flex; justify-content: center; margin-top: clamp(32px, 4vw, 48px); }
+  .svc-button-light { background: var(--bg); border-color: var(--bg); color: var(--ink); }
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   .svc-related {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
-    margin-top: clamp(36px, 4vw, 56px);
-    padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: clamp(28px, 3.5vw, 40px);
     border-top: 1px solid rgba(243,242,238,.18);
   }
   .svc-related a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: #c6c4bd;
-    border-bottom: 1px solid rgba(243,242,238,.3);
-    padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    font-size: 15px; color: var(--bg);
+    border: 1px solid rgba(243,242,238,.35); border-radius: 100px;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-related a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
 
   /* ---------- 04 Финал: форма запроса и подвал ---------- */
   .final { --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55); background: var(--ink); color: var(--bg); overflow: hidden; }
@@ -407,6 +408,9 @@
     .svc-hero h1 { font-size: clamp(38px, 11vw, 68px); }
     .svc-hero h1 br { display: none; }
     .svc-hero-bottom { grid-template-columns: 1fr; }
+    .svc-related { flex-direction: column; gap: 0; padding-top: 0; margin-top: 28px; }
+    .svc-related a { width: 100%; justify-content: space-between; min-height: 52px; padding: 0; border: 0; border-bottom: 1px solid rgba(243,242,238,.18); border-radius: 0; }
+    .svc-related a:hover { background: none; color: var(--accent); border-color: var(--accent); }
     .contact { padding-top: 56px; }
     .big-mail { font-size: 9.4vw; }
     .form-grid { grid-template-columns: 1fr; }
@@ -539,7 +543,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Документы и реквизиты</div>
-    <h1 id="svc-title">Документы<br><span>и реквизиты</span></h1>
+    <h1 id="svc-title">Документы <br><span>и&nbsp;реквизиты</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Информация для проверки подрядчика и подготовки закупочной документации.</p>
       <div class="svc-hero-action">
@@ -586,10 +590,10 @@
         <dt class="mono">Телефон и почта</dt>
         <dd><a href="tel:+79262901420">+7 (926) 290-14-20</a> · <a href="mailto:ask@designcodes.ru">ask@designcodes.ru</a></dd>
       </div>
-      <!-- СЛОТ ПОД КПП И БАНКОВСКИЕ РЕКВИЗИТЫ ИЗ АКТУАЛЬНОЙ КАРТОЧКИ ПРЕДПРИЯТИЯ -->
+      <!-- КОНТЕНТ: подставить банковские реквизиты из актуальной карточки предприятия -->
       <div class="req-row">
         <dt class="mono">Банковские реквизиты</dt>
-        <dd class="req-slot">Заполняется из актуальной карточки предприятия (р/с, банк, БИК, к/с)</dd>
+        <dd class="req-slot">Предоставляются в карточке предприятия по запросу (р/с, банк, БИК, к/с)</dd>
       </div>
     </dl>
 
@@ -605,7 +609,7 @@
   <section class="svc-price" aria-labelledby="proc-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 03 · Проверка подрядчика</span>
-      <h2 id="proc-title">Компетенции<br><span class="dim">и закупочные документы</span></h2>
+      <h2 id="proc-title">Компетенции<br><span class="dim">и&nbsp;закупочные документы</span></h2>
       <p class="svc-section-lead">Открытые подтверждения опыта размещены на сайте, закрытый пакет документов направляем по запросу.</p>
     </div>
 
@@ -614,7 +618,7 @@
         <div>
           <span class="mono">01 / Партнёрский статус и опыт</span>
           <h3>Проверяемые компетенции</h3>
-          <p>ООО «ДИЗАЙНКОД» работает с 2013 года, имеет статус золотого партнёра 1С-Битрикс, более 130 созданных сайтов и оригиналы благодарственных писем от заказчиков.</p>
+          <p>ООО «ДИЗАЙНКОД» работает с 2013 года, имеет статус сертифицированного партнёра 1С-Битрикс, более 130 созданных сайтов и оригиналы благодарственных писем от заказчиков.</p>
         </div>
         <div class="rule-links">
           <a href="../about/">О студии и статусе партнёра <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -635,7 +639,9 @@
       </div>
     </div>
 
-    <a class="svc-button svc-button-light" href="#form" data-discuss="Запрос документов для закупки">Запросить документы для закупки <svg class="ico ico-down" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="rules-foot">
+      <a class="svc-button svc-button-light" href="#form" data-discuss="Запрос документов для закупки">Запросить документы для закупки <svg class="ico ico-down" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
 
     <div class="svc-related">
       <a href="../about/">О студии <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
