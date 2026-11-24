@@ -319,19 +319,19 @@
   .svc-button-ghost:hover { background: var(--bg); border-color: var(--bg); color: var(--ink); }
 
   .svc-related {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
-    margin-top: clamp(36px, 4vw, 56px);
-    padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: clamp(28px, 3.5vw, 40px);
     border-top: 1px solid rgba(243,242,238,.18);
   }
   .svc-related a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: #c6c4bd;
-    border-bottom: 1px solid rgba(243,242,238,.3);
-    padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    font-size: 15px; color: var(--bg);
+    border: 1px solid rgba(243,242,238,.35); border-radius: 100px;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-related a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
 
   /* ---------- 04 Порядок работ: 6 колонок как на главной ---------- */
   .notes {
@@ -500,6 +500,9 @@
       border-bottom: 1px solid var(--line);
     }
     .cap-card:last-child { border-bottom: 0; }
+    .svc-related { flex-direction: column; gap: 0; padding-top: 0; margin-top: 28px; }
+    .svc-related a { width: 100%; justify-content: space-between; min-height: 52px; padding: 0; border: 0; border-bottom: 1px solid rgba(243,242,238,.18); border-radius: 0; }
+    .svc-related a:hover { background: none; color: var(--accent); border-color: var(--accent); }
     .contact { padding-top: 56px; }
     .big-mail { font-size: 9.4vw; }
     .form-grid { grid-template-columns: 1fr; }
@@ -633,7 +636,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Поддержка сайтов</div>
-    <h1 id="svc-title">Поддержка сайтов<br><span>на 1С-Битрикс</span></h1>
+    <h1 id="svc-title">Поддержка сайтов <br><span>на&nbsp;1С&#8209;Битрикс</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Поддерживаем и развиваем сайты на 1С-Битрикс, включая проекты других подрядчиков: исправляем ошибки, обновляем платформу, PHP и серверное окружение, дорабатываем функциональность.</p>
       <div class="svc-hero-action">
@@ -682,7 +685,7 @@
   <section class="svc-price" aria-labelledby="formats-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 03 · Форматы и стоимость</span>
-      <h2 id="formats-title">Индивидуальный объём<br><span class="dim">без лишних пакетов</span></h2>
+      <h2 id="formats-title">Индивидуальный объём<br><span class="dim">без&nbsp;лишних пакетов</span></h2>
     </div>
     <div class="formats-grid">
       <article class="format-col">
@@ -706,7 +709,6 @@
       </div>
     </div>
     <div class="svc-related">
-      <a href="../../prices/">Почасовые ставки <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <a href="../../services/integrations-1c/">Интеграция с 1С <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <a href="../../process/">Как мы работаем <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
@@ -716,7 +718,7 @@
   <section class="svc-section" aria-labelledby="steps-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 04 · Порядок работ</span>
-      <h2 id="steps-title">Как проходит<br><span class="dim">работа над задачей</span></h2>
+      <h2 id="steps-title">Как проходит<br><span class="dim">работа над&nbsp;задачей</span></h2>
       <p class="svc-section-lead">Понятная последовательность действий: сначала разбираемся в состоянии проекта и согласуем смету, затем вносим правки.</p>
     </div>
     <ol class="notes">
