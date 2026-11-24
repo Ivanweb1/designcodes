@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>О компании «Дизайн+Код» — разработка на 1С-Битрикс</title>
-<meta name="description" content="Студия «Дизайн+Код» с 2013 года: более 130 сайтов, золотой партнёр 1С-Битрикс, опыт проектов, сертификаты и отзывы клиентов.">
+<meta name="description" content="Студия «Дизайн+Код» с 2013 года: более 130 сайтов, сертифицированный партнёр 1С-Битрикс, опыт проектов, сертификаты и отзывы клиентов.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
@@ -435,7 +435,34 @@
   }
   .svc-related-light a:hover { color: var(--accent); border-color: var(--accent); }
 
-  /* ---------- 07 Финал: контакты, форма и подвал ---------- */
+  /* ---------- 07 Команда: приглашаем специалистов ---------- */
+  .careers-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+  .careers-card {
+    padding: clamp(24px, 3vw, 38px) clamp(18px, 2.6vw, 36px) clamp(28px, 3.2vw, 42px) 0;
+    border-right: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .careers-card:not(:first-child) { padding-left: clamp(18px, 2.6vw, 36px); }
+  .careers-card:last-child { border-right: 0; padding-right: 0; }
+  .careers-card .mono { color: var(--accent); }
+  .careers-card h3 {
+    margin: 0;
+    font-size: clamp(24px, 2.2vw, 34px);
+    font-weight: 400; letter-spacing: -0.03em; line-height: 1.08;
+  }
+  .careers-card p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--muted); }
+  .careers-cta {
+    margin-top: clamp(28px, 3.5vw, 44px);
+    display: flex; justify-content: space-between; align-items: center; gap: 20px 32px; flex-wrap: wrap;
+  }
+  .careers-cta p { margin: 0; max-width: 42em; font-size: 17px; line-height: 1.5; color: var(--muted); }
+  .careers-actions { display: flex; align-items: center; gap: 16px 24px; flex-wrap: wrap; }
+
+  /* ---------- 08 Финал: контакты, форма и подвал ---------- */
   .final { --cline: rgba(243,242,238,.18); --cdim: rgba(243,242,238,.55); background: var(--ink); color: var(--bg); overflow: hidden; }
   .final .cm { color: var(--accent); }
   .contact { padding: clamp(64px, 9vw, 128px) var(--gutter) 0; scroll-margin-top: var(--header-h); border-top: 1px solid var(--cline); }
@@ -540,6 +567,11 @@
       border-left: 0; padding: 24px 0 28px; border-bottom: 1px solid var(--line);
     }
     .proof-col:last-child { border-bottom: 0; }
+    .careers-grid { grid-template-columns: 1fr; }
+    .careers-card, .careers-card:not(:first-child) {
+      border-right: 0; padding: 24px 0 28px; border-bottom: 1px solid var(--line);
+    }
+    .careers-card:last-child { border-bottom: 0; }
     .big-mail { grid-column: 1 / 13; }
     .contact-head .side { grid-column: 1 / 13; justify-self: start; text-align: left; margin-top: 24px; }
     .form-intro { grid-column: 1 / 13; padding-right: 0; }
@@ -723,8 +755,8 @@
       <div class="fact-card">
         <span class="mono cm">03 / Статус</span>
         <div>
-          <div class="fact-num">Золотой</div>
-          <p>Официальный золотой партнёр 1С-Битрикс с ежегодной сертификацией разработчиков.</p>
+          <div class="fact-num">Sert</div>
+          <p>Официальный сертифицированный партнёр 1С-Битрикс с ежегодной сертификацией разработчиков.</p>
         </div>
       </div>
       <div class="fact-card">
@@ -738,7 +770,7 @@
 
     <!-- Слот под проверенную ссылку на официальный профиль партнёра 1С-Битрикс -->
     <div class="partner-slot">
-      <p><strong>Официальный профиль партнёра 1С-Битрикс.</strong> Статус золотого партнёра и действующие компетенции можно проверить в реестре 1С-Битрикс.</p>
+      <p><strong>Официальный профиль партнёра 1С-Битрикс.</strong> Статус сертифицированного партнёра и действующие компетенции можно проверить в реестре 1С-Битрикс.</p>
       <span class="slot-tag mono">Слот под ссылку на профиль партнёра 1С-Битрикс</span>
     </div>
   </section>
@@ -890,13 +922,49 @@
       <a href="../process/">Как мы работаем <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
+
+  <!-- 07 · Команда: приглашаем специалистов -->
+  <section class="svc-section" id="careers" aria-labelledby="careers-title">
+    <div class="svc-section-head">
+      <span class="mono"><span class="cm">//</span> 07 · Команда</span>
+      <h2 id="careers-title">Приглашаем<br><span class="dim">специалистов</span></h2>
+      <p class="svc-section-lead">Растём вместе с проектами на 1С-Битрикс и Битрикс24. Будем рады познакомиться со специалистами, которым близок аккуратный инженерный подход.</p>
+    </div>
+
+    <!-- УТОЧНИТЬ СО СТУДИЕЙ: актуальные направления и формат сотрудничества -->
+    <div class="careers-grid">
+      <div class="careers-card">
+        <span class="mono">01 / Разработка</span>
+        <h3>Разработчики 1С-Битрикс</h3>
+        <p>Создание и развитие интернет-магазинов, корпоративных сайтов, обменов с 1С и нестандартных модулей.</p>
+      </div>
+      <div class="careers-card">
+        <span class="mono">02 / CRM и автоматизация</span>
+        <h3>Специалисты по Битрикс24</h3>
+        <p>Настройка CRM, воронок продаж, бизнес-процессов, роботов и интеграций портала с сайтом и внешними сервисами.</p>
+      </div>
+      <div class="careers-card">
+        <span class="mono">03 / Проекты и поддержка</span>
+        <h3>Аналитики и менеджеры</h3>
+        <p>Сбор требований, проектирование структуры, постановка задач команде и сопровождение действующих проектов.</p>
+      </div>
+    </div>
+
+    <div class="careers-cta">
+      <p>Даже если вашей роли нет в списке — расскажите о своём опыте и пришлите резюме или ссылки на проекты. Обсудим штатный или проектный формат работы.</p>
+      <div class="careers-actions">
+        <a class="svc-button" href="mailto:ask@designcodes.ru?subject=%D0%A1%D0%BE%D1%82%D1%80%D1%83%D0%B4%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE%20%D1%81%20%D0%94%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%2B%D0%9A%D0%BE%D0%B4">Откликнуться по почте <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="proof-link" href="https://t.me/klimova_oxana" target="_blank" rel="noopener">Написать в Telegram <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </section>
 </main>
 
-<!-- 07 · Контакты, форма и подвал -->
+<!-- 08 · Контакты, форма и подвал -->
 <div class="final">
   <section class="contact" id="form" aria-labelledby="form-title">
     <div class="contact-head">
-      <span class="sec-label mono"><span class="cm">//</span> 07 · обсудим проект</span>
+      <span class="sec-label mono"><span class="cm">//</span> 08 · обсудим проект</span>
       <a class="big-mail" href="mailto:ask@designcodes.ru">ask@designcodes.ru <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <div class="side">
         <a href="tel:+79262901420">+7 (926) 290-14-20</a>
