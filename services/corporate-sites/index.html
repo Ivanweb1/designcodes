@@ -307,19 +307,22 @@
   .extra-strip span { color: var(--muted); }
 
   .cap-cta {
-    display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; align-items: center;
-    padding-top: clamp(32px, 4vw, 48px);
+    margin-top: clamp(32px, 4vw, 48px);
+    padding: clamp(24px, 3vw, 38px) clamp(20px, 3vw, 40px);
+    border: 1px solid var(--line);
+    display: flex; justify-content: space-between; align-items: center; gap: 24px 40px; flex-wrap: wrap;
   }
+  .cap-cta-copy { flex: 1 1 380px; min-width: 0; }
   .cap-cta-text {
-    grid-column: 1 / 8; margin: 0;
-    font-size: clamp(24px, 2.6vw, 42px); line-height: 1.12; letter-spacing: -0.035em;
+    margin: 0; max-width: 28em;
+    font-size: clamp(22px, 2.2vw, 32px); line-height: 1.18; letter-spacing: -0.03em;
   }
   .cap-cta-text span { color: var(--muted); }
-  .cap-cta-action { grid-column: 8 / 13; justify-self: end; }
   .cap-disclaimer {
-    margin: 26px 0 0; max-width: 58em;
+    margin: 12px 0 0; max-width: 46em;
     font-size: 14px; line-height: 1.45; color: var(--muted);
   }
+  .cap-cta-action { flex: none; }
 
   /* ---------- 04 Стоимость (тёмный блок) ---------- */
   .svc-price {
@@ -352,19 +355,19 @@
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   .svc-related {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
-    margin-top: clamp(40px, 5vw, 64px);
-    padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: clamp(28px, 3.5vw, 40px);
     border-top: 1px solid rgba(243,242,238,.18);
   }
   .svc-related a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: #c6c4bd;
-    border-bottom: 1px solid rgba(243,242,238,.3);
-    padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    font-size: 15px; color: var(--bg);
+    border: 1px solid rgba(243,242,238,.35); border-radius: 100px;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-related a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
 
   /* ---------- 05 Частые вопросы ---------- */
   .svc-faq-list { border-top: 1px solid var(--ink); }
@@ -483,7 +486,7 @@
     .footer-col { grid-column: span 6; margin-bottom: 28px; }
   }
   @media (max-width: 680px) {
-    .svc-hero h1 { font-size: clamp(38px, 11vw, 68px); }
+    .svc-hero h1 { font-size: clamp(32px, 9.4vw, 60px); }
     .svc-hero h1 br { display: none; }
     .svc-hero-bottom, .base-grid, .cap-grid { grid-template-columns: 1fr; }
     .base-item, .base-item:nth-child(even),
@@ -495,6 +498,9 @@
     }
     .base-item:last-child, .cap-card:last-child { border-bottom: 0; }
     .svc-price-number { white-space: normal; }
+    .svc-related { flex-direction: column; gap: 0; padding-top: 0; margin-top: 28px; }
+    .svc-related a { width: 100%; justify-content: space-between; min-height: 52px; padding: 0; border: 0; border-bottom: 1px solid rgba(243,242,238,.18); border-radius: 0; }
+    .svc-related a:hover { background: none; color: var(--accent); border-color: var(--accent); }
     .contact { padding-top: 56px; }
     .big-mail { font-size: 9.4vw; }
     .form-grid { grid-template-columns: 1fr; }
@@ -627,7 +633,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Корпоративные сайты</div>
-    <h1 id="svc-title">Разработка корпоративных сайтов<br><span>на 1С-Битрикс</span></h1>
+    <h1 id="svc-title">Разработка корпоративных сайтов <br><span>на&nbsp;1С&#8209;Битрикс</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Разрабатываем корпоративные сайты на 1С-Битрикс: от представительства компании до B2B-каталогов и сервисов для клиентов и партнёров. Помогаем представить сложный продукт и получать предметные заявки.</p>
       <div class="svc-hero-action">
@@ -641,7 +647,7 @@
   <section class="svc-section" aria-labelledby="base-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 02 · Основа корпоративного сайта</span>
-      <h2 id="base-title">Понятная структура<br><span class="dim">под задачи бизнеса</span></h2>
+      <h2 id="base-title">Понятная структура<br><span class="dim">под&nbsp;задачи бизнеса</span></h2>
       <p class="svc-section-lead">Собираем базу, которая помогает клиенту быстро понять ваши компетенции, изучить продукцию и оставить предметное обращение.</p>
     </div>
     <div class="base-grid">
@@ -682,7 +688,7 @@
   <section class="svc-section" aria-labelledby="cap-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 03 · Функциональность под бизнес-процессы</span>
-      <h2 id="cap-title">Когда нужен инструмент,<br><span class="dim">а не просто визитка</span></h2>
+      <h2 id="cap-title">Когда нужен инструмент,<br><span class="dim">а&nbsp;не&nbsp;просто визитка</span></h2>
       <p class="svc-section-lead">Если типового корпоративного сайта недостаточно, проектируем каталоги, расчёты, кабинеты и интеграции под ваши процессы.</p>
     </div>
     <div class="cap-grid">
@@ -726,19 +732,21 @@
     </div>
 
     <div class="cap-cta">
-      <p class="cap-cta-text">Нужен B2B-каталог, калькулятор или кабинет? <span>Оценим сценарий и подберём оптимальную архитектуру.</span></p>
+      <div class="cap-cta-copy">
+        <p class="cap-cta-text">Нужен B2B-каталог, калькулятор или&nbsp;кабинет? <span>Оценим сценарий и&nbsp;подберём оптимальную архитектуру.</span></p>
+        <p class="cap-disclaimer">Перечень описывает возможные сценарии реализации, а не утверждение о выполненных кейсах. Сложный портал и индивидуальные интеграции требуют отдельной технической оценки.</p>
+      </div>
       <div class="cap-cta-action">
         <a class="svc-button svc-button-outline" href="#form" data-discuss="Обсудить корпоративный сайт с нестандартной функциональностью">Обсудить корпоративный сайт <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </div>
     </div>
-    <p class="cap-disclaimer">Перечень описывает возможные сценарии реализации, а не утверждение о выполненных кейсах. Сложный портал и индивидуальные интеграции требуют отдельной технической оценки.</p>
   </section>
 
   <!-- 04 · Стоимость -->
   <section class="svc-price" aria-labelledby="price-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 04 · Стоимость</span>
-      <h2 id="price-title">Понятный старт<br><span class="dim">и оценка под задачу</span></h2>
+      <h2 id="price-title">Понятный старт<br><span class="dim">и&nbsp;оценка под&nbsp;задачу</span></h2>
     </div>
     <div class="svc-price-grid">
       <div>
