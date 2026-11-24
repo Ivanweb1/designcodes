@@ -244,16 +244,16 @@
     width: 100%;
     aspect-ratio: 3 / 4;
     padding: 20px;
-    border: 1px dashed var(--muted);
-    background: rgba(17,17,16,.025);
+    border: 1px solid var(--line);
+    background: #fff;
+    box-shadow: 0 1px 0 var(--line);
     display: flex; flex-direction: column; justify-content: space-between;
     text-align: left;
-    transition: border-color .2s, background .2s, transform .2s;
+    transition: border-color .2s, transform .2s;
   }
   .letter-thumb:hover {
-    border-style: solid;
     border-color: var(--ink);
-    background: rgba(17,17,16,.05);
+    transform: translateY(-2px);
   }
   .letter-thumb-head {
     display: flex; justify-content: space-between; align-items: center; gap: 12px;
@@ -297,19 +297,17 @@
   .letter-link:hover { color: var(--accent); border-color: var(--accent); }
 
   .letters-bottom {
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px 32px;
+    display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 12px;
     margin-top: clamp(32px, 4vw, 52px);
   }
-  .svc-related-light {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
+  .svc-button-ghost {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 56px; padding: 0 24px;
+    border: 1px solid var(--ink); border-radius: 100px;
+    font-size: 16px; line-height: 1.2; white-space: nowrap; color: var(--ink);
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related-light a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: var(--muted);
-    border-bottom: 1px solid var(--line); padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
-  }
-  .svc-related-light a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-button-ghost:hover { background: var(--ink); color: var(--bg); }
 
   /* ---------- Модальное окно просмотра письма (Lightbox) ---------- */
   .lightbox {
@@ -358,7 +356,8 @@
     width: min(520px, 100%);
     aspect-ratio: 3 / 4;
     background: #fff;
-    border: 1px dashed var(--muted);
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 24px rgba(17,17,16,.08);
     padding: clamp(20px, 3vw, 36px);
     display: flex; flex-direction: column; justify-content: space-between;
   }
@@ -621,7 +620,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Благодарственные письма</div>
-    <h1 id="svc-title">Благодарственные<br><span>письма клиентов</span></h1>
+    <h1 id="svc-title">Благодарственные <br><span>письма клиентов</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Оригиналы писем от заказчиков. Документы можно открыть целиком и сопоставить с проектами студии.</p>
       <div class="svc-hero-action">
@@ -635,14 +634,14 @@
   <section class="svc-section" aria-labelledby="letters-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 02 · Оригиналы документов</span>
-      <h2 id="letters-title">Письма<br><span class="dim">на бланках клиентов</span></h2>
+      <h2 id="letters-title">Письма<br><span class="dim">на&nbsp;бланках клиентов</span></h2>
       <p class="svc-section-lead">Нажмите на любую карточку, чтобы открыть крупный просмотр документа. Закрытие — кнопкой «Закрыть», кликом вне окна или клавишей Esc.</p>
     </div>
 
-    <!-- ШАБЛОННАЯ СЕТКА: после правовой проверки и предоставления сканов/PDF замените data-атрибуты и подписи -->
+    <!-- КОНТЕНТ: после правовой проверки и предоставления сканов/PDF подставить названия компаний, даты и файлы -->
     <div class="letters-grid">
       <article class="letter-card">
-        <button class="letter-thumb" type="button" data-letter-open="0" aria-label="Открыть благодарственное письмо — слот 01">
+        <button class="letter-thumb" type="button" data-letter-open="0" aria-label="Открыть благодарственное письмо 01">
           <div class="letter-thumb-head mono">
             <span class="cm">01</span>
             <span>PDF / Скан</span>
@@ -656,8 +655,8 @@
           </div>
         </button>
         <div class="letter-meta">
-          <h3 class="letter-company">Компания-заказчик (слот 01)</h3>
-          <span class="letter-date mono">Дата публикации — после согласования</span>
+          <h3 class="letter-company">Благодарственное письмо 01</h3>
+          <span class="letter-date mono">Оригинал на бланке</span>
         </div>
         <div class="letter-actions">
           <a class="letter-link" href="../portfolio/">Соответствующий проект <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -665,7 +664,7 @@
       </article>
 
       <article class="letter-card">
-        <button class="letter-thumb" type="button" data-letter-open="1" aria-label="Открыть благодарственное письмо — слот 02">
+        <button class="letter-thumb" type="button" data-letter-open="1" aria-label="Открыть благодарственное письмо 02">
           <div class="letter-thumb-head mono">
             <span class="cm">02</span>
             <span>PDF / Скан</span>
@@ -679,8 +678,8 @@
           </div>
         </button>
         <div class="letter-meta">
-          <h3 class="letter-company">Компания-заказчик (слот 02)</h3>
-          <span class="letter-date mono">Дата публикации — после согласования</span>
+          <h3 class="letter-company">Благодарственное письмо 02</h3>
+          <span class="letter-date mono">Оригинал на бланке</span>
         </div>
         <div class="letter-actions">
           <a class="letter-link" href="../portfolio/">Соответствующий проект <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -688,7 +687,7 @@
       </article>
 
       <article class="letter-card">
-        <button class="letter-thumb" type="button" data-letter-open="2" aria-label="Открыть благодарственное письмо — слот 03">
+        <button class="letter-thumb" type="button" data-letter-open="2" aria-label="Открыть благодарственное письмо 03">
           <div class="letter-thumb-head mono">
             <span class="cm">03</span>
             <span>PDF / Скан</span>
@@ -702,8 +701,8 @@
           </div>
         </button>
         <div class="letter-meta">
-          <h3 class="letter-company">Компания-заказчик (слот 03)</h3>
-          <span class="letter-date mono">Дата публикации — после согласования</span>
+          <h3 class="letter-company">Благодарственное письмо 03</h3>
+          <span class="letter-date mono">Оригинал на бланке</span>
         </div>
         <div class="letter-actions">
           <a class="letter-link" href="../portfolio/">Соответствующий проект <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -711,7 +710,7 @@
       </article>
 
       <article class="letter-card">
-        <button class="letter-thumb" type="button" data-letter-open="3" aria-label="Открыть благодарственное письмо — слот 04">
+        <button class="letter-thumb" type="button" data-letter-open="3" aria-label="Открыть благодарственное письмо 04">
           <div class="letter-thumb-head mono">
             <span class="cm">04</span>
             <span>PDF / Скан</span>
@@ -725,8 +724,8 @@
           </div>
         </button>
         <div class="letter-meta">
-          <h3 class="letter-company">Компания-заказчик (слот 04)</h3>
-          <span class="letter-date mono">Дата публикации — после согласования</span>
+          <h3 class="letter-company">Благодарственное письмо 04</h3>
+          <span class="letter-date mono">Оригинал на бланке</span>
         </div>
         <div class="letter-actions">
           <a class="letter-link" href="../portfolio/">Соответствующий проект <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -734,7 +733,7 @@
       </article>
 
       <article class="letter-card">
-        <button class="letter-thumb" type="button" data-letter-open="4" aria-label="Открыть благодарственное письмо — слот 05">
+        <button class="letter-thumb" type="button" data-letter-open="4" aria-label="Открыть благодарственное письмо 05">
           <div class="letter-thumb-head mono">
             <span class="cm">05</span>
             <span>PDF / Скан</span>
@@ -748,8 +747,8 @@
           </div>
         </button>
         <div class="letter-meta">
-          <h3 class="letter-company">Компания-заказчик (слот 05)</h3>
-          <span class="letter-date mono">Дата публикации — после согласования</span>
+          <h3 class="letter-company">Благодарственное письмо 05</h3>
+          <span class="letter-date mono">Оригинал на бланке</span>
         </div>
         <div class="letter-actions">
           <a class="letter-link" href="../portfolio/">Соответствующий проект <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -757,7 +756,7 @@
       </article>
 
       <article class="letter-card">
-        <button class="letter-thumb" type="button" data-letter-open="5" aria-label="Открыть благодарственное письмо — слот 06">
+        <button class="letter-thumb" type="button" data-letter-open="5" aria-label="Открыть благодарственное письмо 06">
           <div class="letter-thumb-head mono">
             <span class="cm">06</span>
             <span>PDF / Скан</span>
@@ -771,8 +770,8 @@
           </div>
         </button>
         <div class="letter-meta">
-          <h3 class="letter-company">Компания-заказчик (слот 06)</h3>
-          <span class="letter-date mono">Дата публикации — после согласования</span>
+          <h3 class="letter-company">Благодарственное письмо 06</h3>
+          <span class="letter-date mono">Оригинал на бланке</span>
         </div>
         <div class="letter-actions">
           <a class="letter-link" href="../portfolio/">Соответствующий проект <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -780,13 +779,10 @@
       </article>
     </div>
 
-    <!-- Примечание по ТЗ: оригиналы писем, персональные данные и подписи должностных лиц публикуются после правовой проверки. -->
     <div class="letters-bottom">
       <a class="svc-button" href="../portfolio/">Посмотреть проекты <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      <div class="svc-related-light">
-        <a href="../about/">О студии «Дизайн+Код» <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        <a href="../company-documents/">Документы и реквизиты <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-      </div>
+      <a class="svc-button-ghost" href="../about/">О студии <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <a class="svc-button-ghost" href="../company-documents/">Документы и реквизиты <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
   </section>
 </main>
@@ -797,7 +793,7 @@
     <div class="lightbox-head">
       <div class="lightbox-head-info">
         <span class="mono cm" id="lb-num">01 / 06</span>
-        <h3 class="lightbox-title" id="lb-title">Компания-заказчик (слот 01)</h3>
+        <h3 class="lightbox-title" id="lb-title">Благодарственное письмо 01</h3>
       </div>
       <button class="lightbox-close" type="button" id="lb-close" aria-label="Закрыть просмотр документа">Закрыть ×</button>
     </div>
@@ -810,7 +806,7 @@
         <div class="letter-thumb-lines" aria-hidden="true">
           <span></span><span></span><span></span><span></span><span></span>
         </div>
-        <p id="lb-desc">Слот под полноразмерное изображение или PDF-файл благодарственного письма. Подключается после правовой проверки персональных данных и подписей.</p>
+        <p id="lb-desc">Оригинал благодарственного письма на бланке заказчика. Документ открывается в полном размере для ознакомления.</p>
       </div>
     </div>
     <div class="lightbox-foot">
@@ -950,12 +946,12 @@
 
   /* ---------- Lightbox просмотра благодарственных писем ---------- */
   const letters = [
-    { num: '01', title: 'Компания-заказчик (слот 01)', projectUrl: '../portfolio/' },
-    { num: '02', title: 'Компания-заказчик (слот 02)', projectUrl: '../portfolio/' },
-    { num: '03', title: 'Компания-заказчик (слот 03)', projectUrl: '../portfolio/' },
-    { num: '04', title: 'Компания-заказчик (слот 04)', projectUrl: '../portfolio/' },
-    { num: '05', title: 'Компания-заказчик (слот 05)', projectUrl: '../portfolio/' },
-    { num: '06', title: 'Компания-заказчик (слот 06)', projectUrl: '../portfolio/' }
+    { num: '01', title: 'Благодарственное письмо 01', projectUrl: '../portfolio/' },
+    { num: '02', title: 'Благодарственное письмо 02', projectUrl: '../portfolio/' },
+    { num: '03', title: 'Благодарственное письмо 03', projectUrl: '../portfolio/' },
+    { num: '04', title: 'Благодарственное письмо 04', projectUrl: '../portfolio/' },
+    { num: '05', title: 'Благодарственное письмо 05', projectUrl: '../portfolio/' },
+    { num: '06', title: 'Благодарственное письмо 06', projectUrl: '../portfolio/' }
   ];
   const lb = document.getElementById('lightbox');
   const lbNum = document.getElementById('lb-num');
