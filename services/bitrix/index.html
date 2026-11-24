@@ -311,17 +311,36 @@
   /* ---------- 04 Практика студии ---------- */
   .svc-practice-list { border-top: 1px solid var(--ink); }
   .svc-practice-list article {
-    display: grid; grid-template-columns: minmax(160px, .8fr) minmax(0, 1.4fr) minmax(0, 1.6fr);
-    gap: 24px; padding: 28px 0 34px;
+    display: grid; grid-template-columns: minmax(140px, .55fr) minmax(0, 1.2fr) minmax(0, 1.85fr);
+    gap: 24px 32px; padding: 32px 0 36px;
     border-bottom: 1px solid var(--line);
+    align-items: start;
   }
-  .svc-practice-list .mono { color: var(--accent); padding-top: 8px; }
+  .svc-practice-list > article > .mono { color: var(--accent); padding-top: 8px; }
   .svc-practice-list h3 {
-    margin: 0; max-width: 16em;
-    font-size: clamp(26px, 2.7vw, 44px);
+    margin: 0; max-width: 15em;
+    font-size: clamp(24px, 2.4vw, 40px);
     line-height: 1.08; font-weight: 400; letter-spacing: -.04em;
   }
-  .svc-practice-list p { margin: 4px 0 0; max-width: 36em; font-size: 17px; line-height: 1.5; }
+  .pr-body { display: flex; flex-direction: column; gap: 16px; }
+  .pr-flow {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    margin: 0; padding: 0; list-style: none;
+  }
+  .pr-step {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 13px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: rgba(17,17,16,.025);
+    font-size: 13px; line-height: 1.2; color: var(--ink);
+  }
+  .pr-step.is-out { border-color: var(--ink); background: var(--ink); color: var(--bg); }
+  .pr-arr { color: var(--accent); font-family: var(--mono); font-size: 13px; user-select: none; }
+  .pr-body p { margin: 0; max-width: 38em; font-size: 16px; line-height: 1.5; color: var(--muted); }
+  .pr-result {
+    margin: 0; padding-left: 14px; border-left: 2px solid var(--accent);
+    max-width: 38em; font-size: 16px; line-height: 1.45; color: var(--ink);
+  }
   .svc-practice-note {
     margin: 28px 0 0; max-width: 44em;
     font-size: 16px; line-height: 1.5; color: var(--muted);
@@ -748,17 +767,47 @@
       <article>
         <span class="mono">01 / Доставка</span>
         <h3>Доставка, у которой нашлось больше десяти мнений</h3>
-        <p>Для крупной мультибрендовой системы с сайтами на нескольких языках, страницами для торговых точек и сотрудников, связанными с Битрикс24, мы разработали собственный модуль доставки. Он собирал условия более десяти перевозчиков, учитывал их исключения и подбирал покупателю подходящую транспортную компанию со сроком доставки прямо при оформлении заказа. Потому что человеку нужна посылка, а не знакомство с регламентами перевозчиков.</p>
+        <div class="pr-body">
+          <ol class="pr-flow" aria-label="Схема работы модуля доставки">
+            <li class="pr-step">10+ перевозчиков</li>
+            <li class="pr-arr" aria-hidden="true">→</li>
+            <li class="pr-step">Свой модуль правил и исключений</li>
+            <li class="pr-arr" aria-hidden="true">→</li>
+            <li class="pr-step is-out">Подходящая ТК и срок в заказе</li>
+          </ol>
+          <p>Для мультибрендовой системы с сайтами на нескольких языках, страницами торговых точек и связкой с Битрикс24 разработали собственный модуль доставки.</p>
+          <div class="pr-result">Покупатель сразу видит подходящую транспортную компанию и срок прямо при оформлении — без знакомства с регламентами перевозчиков.</div>
+        </div>
       </article>
       <article>
         <span class="mono">02 / Корзина</span>
         <h3>Корзина, которая подсказывает по делу</h3>
-        <p>В магазине детских товаров корзина предлагала сопутствующие товары с учётом предполагаемой возрастной группы ребёнка, которую система определяла по уже выбранным товарам. И всё это — сразу, без перезагрузки страницы.</p>
+        <div class="pr-body">
+          <ol class="pr-flow" aria-label="Схема работы умной корзины">
+            <li class="pr-step">Товары в корзине</li>
+            <li class="pr-arr" aria-hidden="true">→</li>
+            <li class="pr-step">Определение возраста ребёнка</li>
+            <li class="pr-arr" aria-hidden="true">→</li>
+            <li class="pr-step is-out">Рекомендации без перезагрузки</li>
+          </ol>
+          <p>В интернет-магазине детских товаров настроили динамический подбор сопутствующих позиций прямо внутри корзины.</p>
+          <div class="pr-result">Система сама определяет возрастную группу по уже выбранным товарам и мгновенно показывает подходящие дополнения.</div>
+        </div>
       </article>
       <article>
         <span class="mono">03 / Подбор</span>
         <h3>Подбор предложений по таблице, которая постоянно меняется</h3>
-        <p>В другом проекте посетитель вводил данные, а система подбирала предложения по заданным заказчиком весовым коэффициентам. Таблицу с правилами можно было обновлять — и расчёт учитывал изменения. Не каждый необычный запрос нужно превращать в ручную работу.</p>
+        <div class="pr-body">
+          <ol class="pr-flow" aria-label="Схема работы подбора по таблице">
+            <li class="pr-step">Параметры клиента</li>
+            <li class="pr-arr" aria-hidden="true">→</li>
+            <li class="pr-step">Таблица весовых коэффициентов</li>
+            <li class="pr-arr" aria-hidden="true">→</li>
+            <li class="pr-step is-out">Автоподбор предложений</li>
+          </ol>
+          <p>Сделали механизм подбора вариантов по заданным заказчиком весовым коэффициентам вместо ручного расчёта.</p>
+          <div class="pr-result">Таблицу с правилами можно обновлять самостоятельно — расчёт сразу подхватывает изменения.</div>
+        </div>
       </article>
     </div>
     <p class="svc-practice-note">Имена заказчиков здесь не приводим. Важно другое: мы не просто «можем сделать нестандартно» — такие задачи у нас уже были.</p>
