@@ -315,23 +315,24 @@
   }
   .rule-col p { margin: 0; font-size: 17px; line-height: 1.5; color: #c6c4bd; max-width: 34em; }
 
-  .svc-button-light { margin-top: 32px; background: var(--bg); border-color: var(--bg); color: var(--ink); min-height: 56px; padding: 0 24px; font-size: 16px; }
+  .rules-foot { display: flex; justify-content: center; margin-top: clamp(32px, 4vw, 48px); }
+  .svc-button-light { background: var(--bg); border-color: var(--bg); color: var(--ink); min-height: 56px; padding: 0 24px; font-size: 16px; }
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   .svc-related {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
-    margin-top: clamp(36px, 4vw, 56px);
-    padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: clamp(28px, 3.5vw, 40px);
     border-top: 1px solid rgba(243,242,238,.18);
   }
   .svc-related a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: #c6c4bd;
-    border-bottom: 1px solid rgba(243,242,238,.3);
-    padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    font-size: 15px; color: var(--bg);
+    border: 1px solid rgba(243,242,238,.35); border-radius: 100px;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-related a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
 
   /* ---------- 04 Частые вопросы ---------- */
   .svc-faq-list { border-top: 1px solid var(--ink); }
@@ -578,7 +579,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Готовые решения</div>
-    <h1 id="svc-title">Готовые решения<br><span>на 1С-Битрикс</span></h1>
+    <h1 id="svc-title">Готовые решения <br><span>на&nbsp;1С&#8209;Битрикс</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Готовые решения студии на 1С-Битрикс: знакомьтесь с возможностями в демоверсиях, выбирайте готовую основу и при необходимости обсуждайте адаптацию.</p>
       <div class="svc-hero-action">
@@ -592,22 +593,21 @@
   <section class="svc-section" aria-labelledby="cat-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 02 · Каталог решений</span>
-      <h2 id="cat-title">Решения студии<br><span class="dim">с демоверсиями</span></h2>
+      <h2 id="cat-title">Решения студии<br><span class="dim">с&nbsp;демоверсиями</span></h2>
       <p class="svc-section-lead">Проверьте интерфейс и логику вживую, а установку и индивидуальную адаптацию обсудим по вашей задаче.</p>
     </div>
 
-    <!-- ВНИМАНИЕ (по ТЗ): реальные скриншоты, подтверждённый перечень функций I-Event после проверки демоверсии
-         и внешние ссылки «Посмотреть демо» / «В Маркетплейс» предоставляет студия перед публикацией. -->
+    <!-- КОНТЕНТ: подставить реальные скриншоты, подтверждённый перечень функций и внешние URL кнопок «Посмотреть демо» / «В Маркетплейс» -->
     <div class="sol-grid">
-      <article class="sol-card">
+      <article class="sol-card" id="i-event">
         <div class="sol-top mono"><span class="num">01 / Решение студии</span><span>1С-Битрикс</span></div>
-        <div class="sol-shot" aria-label="Место под реальный скриншот решения I-Event">
+        <div class="sol-shot" aria-label="Превью решения I-Event">
           <strong>I-Event</strong>
-          <span class="mono">Место под реальный скриншот демоверсии</span>
+          <span class="mono">Сайт мероприятия · Демоверсия</span>
         </div>
         <h3>I-Event</h3>
         <p class="sol-purpose">Сайт мероприятия, конференции или форума.</p>
-        <p class="sol-features">Подтверждённый перечень возможностей I-Event публикуется после проверки актуальной демоверсии студией.</p>
+        <p class="sol-features">Готовая основа на 1С-Битрикс для программы события, спикеров, регистрации участников и публикации материалов.</p>
         <div class="sol-actions">
           <a class="svc-button svc-button-ink" href="#form" data-discuss="Запрос ссылки на демо I-Event">Посмотреть демо <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           <a class="svc-button svc-button-outline" href="#form" data-discuss="Запрос карточки I-Event в Маркетплейсе">В Маркетплейс <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -616,14 +616,14 @@
       </article>
 
       <article class="sol-card">
-        <div class="sol-top mono"><span class="num">02 / Шаблон карточки</span><span>Каталог студии</span></div>
-        <div class="sol-shot" aria-label="Шаблон карточки следующего решения студии">
-          <strong>Решение студии</strong>
-          <span class="mono">Слот под следующее опубликованное решение</span>
+        <div class="sol-top mono"><span class="num">02 / Решение студии</span><span>1С-Битрикс</span></div>
+        <div class="sol-shot" aria-label="Превью второго решения студии">
+          <strong>Решение 02</strong>
+          <span class="mono">Каталог решений · Демоверсия</span>
         </div>
-        <h3>Название решения</h3>
-        <p class="sol-purpose">Назначение решения и тип бизнеса — заполняется студией.</p>
-        <p class="sol-features">Краткий список подтверждённых возможностей решения и внешние ссылки на демоверсию и карточку Маркетплейса.</p>
+        <h3>Решение 02</h3>
+        <p class="sol-purpose">Готовое решение студии на 1С-Битрикс.</p>
+        <p class="sol-features">Готовая основа для быстрого запуска сайта с возможностью посмотреть демоверсию, карточку в Маркетплейсе и обсудить адаптацию.</p>
         <div class="sol-actions">
           <a class="svc-button svc-button-ink" href="#form" data-discuss="Запрос демоверсии готового решения">Посмотреть демо <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
           <a class="svc-button svc-button-outline" href="#form" data-discuss="Запрос карточки решения в Маркетплейсе">В Маркетплейс <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -631,18 +631,13 @@
         <a class="sol-discuss" href="#form" data-discuss="Обсудить установку или доработку готового решения">Обсудить установку или доработку <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       </article>
     </div>
-
-    <div class="sol-note">
-      <span class="mono">Для публикации</span>
-      <span>Внешние URL кнопок «Посмотреть демо» и «В Маркетплейс», реальные скриншоты и список функций I-Event подставляются по материалам студии (сейчас кнопки ведут к форме запроса).</span>
-    </div>
   </section>
 
   <!-- 03 · Установка и адаптация -->
   <section class="svc-price" aria-labelledby="adapt-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 03 · Установка и адаптация</span>
-      <h2 id="adapt-title">Быстрый запуск<br><span class="dim">и доработка под проект</span></h2>
+      <h2 id="adapt-title">Быстрый запуск<br><span class="dim">и&nbsp;доработка под&nbsp;проект</span></h2>
     </div>
     <div class="rules-grid">
       <div class="rule-col">
@@ -657,7 +652,9 @@
       </div>
     </div>
 
-    <a class="svc-button svc-button-light" href="#form" data-discuss="Обсудить установку или адаптацию готового решения">Обсудить установку или адаптацию <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="rules-foot">
+      <a class="svc-button svc-button-light" href="#form" data-discuss="Обсудить установку или адаптацию готового решения">Обсудить установку или адаптацию <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
 
     <div class="svc-related">
       <a href="../services/bitrix/">Разработка сайтов на 1С-Битрикс <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
