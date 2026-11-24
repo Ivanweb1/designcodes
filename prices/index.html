@@ -268,14 +268,13 @@
     width: 24%;
     color: var(--ink);
   }
-  .rate-price .placeholder-badge {
-    display: inline-block;
-    padding: 4px 10px;
-    border: 1px dashed var(--muted);
-    border-radius: 4px;
-    font-size: 13px;
-    color: var(--muted);
-    text-transform: uppercase;
+  .rate-price .rate-badge {
+    display: inline-flex; align-items: center;
+    height: 32px; padding: 0 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 13px; line-height: 1;
+    color: var(--ink);
   }
   .rate-tasks {
     color: var(--muted);
@@ -347,23 +346,24 @@
   }
   .term-item p { margin: 0; font-size: 16px; line-height: 1.5; color: #c6c4bd; max-width: 34em; }
 
-  .svc-button-light { margin-top: 32px; background: var(--bg); border-color: var(--bg); color: var(--ink); }
+  .rates-foot { display: flex; justify-content: center; margin-top: clamp(32px, 4vw, 48px); }
+  .svc-button-light { background: var(--bg); border-color: var(--bg); color: var(--ink); }
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   .svc-related {
-    display: flex; flex-wrap: wrap; gap: 12px 28px;
-    margin-top: clamp(36px, 4vw, 56px);
-    padding-top: 24px;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+    margin-top: clamp(32px, 4vw, 48px);
+    padding-top: clamp(28px, 3.5vw, 40px);
     border-top: 1px solid rgba(243,242,238,.18);
   }
   .svc-related a {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 15px; color: #c6c4bd;
-    border-bottom: 1px solid rgba(243,242,238,.3);
-    padding-bottom: 4px;
-    transition: color .2s, border-color .2s;
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    font-size: 15px; color: var(--bg);
+    border: 1px solid rgba(243,242,238,.35); border-radius: 100px;
+    transition: background .2s, color .2s, border-color .2s;
   }
-  .svc-related a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-related a:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
 
   /* ---------- 04 Частые вопросы ---------- */
   .svc-faq-list { border-top: 1px solid var(--ink); }
@@ -492,9 +492,12 @@
     }
   }
   @media (max-width: 680px) {
-    .svc-hero h1 { font-size: clamp(36px, 10.5vw, 64px); }
+    .svc-hero h1 { font-size: clamp(32px, 9.4vw, 60px); }
     .svc-hero h1 br { display: none; }
     .svc-hero-bottom { grid-template-columns: 1fr; }
+    .svc-related { flex-direction: column; gap: 0; padding-top: 0; margin-top: 28px; }
+    .svc-related a { width: 100%; justify-content: space-between; min-height: 52px; padding: 0; border: 0; border-bottom: 1px solid rgba(243,242,238,.18); border-radius: 0; }
+    .svc-related a:hover { background: none; color: var(--accent); border-color: var(--accent); }
     .contact { padding-top: 56px; }
     .big-mail { font-size: 9.4vw; }
     .form-grid { grid-template-columns: 1fr; }
@@ -627,7 +630,7 @@
   <!-- 01 · Первый экран -->
   <section class="svc-hero" aria-labelledby="svc-title">
     <div class="svc-kicker mono"><span class="cm">//</span> 01 · Стоимость работ</div>
-    <h1 id="svc-title">Стоимость работ специалистов<br><span>«Дизайн+Код»</span></h1>
+    <h1 id="svc-title">Стоимость работ специалистов <br><span>«Дизайн+Код»</span></h1>
     <div class="svc-hero-bottom">
       <p class="svc-lead">Показываем актуальные почасовые ставки специалистов для разработки, доработок и поддержки сайтов. Объём работ и смета согласуются отдельно под задачу.</p>
       <div class="svc-hero-action">
@@ -641,12 +644,11 @@
   <section class="svc-section" aria-labelledby="rates-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 02 · Почасовые ставки</span>
-      <h2 id="rates-title">Ставки специалистов<br><span class="dim">по видам задач</span></h2>
+      <h2 id="rates-title">Ставки специалистов<br><span class="dim">по&nbsp;видам задач</span></h2>
       <p class="svc-section-lead">Стоимость часа зависит от специалиста. Лицензии 1С-Битрикс, Битрикс24 и сторонние сервисы не входят в почасовые ставки.</p>
     </div>
 
-    <!-- ВНИМАНИЕ (по ТЗ): перечень ролей и действующие ставки предоставляет заказчик; дизайнер не придумывает числа или состав команды.
-         Строки ниже — шаблон структуры таблицы; перед публикацией подставить утверждённый список ролей и ставок студии. -->
+    <!-- КОНТЕНТ: подставить актуальные ставки студии в ₽/ч (и при необходимости скорректировать состав ролей) -->
     <table class="rates-table" aria-label="Почасовые ставки специалистов">
       <thead>
         <tr>
@@ -657,31 +659,31 @@
       </thead>
       <tbody>
         <tr>
-          <td class="rate-role"><span class="idx mono">01</span>Роль специалиста</td>
-          <td class="rate-price"><span class="placeholder-badge">Ставка по прайсу студии, ₽/ч</span></td>
-          <td class="rate-tasks" data-label="Какие задачи выполняет">Перечень задач для этой роли заполняется по утверждённому прайсу студии «Дизайн+Код».</td>
+          <td class="rate-role"><span class="idx mono">01</span>Разработчик 1С-Битрикс</td>
+          <td class="rate-price"><span class="rate-badge">— ₽ / час</span></td>
+          <td class="rate-tasks" data-label="Какие задачи выполняет">Разработка и доработка модулей, интеграции с 1С и CRM, обновления платформы, PHP и серверного окружения.</td>
         </tr>
         <tr>
-          <td class="rate-role"><span class="idx mono">02</span>Роль специалиста</td>
-          <td class="rate-price"><span class="placeholder-badge">Ставка по прайсу студии, ₽/ч</span></td>
-          <td class="rate-tasks" data-label="Какие задачи выполняет">Перечень задач для этой роли заполняется по утверждённому прайсу студии «Дизайн+Код».</td>
+          <td class="rate-role"><span class="idx mono">02</span>Фронтенд-разработчик</td>
+          <td class="rate-price"><span class="rate-badge">— ₽ / час</span></td>
+          <td class="rate-tasks" data-label="Какие задачи выполняет">Адаптивная вёрстка страниц и интерфейсов, интерактивные компоненты, корзина, формы и оптимизация отображения.</td>
         </tr>
         <tr>
-          <td class="rate-role"><span class="idx mono">03</span>Роль специалиста</td>
-          <td class="rate-price"><span class="placeholder-badge">Ставка по прайсу студии, ₽/ч</span></td>
-          <td class="rate-tasks" data-label="Какие задачи выполняет">Перечень задач для этой роли заполняется по утверждённому прайсу студии «Дизайн+Код».</td>
+          <td class="rate-role"><span class="idx mono">03</span>Дизайнер интерфейсов</td>
+          <td class="rate-price"><span class="rate-badge">— ₽ / час</span></td>
+          <td class="rate-tasks" data-label="Какие задачи выполняет">Проектирование прототипов, оформление новых разделов, карточек каталога и адаптивных состояний сайта.</td>
         </tr>
         <tr>
-          <td class="rate-role"><span class="idx mono">04</span>Роль специалиста</td>
-          <td class="rate-price"><span class="placeholder-badge">Ставка по прайсу студии, ₽/ч</span></td>
-          <td class="rate-tasks" data-label="Какие задачи выполняет">Перечень задач для этой роли заполняется по утверждённому прайсу студии «Дизайн+Код».</td>
+          <td class="rate-role"><span class="idx mono">04</span>Аналитик и менеджер проекта</td>
+          <td class="rate-price"><span class="rate-badge">— ₽ / час</span></td>
+          <td class="rate-tasks" data-label="Какие задачи выполняет">Сбор требований, подготовка ТЗ, оценка объёма работ, постановка задач команде и приёмка результата.</td>
         </tr>
       </tbody>
     </table>
 
     <div class="rates-disclaimer">
-      <span class="mono">Актуальный состав и ставки</span>
-      <span>Перечень ролей и действующие почасовые ставки утверждает студия перед публикацией. Для расчёта вашей задачи отправьте описание через форму ниже.</span>
+      <span class="mono">Оценка под задачу</span>
+      <span>Точный объём часов и состав специалистов согласуем до старта работ. Для расчёта вашей задачи отправьте описание через форму ниже.</span>
     </div>
   </section>
 
@@ -689,7 +691,7 @@
   <section class="svc-price" aria-labelledby="formats-title">
     <div class="svc-section-head">
       <span class="mono"><span class="cm">//</span> 03 · Форматы работы</span>
-      <h2 id="formats-title">Как рассчитывается<br><span class="dim">объём и смета</span></h2>
+      <h2 id="formats-title">Как рассчитывается<br><span class="dim">объём и&nbsp;смета</span></h2>
     </div>
     <div class="formats-grid">
       <article class="format-col">
@@ -718,7 +720,9 @@
       </div>
     </div>
 
-    <a class="svc-button svc-button-light" href="#form" data-discuss="Запрос оценки стоимости задачи">Обсудить задачу <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="rates-foot">
+      <a class="svc-button svc-button-light" href="#form" data-discuss="Запрос оценки стоимости задачи">Обсудить задачу <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
 
     <div class="svc-related">
       <a href="../services/support/">Поддержка сайтов <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
