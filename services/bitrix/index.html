@@ -341,10 +341,22 @@
     margin: 0; padding-left: 14px; border-left: 2px solid var(--accent);
     max-width: 38em; font-size: 16px; line-height: 1.45; color: var(--ink);
   }
+  .svc-practice-foot {
+    margin-top: clamp(28px, 3.5vw, 44px);
+    display: flex; justify-content: space-between; align-items: center; gap: 20px 32px; flex-wrap: wrap;
+  }
   .svc-practice-note {
-    margin: 28px 0 0; max-width: 44em;
+    margin: 0; max-width: 38em;
     font-size: 16px; line-height: 1.5; color: var(--muted);
   }
+  .svc-button-ghost {
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 52px; padding: 0 24px;
+    border: 1px solid var(--ink); border-radius: 100px;
+    font-size: 16px; line-height: 1.2; white-space: nowrap; color: var(--ink);
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .svc-button-ghost:hover { background: var(--ink); color: var(--bg); }
   .svc-text-link {
     margin-top: 28px;
     display: inline-flex; align-items: center; gap: 18px;
@@ -810,8 +822,10 @@
         </div>
       </article>
     </div>
-    <p class="svc-practice-note">Имена заказчиков здесь не приводим. Важно другое: мы не просто «можем сделать нестандартно» — такие задачи у нас уже были.</p>
-    <a class="svc-text-link" href="../../portfolio/">Смотреть портфолио <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="svc-practice-foot">
+      <p class="svc-practice-note">Имена заказчиков здесь не приводим. Важно другое: мы не просто «можем сделать нестандартно» — такие задачи у нас уже были.</p>
+      <a class="svc-button-ghost" href="../../portfolio/">Смотреть портфолио <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
   </section>
 
   <!-- 05 · Почему с нами остаются надолго -->
