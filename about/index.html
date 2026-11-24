@@ -441,7 +441,8 @@
   .clients-strip .cl-name { font-size: clamp(20px, 1.8vw, 26px); letter-spacing: -0.025em; line-height: 1.15; color: var(--bg); }
   .clients-strip .cl-meta { color: #a8a7a2; }
 
-  .svc-button-light { margin-top: 32px; background: var(--bg); border-color: var(--bg); color: var(--ink); }
+  .clients-foot { display: flex; justify-content: center; margin-top: clamp(32px, 4vw, 52px); }
+  .svc-button-light { background: var(--bg); border-color: var(--bg); color: var(--ink); }
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   /* ---------- 06 Экспертиза, отзывы и документы ---------- */
@@ -964,7 +965,9 @@
       <li><span class="cl-name">DeLonghi</span><span class="cl-meta mono">бытовая техника · 1С-Битрикс</span></li>
     </ul>
 
-    <a class="svc-button svc-button-light" href="../portfolio/">Посмотреть проекты <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <div class="clients-foot">
+      <a class="svc-button svc-button-light" href="../portfolio/">Посмотреть проекты <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
   </section>
 
   <!-- 06 · Экспертиза, отзывы и документы -->
