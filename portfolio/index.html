@@ -945,6 +945,32 @@
 .port-hero { padding-top:clamp(20px,2vw,32px); padding-bottom:clamp(20px,2vw,32px); }
 .port-hero-phrase { margin:clamp(18px,2.2vw,32px) 0 0; max-width:none; text-wrap:normal; }
 .port-hero-phrase span { display:block; }
+
+/* Пустое состояние фильтра, когда кейсы выбранного типа готовятся к публикации */
+.filter-empty {
+  border-top:1px solid var(--ink);
+  border-bottom:1px solid var(--line);
+  padding:clamp(36px,5vw,64px) 0;
+  display:grid;
+  grid-template-columns:repeat(12,minmax(0,1fr));
+  gap:20px;
+  align-items:end;
+}
+.filter-empty[hidden] { display:none; }
+.filter-empty-copy { grid-column:1/8; }
+.filter-empty-copy .mono { display:block; color:var(--muted); margin-bottom:16px; }
+.filter-empty-copy h3 { margin:0; font-size:clamp(26px,3.2vw,48px); font-weight:400; line-height:1.06; letter-spacing:-.035em; }
+.filter-empty-copy p { margin:14px 0 0; max-width:38em; font-size:16px; line-height:1.5; color:var(--muted); }
+.filter-empty-actions { grid-column:8/13; display:flex; justify-content:flex-end; flex-wrap:wrap; gap:12px; }
+.filter-empty-actions .btn, .filter-empty-actions .link-arrow { height:48px; padding:0 22px; font-size:15px; }
+@media(max-width:900px) {
+  .filter-empty-copy, .filter-empty-actions { grid-column:1/13; }
+  .filter-empty-actions { justify-content:flex-start; margin-top:8px; }
+}
+@media(max-width:560px) {
+  .filter-empty-actions { flex-direction:column; }
+  .filter-empty-actions .btn, .filter-empty-actions .link-arrow { width:100%; justify-content:center; }
+}
 </style>
 </head>
 <body>
@@ -1074,16 +1100,15 @@
   </section>
   <section class="port-list" id="projects" aria-label="Работы студии">
     
-    <div class="filters" role="group" aria-label="Фильтр по отраслям">
-      <span class="mono">Отрасль <span class="cm">//</span></span>
+    <div class="filters" role="group" aria-label="Фильтр по типам сайта">
+      <span class="mono">Тип сайта <span class="cm">//</span></span>
       <button class="filter" type="button" data-filter="all" aria-pressed="true">Все <span class="filter-count">06</span></button>
-      <button class="filter" type="button" data-filter="kids" aria-pressed="false">Детские товары <span class="filter-count">01</span></button>
-      <button class="filter" type="button" data-filter="tech" aria-pressed="false">Техника <span class="filter-count">02</span></button>
-      <button class="filter" type="button" data-filter="transport" aria-pressed="false">Электротранспорт <span class="filter-count">01</span></button>
-      <button class="filter" type="button" data-filter="materials" aria-pressed="false">Фанера <span class="filter-count">01</span></button>
-      <button class="filter" type="button" data-filter="manufacturing" aria-pressed="false">Металлоконструкции <span class="filter-count">01</span></button>
+      <button class="filter" type="button" data-filter="store" aria-pressed="false">Интернет-магазин <span class="filter-count">03</span></button>
+      <button class="filter" type="button" data-filter="corporate" aria-pressed="false">Корпоративный <span class="filter-count">03</span></button>
+      <button class="filter" type="button" data-filter="services" aria-pressed="false">Услуги <span class="filter-count">00</span></button>
+      <button class="filter" type="button" data-filter="landing" aria-pressed="false">Лендинг <span class="filter-count">00</span></button>
     </div>
-    <div class="project-grid"><article class="project-card" data-industry="kids" data-project="Happy Baby">
+    <div class="project-grid"><article class="project-card" data-type="store" data-industry="kids" data-project="Happy Baby">
   <div class="card-top mono"><span>01 / 06</span><span>Детские товары</span></div>
   <a class="card-image" href="https://happybaby.ru/" target="_blank" rel="noopener" aria-label="Смотреть сайт Happy Baby">
     <img src="../prototype/img/cases/happybaby.webp" alt="Скриншот сайта Happy Baby" width="1200" height="600" loading="eager">
@@ -1098,7 +1123,7 @@
   </div>
   <div class="card-actions"><a class="site-link" href="https://happybaby.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="Happy Baby"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
-<article class="project-card" data-industry="transport" data-project="ТРОЙКА Electro">
+<article class="project-card" data-type="corporate" data-industry="transport" data-project="ТРОЙКА Electro">
   <div class="card-top mono"><span>02 / 06</span><span>Электротранспорт</span></div>
   <a class="card-image" href="https://3electro.ru/" target="_blank" rel="noopener" aria-label="Смотреть сайт ТРОЙКА Electro">
     <img src="../prototype/img/cases/troika.webp" alt="Скриншот сайта ТРОЙКА Electro" width="1200" height="600" loading="eager">
@@ -1113,7 +1138,7 @@
   </div>
   <div class="card-actions"><a class="site-link" href="https://3electro.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="ТРОЙКА Electro"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
-<article class="project-card" data-industry="tech" data-project="Kenwood">
+<article class="project-card" data-type="store" data-industry="tech" data-project="Kenwood">
   <div class="card-top mono"><span>03 / 06</span><span>Техника</span></div>
   <a class="card-image" href="https://kenwood.kz/" target="_blank" rel="noopener" aria-label="Смотреть сайт Kenwood">
     <img src="../prototype/img/cases/kenwood.webp" alt="Скриншот сайта Kenwood" width="1200" height="600" loading="lazy">
@@ -1128,7 +1153,7 @@
   </div>
   <div class="card-actions"><a class="site-link" href="https://kenwood.kz/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="Kenwood"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
-<article class="project-card" data-industry="tech" data-project="DeLonghi">
+<article class="project-card" data-type="store" data-industry="tech" data-project="DeLonghi">
   <div class="card-top mono"><span>04 / 06</span><span>Техника</span></div>
   <a class="card-image" href="https://delonghi.kz/" target="_blank" rel="noopener" aria-label="Смотреть сайт DeLonghi">
     <img src="../prototype/img/cases/delonghi.webp" alt="Скриншот сайта DeLonghi" width="1200" height="600" loading="lazy">
@@ -1143,7 +1168,7 @@
   </div>
   <div class="card-actions"><a class="site-link" href="https://delonghi.kz/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="DeLonghi"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
-<article class="project-card" data-industry="materials" data-project="Fanera">
+<article class="project-card" data-type="corporate" data-industry="materials" data-project="Fanera">
   <div class="card-top mono"><span>05 / 06</span><span>Материалы</span></div>
   <a class="card-image" href="https://fanera.ru/" target="_blank" rel="noopener" aria-label="Смотреть сайт Fanera">
     <img src="../prototype/img/cases/fanera.webp" alt="Скриншот сайта Fanera" width="1200" height="600" loading="lazy">
@@ -1158,7 +1183,7 @@
   </div>
   <div class="card-actions"><a class="site-link" href="https://fanera.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="Fanera"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article>
-<article class="project-card" data-industry="manufacturing" data-project="Фавор-Гарант">
+<article class="project-card" data-type="corporate" data-industry="manufacturing" data-project="Фавор-Гарант">
   <div class="card-top mono"><span>06 / 06</span><span>Производство</span></div>
   <a class="card-image" href="https://favor-garant.ru/" target="_blank" rel="noopener" aria-label="Смотреть сайт Фавор-Гарант">
     <img src="../prototype/img/cases/favor.webp" alt="Скриншот сайта Фавор-Гарант" width="1200" height="600" loading="lazy">
@@ -1173,6 +1198,17 @@
   </div>
   <div class="card-actions"><a class="site-link" href="https://favor-garant.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="project-link" href="#form" aria-label="Обсудить похожий проект" data-discuss="Фавор-Гарант"><span class="cta-long">Обсудить похожий проект</span><span class="cta-short">Обсудить проект</span> <svg class="ico ico-diag" aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
 </article></div>
+    <div class="filter-empty" id="filter-empty" hidden>
+      <div class="filter-empty-copy">
+        <span class="mono"><span class="cm">//</span> <span id="filter-empty-label">Раздел наполняется</span></span>
+        <h3>Кейсы этого типа готовятся к&nbsp;публикации</h3>
+        <p>Мы разрабатываем сайты услуг и&nbsp;лендинги на&nbsp;1С-Битрикс. Расскажите о&nbsp;задаче — покажем релевантные примеры по&nbsp;запросу и&nbsp;предложим решение.</p>
+      </div>
+      <div class="filter-empty-actions">
+        <a class="btn" href="#form" id="filter-empty-cta" data-discuss="Сайт">Обсудить проект <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <button class="link-arrow" type="button" id="filter-reset">Показать все работы</button>
+      </div>
+    </div>
   </section>
   </main>
 <div class="final">
@@ -1279,7 +1315,26 @@ menuBtn.addEventListener('click',()=>toggleMenu());
 menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){const opened=document.querySelector('.nav-link[aria-expanded="true"]');closeAll();if(opened)opened.focus();toggleMenu(false);}});
 const filters=document.querySelectorAll('.filter'),projects=document.querySelectorAll('.project-card');
-filters.forEach(button=>button.addEventListener('click',()=>{const selected=button.dataset.filter;filters.forEach(b=>b.setAttribute('aria-pressed',String(b===button)));let visible=0;projects.forEach(card=>{card.hidden=selected!=='all'&&card.dataset.industry!==selected;if(!card.hidden)visible++;});}));
+const filterEmpty=document.getElementById('filter-empty'),filterEmptyLabel=document.getElementById('filter-empty-label'),filterEmptyCta=document.getElementById('filter-empty-cta'),filterReset=document.getElementById('filter-reset');
+const typeLabels={store:'Интернет-магазин',corporate:'Корпоративный сайт',services:'Сайт услуг',landing:'Лендинг'};
+filters.forEach(b=>{const key=b.dataset.filter;const count=key==='all'?projects.length:[...projects].filter(c=>c.dataset.type===key).length;const cnt=b.querySelector('.filter-count');if(cnt)cnt.textContent=String(count).padStart(2,'0');});
+function applyFilter(selected){
+  filters.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===selected)));
+  let visible=0;
+  projects.forEach(card=>{const hide=selected!=='all'&&card.dataset.type!==selected;card.hidden=hide;if(!hide)visible++;});
+  if(filterEmpty){
+    filterEmpty.hidden=visible>0;
+    if(visible===0){
+      const label=typeLabels[selected]||'Выбранный тип';
+      if(filterEmptyLabel)filterEmptyLabel.textContent=label;
+      if(filterEmptyCta)filterEmptyCta.dataset.discuss=label;
+    }
+  }
+}
+filters.forEach(button=>button.addEventListener('click',()=>applyFilter(button.dataset.filter)));
+if(filterReset)filterReset.addEventListener('click',()=>applyFilter('all'));
+const initType=new URLSearchParams(location.search).get('type');
+if(initType&&[...filters].some(b=>b.dataset.filter===initType))applyFilter(initType);
 document.querySelectorAll('[data-discuss]').forEach(link=>link.addEventListener('click',()=>{const name=link.dataset.discuss;const task=document.querySelector('#lead-form textarea[name="task"]');task.value='Хочу обсудить проект по примеру «'+name+'».\n\nМоя задача: ';}));
 
   // Подвал: логотип прорисовывается, когда подвал виден больше чем наполовину

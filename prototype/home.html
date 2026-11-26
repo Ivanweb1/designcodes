@@ -549,7 +549,24 @@
   }
   .note:first-child { border-left: 0; padding-left: 0; }
   .note-link { display: flex; flex-direction: column; flex: 1; color: inherit; text-decoration: none; }
+  .note-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .note-meta { display: inline-flex; align-items: center; gap: 10px; }
+  .note-ico {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px;
+    border: 1px solid var(--line); border-radius: 50%;
+    color: var(--ink);
+    transition: border-color .2s, background .2s, color .2s;
+  }
+  .note-ico svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .note-flow {
+    width: 16px; height: 16px; flex: none;
+    fill: none; stroke: var(--muted); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+    transition: stroke .2s, transform .2s;
+  }
   .note .num { color: var(--accent); }
+  .note:hover .note-ico { border-color: var(--accent); background: var(--accent); color: #fff; }
+  .note:hover .note-flow { stroke: var(--accent); transform: translateX(3px); }
   .note h3 {
     margin: clamp(20px, 2.4vw, 40px) 0 0; font-weight: var(--tw); font-size: clamp(20px, 1.6vw, 28px); line-height: 1.05; letter-spacing: -0.03em;
     transition: color .2s;
@@ -575,7 +592,8 @@
     .note:last-child { padding-bottom: 0; }
     .note::before { content: ""; position: absolute; left: -5px; top: .35em; width: 9px; height: 9px; border-radius: 50%; background: var(--bg); border: 1px solid var(--accent); }
     .note:hover::before { background: var(--accent); }
-    .note h3 { margin-top: 6px; font-size: clamp(24px, 3.4vw, 36px); }
+    .note-flow { display: none; }
+    .note h3 { margin-top: 10px; font-size: clamp(24px, 3.4vw, 36px); }
     .note-body p { max-width: 32em; }
     .note .tags { padding-top: 10px; }
   }
@@ -850,6 +868,13 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M8.5 4.5L16 12l-7.5 7.5"/></symbol>
   <symbol id="i-chat" viewBox="0 0 24 24"><path d="M5.5 4h13A1.5 1.5 0 0 1 20 5.5v9a1.5 1.5 0 0 1-1.5 1.5H11l-4.5 4v-4h-1A1.5 1.5 0 0 1 4 14.5v-9A1.5 1.5 0 0 1 5.5 4z"/><path d="M8 8.5h8M8 11.5h5"/></symbol>
+  <symbol id="i-flow" viewBox="0 0 24 24"><path d="M4 12h15M14 7l5 5-5 5"/></symbol>
+  <symbol id="i-step-1" viewBox="0 0 24 24"><path d="M9 5H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-3"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M8 12h8M8 16h5"/></symbol>
+  <symbol id="i-step-2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M9 9v11"/></symbol>
+  <symbol id="i-step-3" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></symbol>
+  <symbol id="i-step-4" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></symbol>
+  <symbol id="i-step-5" viewBox="0 0 24 24"><path d="M12 2c3.5 2.5 5 6.2 5 10.5L14 16H10l-3-3.5C7 8.2 8.5 4.5 12 2z"/><path d="M10 16l-1 4 3-2 3 2-1-4"/><circle cx="12" cy="9.5" r="1.5"/></symbol>
+  <symbol id="i-step-6" viewBox="0 0 24 24"><path d="M21 12a9 9 0 0 1-15.5 6.3L3 16"/><path d="M3 12a9 9 0 0 1 15.5-6.3L21 8"/><path d="M21 3v5h-5M3 21v-5h5"/></symbol>
 </svg>
 
 
@@ -1018,37 +1043,60 @@
     <ol class="notes">
       <li class="note" data-n="1">
         <a class="note-link" href="../process/#step-1">
-          <span class="num mono">01</span><h3>Задача</h3>
+          <div class="note-top">
+            <span class="note-meta"><span class="note-ico" aria-hidden="true"><svg><use href="#i-step-1"/></svg></span><span class="num mono">01</span></span>
+            <svg class="note-flow" aria-hidden="true"><use href="#i-flow"/></svg>
+          </div>
+          <h3>Задача</h3>
           <div class="note-body"><p>Вы рассказываете, что нужно, хоть обычными словами. Мы задаём вопросы, предлагаем решение и оценку.</p><span class="tags mono"><b>→</b> договор и ТЗ</span></div>
         </a>
       </li>
       <li class="note" data-n="2">
         <a class="note-link" href="../process/#step-2">
-          <span class="num mono">02</span><h3>Проектирование</h3>
+          <div class="note-top">
+            <span class="note-meta"><span class="note-ico" aria-hidden="true"><svg><use href="#i-step-2"/></svg></span><span class="num mono">02</span></span>
+            <svg class="note-flow" aria-hidden="true"><use href="#i-flow"/></svg>
+          </div>
+          <h3>Проектирование</h3>
           <div class="note-body"><p>Продумываем структуру и сценарии и собираем рабочий прототип, а не набор картинок.</p><span class="tags mono"><b>→</b> прототип</span></div>
         </a>
       </li>
       <li class="note" data-n="3">
         <a class="note-link" href="../process/#step-3">
-          <span class="num mono">03</span><h3>Дизайн</h3>
+          <div class="note-top">
+            <span class="note-meta"><span class="note-ico" aria-hidden="true"><svg><use href="#i-step-3"/></svg></span><span class="num mono">03</span></span>
+            <svg class="note-flow" aria-hidden="true"><use href="#i-flow"/></svg>
+          </div>
+          <h3>Дизайн</h3>
           <div class="note-body"><p>Оформляем согласованный прототип: типовые страницы, состояния и мобильные версии.</p><span class="tags mono"><b>→</b> утверждённые макеты</span></div>
         </a>
       </li>
       <li class="note" data-n="4">
         <a class="note-link" href="../process/#step-4">
-          <span class="num mono">04</span><h3>Разработка</h3>
+          <div class="note-top">
+            <span class="note-meta"><span class="note-ico" aria-hidden="true"><svg><use href="#i-step-4"/></svg></span><span class="num mono">04</span></span>
+            <svg class="note-flow" aria-hidden="true"><use href="#i-flow"/></svg>
+          </div>
+          <h3>Разработка</h3>
           <div class="note-body"><p>Разрабатываем сайт на 1С-Битрикс, подключаем обмен с 1С и CRM, наполняем материалами.</p><span class="tags mono"><b>→</b> сайт на тестовом сервере</span></div>
         </a>
       </li>
       <li class="note" data-n="5">
         <a class="note-link" href="../process/#step-5">
-          <span class="num mono">05</span><h3>Тестирование и запуск</h3>
+          <div class="note-top">
+            <span class="note-meta"><span class="note-ico" aria-hidden="true"><svg><use href="#i-step-5"/></svg></span><span class="num mono">05</span></span>
+            <svg class="note-flow" aria-hidden="true"><use href="#i-flow"/></svg>
+          </div>
+          <h3>Тестирование и запуск</h3>
           <div class="note-body"><p>Проверяем сайт на устройствах и в браузерах, переносим на хостинг, помогаем с доменом.</p><span class="tags mono"><b>→</b> сайт открыт посетителям</span></div>
         </a>
       </li>
       <li class="note" data-n="6">
         <a class="note-link" href="../process/#step-6">
-          <span class="num mono">06</span><h3>Сопровождение</h3>
+          <div class="note-top">
+            <span class="note-meta"><span class="note-ico" aria-hidden="true"><svg><use href="#i-step-6"/></svg></span><span class="num mono">06</span></span>
+          </div>
+          <h3>Сопровождение</h3>
           <div class="note-body"><p>По отдельной договорённости обновляем платформу, исправляем ошибки и развиваем сайт.</p><span class="tags mono"><b>→</b> сайт продолжает работать</span></div>
         </a>
       </li>

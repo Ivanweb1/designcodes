@@ -519,6 +519,128 @@
     .footer-logo { width: 180px; }
     .footer-legal { flex-direction: column; }
   }
+
+  /* ---------- Реальные кейсы из портфолио ---------- */
+  .svc-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(28px, 3vw, 40px) 20px;
+  }
+  .svc-case-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-top: 1px solid var(--ink);
+  }
+  .svc-case-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 0;
+    color: var(--muted);
+  }
+  .svc-case-top span:first-child { color: var(--accent); }
+  .svc-case-shot {
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #E8E6E0;
+  }
+  .svc-case-shot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    transition: transform .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .svc-case-card:hover .svc-case-shot img { transform: scale(1.03); }
+  .svc-case-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 18px 0 20px;
+  }
+  .svc-case-body h3 {
+    margin: 0;
+    font-size: clamp(24px, 2.2vw, 34px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    transition: color .2s;
+  }
+  .svc-case-card:hover .svc-case-body h3 { color: var(--accent); }
+  .svc-case-desc {
+    margin: 10px 0 0;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+  .svc-case-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: auto 0 0;
+    padding: 16px 0 0;
+    list-style: none;
+  }
+  .svc-case-tags li {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 10px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 11px;
+    line-height: 1;
+    color: var(--muted);
+  }
+  .svc-case-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 14px;
+  }
+  .svc-case-actions a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color .2s, border-color .2s;
+  }
+  .svc-case-actions a:hover { color: var(--accent); border-color: var(--accent); }
+  .svc-case-actions .svc-case-discuss { color: var(--muted); }
+  .svc-case-actions .svc-case-discuss:hover { color: var(--ink); border-color: var(--ink); }
+  .svc-cases-foot {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(36px, 4.5vw, 56px);
+  }
+  .svc-cases-all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 52px;
+    padding: 0 26px;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    font-size: 16px;
+    color: var(--ink);
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .svc-cases-all:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  @media (max-width: 960px) {
+    .svc-cases-grid { grid-template-columns: 1fr; gap: 36px; }
+  }
+  @media (max-width: 680px) {
+    .svc-cases-all { width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -770,10 +892,69 @@
     </div>
   </section>
 
-  <!-- 04 · Индивидуальное внедрение и порядок работ -->
+  <!-- 04 · Кейсы из портфолио -->
+  <section class="svc-section svc-cases" aria-labelledby="cases-title">
+    <div class="svc-section-head">
+      <span class="mono"><span class="cm">//</span> 04 · Портфолио</span>
+      <h2 id="cases-title">Реальные кейсы<br><span class="dim">из&nbsp;портфолио</span></h2>
+      <p class="svc-section-lead">Сайты и интернет-магазины из портфолио студии — выстраиваем связку сайта с Битрикс24, чтобы ни одна заявка не терялась.</p>
+    </div>
+    <div class="svc-cases-grid">
+      <article class="svc-case-card">
+        <div class="svc-case-top mono"><span>01 / 03</span><span>Интернет-магазин</span></div>
+        <a class="svc-case-shot" href="https://happybaby.ru/" target="_blank" rel="noopener" aria-label="Открыть сайт Happy Baby">
+          <img src="../prototype/img/cases/happybaby.webp" alt="Скриншот сайта Happy Baby" width="1200" height="600" loading="lazy">
+        </a>
+        <div class="svc-case-body">
+          <h3>Happy Baby</h3>
+          <p class="svc-case-desc">Собрали каталог крупной марки детских товаров, карточки, подбор по категориям и сценарий покупки.</p>
+          <ul class="svc-case-tags mono"><li>1С-Битрикс</li><li>Интернет-магазин</li><li>Каталог</li></ul>
+        </div>
+        <div class="svc-case-actions">
+          <a href="https://happybaby.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="svc-case-discuss" href="#form" data-discuss="Проект по примеру «Happy Baby»">Похожий проект</a>
+        </div>
+      </article>
+      <article class="svc-case-card">
+        <div class="svc-case-top mono"><span>02 / 03</span><span>Корпоративный</span></div>
+        <a class="svc-case-shot" href="https://3electro.ru/" target="_blank" rel="noopener" aria-label="Открыть сайт ТРОЙКА Electro">
+          <img src="../prototype/img/cases/troika.webp" alt="Скриншот сайта ТРОЙКА Electro" width="1200" height="600" loading="lazy">
+        </a>
+        <div class="svc-case-body">
+          <h3>ТРОЙКА Electro</h3>
+          <p class="svc-case-desc">Сделали сайт-каталог гольфкаров и электротранспорта: карточки моделей, характеристики и формы обращения.</p>
+          <ul class="svc-case-tags mono"><li>1С-Битрикс</li><li>Сайт-каталог</li><li>B2B</li></ul>
+        </div>
+        <div class="svc-case-actions">
+          <a href="https://3electro.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="svc-case-discuss" href="#form" data-discuss="Проект по примеру «ТРОЙКА Electro»">Похожий проект</a>
+        </div>
+      </article>
+      <article class="svc-case-card">
+        <div class="svc-case-top mono"><span>03 / 03</span><span>Корпоративный</span></div>
+        <a class="svc-case-shot" href="https://favor-garant.ru/" target="_blank" rel="noopener" aria-label="Открыть сайт Фавор-Гарант">
+          <img src="../prototype/img/cases/favor.webp" alt="Скриншот сайта Фавор-Гарант" width="1200" height="600" loading="lazy">
+        </a>
+        <div class="svc-case-body">
+          <h3>Фавор-Гарант</h3>
+          <p class="svc-case-desc">Разработали сайт-каталог производителя: разделы продукции, карточки изделий и сбор предметных заявок.</p>
+          <ul class="svc-case-tags mono"><li>1С-Битрикс</li><li>Сайт-каталог</li><li>Производство</li></ul>
+        </div>
+        <div class="svc-case-actions">
+          <a href="https://favor-garant.ru/" target="_blank" rel="noopener">Смотреть сайт <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="svc-case-discuss" href="#form" data-discuss="Проект по примеру «Фавор-Гарант»">Похожий проект</a>
+        </div>
+      </article>
+    </div>
+    <div class="svc-cases-foot">
+      <a class="svc-cases-all" href="../portfolio/">Смотреть всё портфолио <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+  </section>
+
+  <!-- 05 · Индивидуальное внедрение и порядок работ -->
   <section class="svc-price" aria-labelledby="ind-title">
     <div class="svc-section-head">
-      <span class="mono"><span class="cm">//</span> 04 · Индивидуальное внедрение</span>
+      <span class="mono"><span class="cm">//</span> 05 · Индивидуальное внедрение</span>
       <h2 id="ind-title">Настройка под&nbsp;процессы<br><span class="dim">вашего отдела</span></h2>
     </div>
     <ol class="stages-grid">
@@ -817,10 +998,10 @@
     </div>
   </section>
 
-  <!-- 05 · Частые вопросы -->
+  <!-- 06 · Частые вопросы -->
   <section class="svc-section svc-faq" aria-labelledby="faq-title">
     <div class="svc-section-head">
-      <span class="mono"><span class="cm">//</span> 05 · Частые вопросы</span>
+      <span class="mono"><span class="cm">//</span> 06 · Частые вопросы</span>
       <h2 id="faq-title">Коротко о главном</h2>
     </div>
     <div class="svc-faq-list">
@@ -840,11 +1021,11 @@
   </section>
 </main>
 
-<!-- 06 · Контакты, форма и подвал -->
+<!-- 07 · Контакты, форма и подвал -->
 <div class="final">
   <section class="contact" id="form" aria-labelledby="form-title">
     <div class="contact-head">
-      <span class="sec-label mono"><span class="cm">//</span> 06 · обсудим внедрение</span>
+      <span class="sec-label mono"><span class="cm">//</span> 07 · обсудим внедрение</span>
       <a class="big-mail" href="mailto:ask@designcodes.ru">ask@designcodes.ru <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
       <div class="side">
         <a href="tel:+79262901420">+7 (926) 290-14-20</a>

@@ -289,6 +289,49 @@
   }
   .rule-links a:hover { color: var(--accent); border-color: var(--accent); }
 
+  /* Документы по персональным данным (/privacy/ и /personal-data-consent/) */
+  .legal-docs {
+    margin-top: clamp(32px, 4vw, 48px);
+    border-top: 1px solid #676661;
+  }
+  .legal-docs-head {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+    padding: 20px 0 14px;
+    color: #a8a7a2;
+  }
+  .legal-docs-list {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid rgba(243,242,238,.18);
+    border-bottom: 1px solid #676661;
+  }
+  .legal-doc-link {
+    display: flex; flex-direction: column; justify-content: space-between; gap: 18px;
+    padding: 24px clamp(20px, 3.5vw, 52px) 26px 0;
+    transition: color .2s;
+  }
+  .legal-doc-link:nth-child(even) {
+    border-left: 1px solid #676661;
+    padding-left: clamp(20px, 3.5vw, 52px);
+    padding-right: 0;
+  }
+  .legal-doc-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; color: #a8a7a2; }
+  .legal-doc-top .mono:first-child { color: var(--accent); }
+  .legal-doc-title {
+    margin: 0;
+    font-size: clamp(20px, 1.8vw, 28px);
+    font-weight: 400; letter-spacing: -0.025em; line-height: 1.15;
+    color: var(--bg);
+    transition: color .2s;
+  }
+  .legal-doc-action {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; color: #c6c4bd;
+    transition: color .2s;
+  }
+  .legal-doc-link:hover .legal-doc-title,
+  .legal-doc-link:hover .legal-doc-action { color: var(--accent); }
+  .legal-doc-link:hover .legal-doc-action .ico { transform: translateX(4px); }
+
   .rules-foot { display: flex; justify-content: center; margin-top: clamp(32px, 4vw, 48px); }
   .svc-button-light { background: var(--bg); border-color: var(--bg); color: var(--ink); }
   .svc-button-light:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
@@ -398,6 +441,11 @@
       border-left: 0; padding: 24px 0 28px; border-bottom: 1px solid #676661;
     }
     .rule-col:last-child { border-bottom: 0; }
+    .legal-docs-list { grid-template-columns: 1fr; }
+    .legal-doc-link, .legal-doc-link:nth-child(even) {
+      border-left: 0; padding: 20px 0 22px; border-bottom: 1px solid rgba(243,242,238,.18);
+    }
+    .legal-doc-link:last-child { border-bottom: 0; }
     .big-mail { grid-column: 1 / 13; }
     .contact-head .side { grid-column: 1 / 13; justify-self: start; text-align: left; margin-top: 24px; }
     .form-intro { grid-column: 1 / 13; padding-right: 0; }
@@ -639,6 +687,31 @@
       </div>
     </div>
 
+    <div class="legal-docs" aria-label="Документы по персональным данным">
+      <div class="legal-docs-head mono">
+        <span><span class="cm">//</span> Персональные данные</span>
+        <span>Открытые документы сайта</span>
+      </div>
+      <div class="legal-docs-list">
+        <a class="legal-doc-link" href="../privacy/">
+          <div class="legal-doc-top">
+            <span class="mono">01 / Политика ПД</span>
+            <span class="mono">/privacy/</span>
+          </div>
+          <h3 class="legal-doc-title">Политика в&nbsp;отношении обработки персональных данных</h3>
+          <span class="legal-doc-action">Открыть документ <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+        <a class="legal-doc-link" href="../personal-data-consent/">
+          <div class="legal-doc-top">
+            <span class="mono">02 / Согласие ПД</span>
+            <span class="mono">/personal-data-consent/</span>
+          </div>
+          <h3 class="legal-doc-title">Согласие на&nbsp;обработку персональных данных</h3>
+          <span class="legal-doc-action">Открыть документ <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+        </a>
+      </div>
+    </div>
+
     <div class="rules-foot">
       <a class="svc-button svc-button-light" href="#form" data-discuss="Запрос документов для закупки">Запросить документы для закупки <svg class="ico ico-down" aria-hidden="true"><use href="#i-arrow"/></svg></a>
     </div>
@@ -677,7 +750,7 @@
             <label class="field"><span class="mono">Телефон</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" maxlength="18" required></label>
           </div>
           <label class="field"><span class="mono">Какие документы нужны</span><textarea name="task" rows="3" placeholder="Карточка предприятия, учредительные документы, проект договора…"></textarea></label>
-          <label class="agree"><input type="checkbox" name="agree" required><span>Согласен с <a href="../privacy/">политикой конфиденциальности</a> и обработкой персональных данных</span></label>
+          <label class="agree"><input type="checkbox" name="agree" required><span>Согласен с <a href="../privacy/">политикой конфиденциальности</a> и <a href="../personal-data-consent/">обработкой персональных данных</a></span></label>
           <div class="form-actions">
             <button class="btn btn-lg" type="submit">Запросить документы <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
             <span class="form-note mono" aria-live="polite"></span>
@@ -741,7 +814,7 @@
     <div class="footer-legal">
       <span>© 2013–2026 ООО «Дизайнкод» · ИНН 7736666610 · ОГРН 5137746015138</span>
       <span>117393, Москва, ул. Академика Пилюгина, д. 14, корп. 2, кв. 582</span>
-      <a href="../privacy/">Политика конфиденциальности</a>
+      <span><a href="../privacy/">Политика ПД</a> · <a href="../personal-data-consent/">Согласие на обработку ПД</a></span>
     </div>
   </footer>
 </div>
