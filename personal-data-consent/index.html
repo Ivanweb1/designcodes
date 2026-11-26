@@ -63,7 +63,14 @@
   .header .nav { grid-column: 1; grid-row: 1; display: flex; gap: 4px; }
   .header .logo { grid-column: 2; grid-row: 1; display: block; flex: none; }
   .header .header-right { grid-column: 3; grid-row: 1; justify-self: end; display: flex; align-items: center; gap: 24px; }
-  .logo-svg { display: block; height: 46px; width: auto; }
+  .logo-svg { display: block; height: 46px; width: auto; overflow: visible; }
+  html.logo-intro .logo-svg path { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.1s cubic-bezier(.65,0,.35,1) .08s; }
+  html.logo-intro .logo-svg path:nth-child(2) { transition-delay: .3s; }
+  html.logo-intro .logo-svg path:nth-child(3) { transition-delay: .48s; }
+  html.logo-intro .logo-svg path:nth-child(4) { transition-delay: .08s; }
+  html.logo-intro .logo-svg g { opacity: 0; transition: opacity .7s .95s; }
+  html.logo-intro.logo-drawn .logo-svg path { stroke-dashoffset: 0; }
+  html.logo-intro.logo-drawn .logo-svg g { opacity: 1; }
   .nav-item { position: relative; }
   .nav-link {
     display: inline-flex; align-items: center; gap: 6px;
@@ -349,6 +356,7 @@
     .footer-legal { flex-direction: column; }
   }
 </style>
+<script>try{if(!sessionStorage.getItem('dc-logo-drawn')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('logo-intro');sessionStorage.setItem('dc-logo-drawn','1');addEventListener('DOMContentLoaded',function(){requestAnimationFrame(function(){requestAnimationFrame(function(){document.documentElement.classList.add('logo-drawn');});});});}}catch(e){}</script>
 </head>
 <body>
 
@@ -359,10 +367,10 @@
 <header class="header">
   <a class="logo" href="../prototype/home.html" aria-label="Дизайн+Код — на главную">
     <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1042 416" fill="none" stroke="currentColor" stroke-width="7" aria-hidden="true">
-      <path d="M595 57H297L10 211l287 154h155"/>
-      <path d="M140 137v142"/>
-      <path d="M706 3L515 412"/>
-      <path d="M725 57l305 154-305 154"/>
+      <path pathLength="1" d="M595 57H297L10 211l287 154h155"/>
+      <path pathLength="1" d="M140 137v142"/>
+      <path pathLength="1" d="M706 3L515 412"/>
+      <path pathLength="1" d="M725 57l305 154-305 154"/>
       <g fill="currentColor" stroke="none" font-family="Jost, 'Futura PT', Futura, 'Century Gothic', sans-serif" font-size="66" font-weight="400">
         <text x="193" y="245" textLength="340" lengthAdjust="spacing">ДИЗАЙН</text>
         <text x="683" y="245" textLength="170" lengthAdjust="spacing">КОД</text>
