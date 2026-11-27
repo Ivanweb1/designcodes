@@ -7,7 +7,7 @@
 <meta name="description" content="Подбор редакций, помощь с покупкой и продлением. Официальные условия производителей.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400&family=Onest:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap&subset=cyrillic" rel="stylesheet">
 <style>
   /* Страница /licenses/ (раздел 11 ТЗ).
      Дизайн-система: типографический минимализм (B), акцент «Сигнальный красный», Onest + JetBrains Mono. */
@@ -40,7 +40,7 @@
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
   :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  h1, h2, h3 { text-wrap: balance; }
+  h1, h2, h3 { text-wrap: balance; overflow-wrap: break-word; }
   p { text-wrap: pretty; }
 
   .mono {
@@ -140,8 +140,7 @@
     width: 44px; height: 44px;
     align-items: center; justify-content: center;
     border: 1px solid var(--ink); border-radius: 999px;
-  }
-  .icon-btn { transition: background .2s, color .2s, border-color .2s; }
+  transition: background .2s, color .2s, border-color .2s; }
   .icon-btn svg { width: 18px; height: 18px; overflow: visible; }
   #menu-toggle svg line {
     stroke: currentColor; stroke-width: 1.6; stroke-linecap: round;
@@ -154,10 +153,6 @@
 
   .ico { width: 1em; height: 1em; vertical-align: -0.14em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; overflow: visible; transition: transform .25s ease; }
   a:hover > .ico, button:hover > .ico { transform: translateX(4px); }
-  .ico-down { transform: rotate(90deg); }
-  a:hover > .ico-down, button:hover > .ico-down { transform: rotate(90deg) translateX(4px); }
-  .ico-left { transform: rotate(180deg); }
-  a:hover > .ico-left, button:hover > .ico-left { transform: rotate(180deg) translateX(4px); }
 
   /* ---------- Мобильное меню ---------- */
   .mobile-menu {
@@ -428,7 +423,7 @@
   .footer.js-draw:not(.drawn) .footer-logo path { stroke-dashoffset: 1; }
   .footer.js-draw:not(.drawn) .footer-logo g { opacity: 0; }
   .footer-top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 20px; padding-top: 32px; border-top: 1px solid var(--cline); }
-  .footer-col { grid-column: span 3; display: flex; flex-direction: column; gap: 8px; font-size: 15px; }
+  .footer-col { grid-column: span 3; display: flex; flex-direction: column; gap: 8px; font-size: 15px; min-width: 0; overflow-wrap: anywhere; }
   .footer-col .mono { color: var(--cdim); margin-bottom: 6px; }
   .footer-col a:hover { color: var(--accent); }
   .footer-legal { display: flex; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding: 0 0 24px; color: var(--cdim); font-size: 13px; }
@@ -469,6 +464,21 @@
     .footer { padding-top: 40px; }
     .footer-logo { width: 180px; }
     .footer-legal { flex-direction: column; }
+  }
+  /* ---------- Адаптив 320–560px ---------- */
+  @media (max-width: 560px) {
+    .svc-hero-bottom, .svc-section-head { grid-template-columns: minmax(0, 1fr); }
+    .svc-hero-bottom > *, .svc-section-head > * { min-width: 0; }
+    .svc-section h2, .svc-price h2 { font-size: clamp(28px, 8.2vw, 38px); }
+    .svc-button, .form-actions .btn-lg {
+      max-width: 100%; white-space: normal; text-align: center;
+      height: auto; min-height: 52px; padding: 12px 18px; line-height: 1.25;
+    }
+  }
+  @media (max-width: 400px) {
+    .svc-hero h1 { font-size: clamp(26px, 8.6vw, 36px); }
+    .svc-button, .form-actions .btn-lg { font-size: 15px; padding: 12px 14px; }
+    .footer-col { grid-column: 1 / -1; }
   }
 </style>
 <script>try{if(!sessionStorage.getItem('dc-logo-drawn')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('logo-intro');sessionStorage.setItem('dc-logo-drawn','1');addEventListener('DOMContentLoaded',function(){requestAnimationFrame(function(){requestAnimationFrame(function(){document.documentElement.classList.add('logo-drawn');});});});}}catch(e){}</script>
